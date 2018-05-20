@@ -1,0 +1,272 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+body {
+    position: relative;
+    background: url(fond2.png) no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+    box-sizing: border-box;
+    padding-bottom: 80px;
+}
+
+*:before, *:after {
+    box-sizing: inherit;
+}
+
+.header {
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100px;
+    position: relative;
+    font-size: 22px;
+    padding: 2%;
+    text-align: left;
+    z-index: 10;
+    color: darkorange;
+    background-color: DARKSLATEGRAY;
+    border-bottom: solid darkorange;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    font-family: Calibri, Verdana, Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    color: lightgray;
+    padding: 3px;
+    border-top: thin solid darkorange;
+    background-color: DARKSLATEGRAY;
+    z-index: 0;
+}
+
+.image {
+    top: 0;
+    padding: 15px;;
+    position: absolute;
+    background-color: transparent;
+    z-index: 0;
+}
+
+a.links {
+    text-decoration: none;
+    color: white;    
+}
+
+.footer_links {
+    text-decoration: none;
+    color: lightgray;
+}
+
+div.content {
+    position: relative;
+    padding: 15px;
+    z-index: 5;
+}
+
+h1 {
+    padding: 15px;
+    color: darkorange;
+}
+
+
+h2 {
+    color: darkorange;
+}
+
+h3 {
+    color: white;
+}
+
+table {
+    color: white;
+	border-collapse: collapse;
+	margin: auto;
+}
+
+th, td {
+	padding: 10px;
+}
+
+th {
+	background-color: DARKSLATEGRAY;
+	color: darkorange;
+	text-align: left;
+}
+
+div.login {
+    width: 400px;
+    margin-right: 50px;
+    padding-top: 15px;
+    top: 0;
+    right: 0;
+    position: absolute;
+    font-size: 16px;
+    text-align: right;
+    color: white;
+}
+
+div.login h3 {
+    text-align: right;
+}
+
+.button {
+	padding: 2px;
+	width: 85px;
+}
+
+.button2 {
+	padding: 3px;
+	width: 100%;
+}
+
+.register {
+    text-align: right;
+    color: white;
+}
+
+.center {
+	margin-top: 50px;
+    background-color: gray;
+    min-width: 300px;
+}
+
+.center td:hover {
+	background-color: coral;
+}
+
+.center tr {
+    border-top: 2px solid darkorange;
+    border-bottom: 2px solid darkorange;
+}
+
+.table {
+    border: 1px solid darkorange;
+}
+
+.table td {
+	width: 195px;
+	height: 45px;
+}
+
+.list {
+    margin-top: 1%;
+    background-color: gray;
+}
+
+.list tr:nth-child(odd) {
+	background-color: darkgray;
+}
+
+.list th {
+	color: white;
+	background-color: darkorange;
+}
+
+.p {
+	font-weight: bold;
+	font-size: 25px;
+	color: darkorange;
+	margin-bottom: 25px;
+}
+
+.about {
+    margin-top: 25px;
+    margin-left: 15%;
+    margin-right: 15%;
+    text-align: center;
+}
+
+.about h1 {
+	font-family: serif;
+	color: white;
+}
+
+.leftTitle {
+    text-align: left;
+}
+
+.rightTitle {
+    text-align: right;
+}
+
+.leftText {
+    color: white;
+    font-size: 20px;
+    text-align: justify;
+    padding-bottom: 50px;
+    width: 45%;
+    left: 0;
+}
+
+.rightText {
+    color: white;
+    font-size: 20px;
+    text-align: justify;
+    padding-bottom: 50px;
+    margin-left: 55%;
+}
+
+hr.top {
+    border-color: darkorange;
+    border-style: inset;
+    border-width: 4px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+hr.bottom {
+    border-color: darkorange;
+    border-style: outset;
+    border-width: 4px;
+    margin-top: 20px;
+}
+
+select, input {
+	width: 173px;
+}
+
+.contact {
+	font-size: 20px;
+    margin-top: 1%;
+    background-color: gray;
+}
+
+.contact tr:nth-child(odd) {
+	background-color: darkgray;
+}
+
+.contact th {
+	color: white;
+	background-color: darkorange;
+}
+
+.contact td {
+	text-align: left;
+}
+
+.privacyText {
+    color: white;
+    font-size: 20px;
+    text-align: justify;
+    padding-bottom: 50px;
+    border-top: solid gray;
+}
+
+.error {
+    color: red;
+}
+
+.exit {
+	right: 0;
+	padding-right: 15px;
+}

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="templates :: head"/>
+    <body>
+        <div th:replace="templates :: header"/>
+        <div class="content">
+            <table class="center">
+                <tr>
+                    <th colspan="3"><h2>Personal things</h2></th>
+                </tr>
+                <tr>
+                    <td><a href="/offers" class="links"><h3>Ofertas</h3></a></td>
+                    <td><a href="/request/myRequests" class="links"><h3>Ofertas aceptas</h3></a></td>
+                    <td><a href="/offer/myOffers" class="links"><h3>Asignación</h3></a></td>
+                </tr>
+                <tr>
+                    <th colspan="3"><h2>General things</h2></th>
+                </tr>
+                <tr>
+                    <td><a href="/skill/skill_list" class="links"><h3>View skills' list</h3></a></td>
+                    <td><a href="/request/request_list" class="links"><h3>View requests' list</h3></a></td>
+                    <td><a href="/offer/offer_list" class="links"><h3>View offers' list</h3></a></td>
+                </tr>
+            </table>
+        </div>
+        <div th:replace="templates :: footer"/>
+    </body>
+</html>

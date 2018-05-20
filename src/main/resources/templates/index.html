@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="templates :: head"/>
+    <body>
+        <div th:replace="templates :: header"/>
+        <div class="content">
+            <table class="center">
+				<tr>
+					<th colspan="2"><h2>BIENVENIDO</h2></th>
+				</tr>
+				<tr>
+					<td><a href="/register" class="links"><h3>Registro</h3></a></td>
+					<td><a href="/login" class="links"><h3>Log in</h3></a></td>
+				</tr>
+            </table>
+            <a href="/logout">Log out</a>
+        </div>
+        <div th:replace="templates :: footer"/>
+    </body>
+</html>

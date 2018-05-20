@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="templates :: head"/>
+    <body>
+        <div th:replace="templates :: header"/>
+		<div class="content">
+			<h1>List of offers</h1>
+			<form method="POST" th:action="@{/offerPrefs/update}" th:object="${preferencesContainer}">
+				<table class="list">
+					<tr>
+						<th>Proyecto</th>
+						<th>Orden</th>
+					</tr>
+					<tr th:each="currPreference, currPrefKey : *{preferences}">
+						<input type="hidden" th:field="*{preferences[__${currPrefKey.index}__].id}"/>
+						<td th:text="${currPreference.ofertaProyecto.tarea}"/>
+						<td><input type="number" th:field="*{preferences[__${currPrefKey.index}__].orden}"/></td>
+						<td><input type="checkbox" th:field="*{selectedPreferences}" th:value="${currPreference.id}"/></td>
+					</tr>
+				</table>
+				<input type="submit" value="Aplicar cambios" class="button2"/>
+			</form>
+		</div>
+        <div th:replace="templates :: footer"/>
+	</body>
+</html>

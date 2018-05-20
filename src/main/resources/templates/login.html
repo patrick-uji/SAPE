@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="templates :: head"/>
+    <body>
+        <div th:replace="templates :: header"/>
+        <div class="content">
+            <h1>Login</h1>
+            <form method="POST" action="" th:action="@{/login}" th:object="${login}">
+                <table class="table">
+                    <tr>
+                    	<td class="register"><label>Usuario:</label></td>
+                        <td><input type="text" th:field="*{email}" pattern="\w+" placeholder="email" maxlength="20"/></td>
+                    </tr>
+                    <tr>
+                        <td class="register"><label>Password:</label></td>
+                        <td><input type="password" th:field="*{password}" placeholder="password"/>
+                        <!-- pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}" -->
+                    	<th:errors class="error" path="password"/></td>
+                    </tr>
+                    <tr>
+                        <td class="register"><input type="submit" value="Log in " class="button2"/></td>
+                        <td><input type="reset" value="Clear data" class="button2"/></td>
+                    </tr>
+                </table>
+			</form>
+			<p class="p"><br/>Don't have an account?<br/>Click <a href="@{/student/add}" class="links">here</a> to register.</p> 
+        </div>
+        <div th:replace="templates :: footer"/>
+    </body>
+</html>

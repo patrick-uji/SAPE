@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="templates :: head"/>
+    <body>
+        <div th:replace="templates :: header"/>
+        <div class="about">
+            <h1>Contact</h1>
+            
+            <p class="p">To contact support, please send us an email to one or more of the email addresses below. We will answer you as soon as possible.</p><br/>
+           	<table class="contact">
+           		<tr>
+           			<th>Name</th>
+           			<th>Email</th>
+       			</tr>
+           		<tr>
+           			<td>Joshua García Olucha</td>
+           			<td>al286375@uji.es</td>
+      			</tr>
+           		<tr>
+           			<td>Manuel Gualsaquí Morán</td>
+           			<td>al259401@uji.es</td>
+      			</tr>
+           		<tr>
+           			<td>Cristian Ionut Valeanu</td>
+           			<td>al315584@uji.es</td>
+      			</tr>
+           	</table>
+        </div>
+        <div th:replace="templates :: footer"/>
+    </body>
+</html>

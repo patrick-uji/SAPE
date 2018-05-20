@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+   <title>Gestionar Nadadors</title>
+   <meta charset="UTF-8" />
+   <link rel="stylesheet"     
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
+</head>
+<body>
+   <h1>Llista de Nadadors</h1>
+   <table>
+     <thead>
+       <tr>
+         <th>Num. Federat</th>
+         <th>Nom</th>
+         <th>Pais</th>
+         <th>Edat</th>
+         <th>Sexe</th>
+       </tr>
+     </thead>
+     <tbody>
+       <tr th:each="nadador: ${nadadors}">
+         <td th:text="${nadador.numFederat}"/>
+         <td th:text="${nadador.nom}"/>
+         <td th:text="${nadador.pais}"/>
+         <td th:text="${nadador.edat}"/>
+         <td th:text="${nadador.sexe}"/>
+         <td>
+         	<a th:href="@{/nadador/update/{nom}(nom=${nadador.nom})}">Edita</a>
+         </td>
+         <td>
+         	<a th:href="@{/nadador/delete/{nom}(nom=${nadador.nom})}">Esborra</a>
+         </td>
+       </tr>
+     </tbody>
+   </table>
+   <a href="add.html">Afegeix nadador</a>
+</body>
+</html>

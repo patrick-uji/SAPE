@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head th:fragment="head">
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, height=device-height, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+        <link rel="stylesheet" href="/css/styles.css" th:href="@{/css/styles.css}"/>
+        <title>SAPE</title>
+    </head>
+    
+    <div class="header" th:fragment="header">
+    	<a href="/" th:href="@{/}">
+    		<img src="/css/sape.png" alt="Skill Sharing" class="image"/>
+    	</a>
+    </div>
+    
+    <div class="footer" th:fragment="footer">
+		<p>&copy; EI102717BGM &#8226; All rights reserved &#8226; <a href="/privacy" class="footer_links">Privacy Policy</a> &#8226; <a href="/about" class="footer_links">About</a> &#8226; <a href="/contact" class="footer_links">Contact</a></p>
+    </div>
+</html>
