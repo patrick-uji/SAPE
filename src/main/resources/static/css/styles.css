@@ -3,10 +3,12 @@
     padding: 0;
     box-sizing: border-box;
     text-align: center;
+    font-weight: lighter;
 }
 
+
+	
 body {
-    position: relative;
     background: url(fond2.png) no-repeat center center fixed;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
@@ -30,13 +32,14 @@ body {
     padding: 2%;
     text-align: left;
     z-index: 10;
-    color: darkorange;
+   
     background-color: DARKSLATEGRAY;
     border-bottom: solid darkorange;
 }
 
 .footer {
     position: absolute;
+    margin: 30px;
     bottom: 0;
     left: 0;
     right: 0;
@@ -50,11 +53,10 @@ body {
 }
 
 .image {
-    top: 0;
-    padding: 15px;;
-    position: absolute;
-    background-color: transparent;
-    z-index: 0;
+    top: 40px;
+  	padding: 15px;
+    aling: center;
+   
 }
 
 a.links {
@@ -68,10 +70,80 @@ a.links {
 }
 
 div.content {
-    position: relative;
-    padding: 15px;
-    z-index: 5;
+  	position: absolute;
+  	aling: center;
+	width: 170px;
+	height: 100x;
+	backgroud-color: DARKSLATEGRAY;
 }
+
+div#menu {
+	position: absolute;
+	width: 240px;
+	height: 100%;
+	background-color: DARKSLATEGRAY;
+}
+
+ul{
+	margin-top:150px;
+	list-style: none;
+	display:block;
+}
+li{
+	wihth:100%;
+	height:100px;
+	border-bottom: 1px solid #323232;
+	overflow: hidden;
+}
+p.menu{
+	position: relative;
+	padding: 10px;
+	padding-right: 25px;
+	float:right
+	color: white;
+	opacity:.6;
+	font-size: 1.8em;
+}
+
+div.barra{
+	position:absolute;
+	height: 100px;
+	width: 0px;
+	background-color: #aaa;
+	opacity: .1;
+	-webkit-transition: width 1s;
+}
+li:hover div.barra{
+	width: 300px;
+}
+
+li:hover p.menu{
+	opacity: 1;
+}
+
+div.botonS{
+	top: 40px;
+	height:50px;
+	padding: 15px;
+}
+
+.salir{
+	height:50px;
+	background-color: #ABB2B9; /* Green */
+    border-radius: 12px;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border: 3px double #ABB2B9;
+}
+
+.salir:hover{
+    opacity: 0.6;
+    text-decoration: none;
+  }
 
 h1 {
     padding: 15px;

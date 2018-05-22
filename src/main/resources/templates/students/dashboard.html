@@ -2,27 +2,61 @@
 <html xmlns:th="http://www.thymeleaf.org">
     <head th:replace="templates :: head"/>
     <body>
-        <div th:replace="templates :: header"/>
-        <div class="content">
-            <table class="center">
-                <tr>
-                    <th colspan="3"><h2>Personal things</h2></th>
-                </tr>
-                <tr>
-                    <td><a href="/offers" class="links"><h3>Ofertas</h3></a></td>
-                    <td><a href="/offerPrefs" class="links"><h3>Ver ofertas preferentes</h3></a></td>
-                    <td><a href="/offer/myOffers" class="links"><h3>Asignaciones</h3></a></td>
-                </tr>
-                <tr>
-                    <th colspan="3"><h2>General things</h2></th>
-                </tr>
-                <tr>
-                    <td><a href="/skill/skill_list" class="links"><h3>View skills' list</h3></a></td>
-                    <td><a href="/request/request_list" class="links"><h3>View requests' list</h3></a></td>
-                    <td><a href="/offer/offer_list" class="links"><h3>View offers' list</h3></a></td>
-                </tr>
-            </table>
-        </div>
-        <div th:replace="templates :: footer"/>
+    	<div id="menu">
+    		 <div th:replace="templates :: header"/>
+    		<ul>
+    		<li>
+    		<div class="barra"></div>
+    		<p class ="menu" style="color:white;">Ofertas pendientes</p>
+    		</li>
+    		<li>
+    		<div class="barra"></div>
+    		<p class ="menu" style="color:white;">Asignaci&oacute;n</p>
+    		</li>
+    		<li>
+    		<div class="barra"></div>
+    		<p class ="menu" style="color:white;">Ofertas aceptadas</p>
+    		</li>
+    		<li>
+    		<div class="barra"></div>
+    		<p class ="menu" style="color:white;">Empresas</p>
+    		</li>
+    		
+    		</ul>
+    			<div class="botonS"><a class="salir" href="/logout">Cerrar Sesi&oacute;n</a></div>
+    	</div>
+    	
+    	<div class="content1">
+			<h1>List of offers</h1>
+			<form method="POST" action="/offerPrefs" th:action="@{/offerPrefs}" th:object="${offersSelection}">
+				<table class="list">
+					<tr>
+						<th></th>
+						<th>Numero</th>
+						<th>Tarea</th>
+						<th>Objetivo</th>
+						<th>Estado</th>
+						<th>Itinerario</th>
+						<th>FechaAlta</th>
+						<th>FechaUltimoCambio</th>
+						<th colspan="2">Action</th>
+					</tr>
+					<tr th:each="currOffer : ${offers}">
+						<td><input type="checkbox" th:field="*{selectedOffers}" th:value="${currOffer.id}"/></td>
+						<td th:text="${currOffer.numero}"/>
+						<td th:text="${currOffer.tarea}"/>
+						<td th:text="${currOffer.objetivo}"/>
+						<td th:text="${currOffer.estado.getName()}"/>
+						<td th:text="${currOffer.itinerario}"/>
+						<td th:text="${currOffer.fechaAlta}"/>
+						<td th:text="${currOffer.fechaUltimoCambio}"/>
+						<td><a th:href="@{/companies/{id}( id=${currOffer.id} )}">Ver empresa</a></td>
+					</tr>
+				</table>
+				
+			</form>
+		</div>
+    	
+    
     </body>
 </html>

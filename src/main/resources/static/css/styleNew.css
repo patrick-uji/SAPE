@@ -1,0 +1,24 @@
+*{
+	margin:0px;
+	padding:0px;
+	fot-family: vernada;
+	color:blue;	
+}
+
+div.menu{
+	position: absolute;
+	width: 170px;
+	height: 100%;
+	background-color: DARKSLATEGRAY;
+}
+
+body {
+  
+    background: url(fond2.png) no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+    box-sizing: border-box;
+    padding-bottom: 80px;
+}
