@@ -32,27 +32,56 @@ body {
     padding: 2%;
     text-align: left;
     z-index: 10;
-   
     background-color: DARKSLATEGRAY;
     border-bottom: solid darkorange;
 }
 
 .footer {
-    position: absolute;
-    margin: 30px;
-    bottom: 0;
-    left: 0;
-    right: 0;
+	float: left;
+	
+    aling: center;
+    margin: 10px;
+   position:absolute; /*El div será ubicado con relación a la pantalla*/
+	left:240px; /*A la derecha deje un espacio de 0px*/
+	right:0px; /*A la izquierda deje un espacio de 0px*/
+	bottom:0px; /*Abajo deje un espacio de 0px*/
+	height:30px; /*alto del div*/
+	z-index:0;
+    font-family: Calibri, Verdana, Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    padding: 5px;
+    color: lightgray;
+    border-top: thin solid darkorange;
+    background-color: DARKSLATEGRAY;
+  
+}
+
+.footer1 {
+	height: 100%;
+    aling: center;
+    margin: 10px;
+    position:absolute; /*El div será ubicado con relación a la pantalla*/
+	left:0px; /*A la derecha deje un espacio de 0px*/
+	right:0px; /*A la izquierda deje un espacio de 0px*/
+	bottom:0px; /*Abajo deje un espacio de 0px*/
+	height:30px; /*alto del div*/
+	z-index:0;
     font-family: Calibri, Verdana, Arial, Helvetica, sans-serif;
     font-size: 15px;
     color: lightgray;
-    padding: 3px;
     border-top: thin solid darkorange;
     background-color: DARKSLATEGRAY;
-    z-index: 0;
+  	padding: 5px;
 }
 
 .image {
+    top: 30px;
+  	padding: 5px;
+    aling: center;
+   
+}
+
+.image1 {
     top: 40px;
   	padding: 15px;
     aling: center;
@@ -85,13 +114,13 @@ div#menu {
 }
 
 ul{
-	margin-top:150px;
+	margin-top:50px;
 	list-style: none;
 	display:block;
 }
 li{
-	wihth:100%;
-	height:100px;
+	wihth:50%;
+	height:80px;
 	border-bottom: 1px solid #323232;
 	overflow: hidden;
 }
@@ -105,9 +134,12 @@ p.menu{
 	font-size: 1.8em;
 }
 
+a.menu{
+	text-decoration:none;
+}
 div.barra{
 	position:absolute;
-	height: 100px;
+	height: 80px;
 	width: 0px;
 	background-color: #aaa;
 	opacity: .1;
@@ -136,10 +168,15 @@ div.botonS{
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 16px;
+    font-size: 18px;
     border: 3px double #ABB2B9;
+    font-weight:bold;
+    margin:10px;
 }
 
+.buttonS{
+	margin:10px;
+}
 .salir:hover{
     opacity: 0.6;
     text-decoration: none;
@@ -200,7 +237,11 @@ div.login h3 {
 	padding: 3px;
 	width: 100%;
 }
-
+.button3 {
+	margin:20px;
+	padding: 3px;
+	width: 10%;
+}
 .register {
     text-align: right;
     color: white;

@@ -3,7 +3,7 @@
     <head th:replace="templates :: head"/>
     <body>
         <div th:replace="templates :: header"/>
-        <div class="content">
+        <div class="content1">
             <h1>Login</h1>
             <form method="POST" action="" th:action="@{/login}" th:object="${login}">
                 <table class="table">
@@ -25,6 +25,6 @@
 			</form>
 			<p class="p"><br/>Don't have an account?<br/>Click <a href="@{/student/add}" class="links">here</a> to register.</p> 
         </div>
-        <div th:replace="templates :: footer"/>
+        <div th:replace="templates :: footer1"/>
     </body>
 </html>

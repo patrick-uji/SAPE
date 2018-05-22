@@ -4,7 +4,7 @@
     <body>
         <div th:replace="templates :: menuEmpresa"/>
 		<div class="content1">
-			<h1>List of offers MG</h1>
+			<h1>Lista de ofertas</h1>
 			<table class="list">
 				<tr>
 					<th>Numero</th>
@@ -29,7 +29,9 @@
 				</tr>
 			</table>
 			<a href="/offers/add">Add</a>
+			
+			 <div th:replace="templates :: footer"/>
 		</div>
-        <div th:replace="templates :: footer"/>
+       
 	</body>
 </html>

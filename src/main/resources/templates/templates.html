@@ -17,34 +17,36 @@
     
     </div>
     
+     
+    
     <div id="menu" th:fragment="menuCoordinador">
         <div th:replace="templates :: header"/>
    		<ul>
-	   		<a href="/offers/pending">
+	   		<a href="/offers/pending" class="menu">
 	   		<li>
 	   		<div class="barra"></div>
 	   		<p class ="menu" style="color:white;">Oferta pendientes</p>
 	   		</li>
 	   		</a>
-	   		<a href="/assignments/pending">
+	   		<a href="/assignments/pending" class="menu">
 	   		<li>
 	   		<div class="barra"></div>
 	   		<p class ="menu" style="color:white;">Asignaci&oacute;n</p>
 	   		</li>
 	   		</a>
-	   		<a href="/offers">
+	   		<a href="/offers" class="menu">
 	   		<li>
 	   		<div class="barra"></div>
 	   		<p class ="menu" style="color:white;">Ofertas aceptadas</p>
 	   		</li>
 	   		</a>
-	   		<a href="/companies">
+	   		<a href="/companies" class="menu">
 	   		<li>
 	   		<div class="barra"></div>
 	   		<p class ="menu" style="color:white;">Empresas</p>
 	   		</li>
 	   		</a>
-	   		<a href="/teachers">
+	   		<a href="/teachers" class="menu">
 	   		<li>
 	   		<div class="barra"></div>
 	   		<p class ="menu" style="color:white;">Tutores</p>
@@ -57,19 +59,19 @@
    	<div id="menu" th:fragment="menuEmpresa">
    	    <div th:replace="templates :: header"/>
 		<ul>
-	   		<a href="/offers">
+	   		<a href="/offers" class="menu">
 	   		<li>
 	   		<div class="barra"></div>
 	   		<p class ="menu" style="color:white;">Ofertas </p>
 	   		</li>
 	   		</a>
-	   		<a href="/offers/add">
+	   		<a href="/offers/add" class="menu">
 	   		<li>
 	   		<div class="barra"></div>
 	   		<p class ="menu" style="color:white;">Crear Oferta</p>
 	   		</li>
 	   		</a>
-	   		<a href="/contactPersons">
+	   		<a href="/contactPersons" class="menu">
 	   		<li>
 	   		<div class="barra"></div>
 	   		<p class ="menu" style="color:white;">Personas de contacto</p>
@@ -82,19 +84,19 @@
     <div id="menu" th:fragment="menuEstudiante">
    	    <div th:replace="templates :: header"/>
 		<ul>
-	   		<a href="/offers">
+	   		<a href="/offers" class="menu">
 	   		<li>
 	   		<div class="barra"></div>
 	   		<p class ="menu" style="color:white;">Ofertas</p>
 	   		</li>
 	   		</a>
-	   		<a href="/offerPreferences">
+	   		<a href="/offerPreferences" class="menu">
 	   		<li>
 	   		<div class="barra"></div>
 	   		<p class ="menu" style="color:white;">Preferencias</p>
 	   		</li>
 	   		</a>
-	   		<a href="/assignments">
+	   		<a href="/assignments" class="menu">
 	   		<li>
 	   		<div class="barra"></div>
 	   		<p class ="menu" style="color:white;">Asignacion</p>
@@ -105,6 +107,9 @@
    	</div>
     
     <div class="footer" th:fragment="footer">
+		<p>&copy; EI102717BGM &#8226; All rights reserved &#8226; <a href="/privacy" class="footer_links">Privacy Policy</a> &#8226; <a href="/about" class="footer_links">About</a> &#8226; <a href="/contact" class="footer_links">Contact</a></p>
+    </div>
+    <div class="footer1" th:fragment="footer1">
 		<p>&copy; EI102717BGM &#8226; All rights reserved &#8226; <a href="/privacy" class="footer_links">Privacy Policy</a> &#8226; <a href="/about" class="footer_links">About</a> &#8226; <a href="/contact" class="footer_links">Contact</a></p>
     </div>
 </html>
