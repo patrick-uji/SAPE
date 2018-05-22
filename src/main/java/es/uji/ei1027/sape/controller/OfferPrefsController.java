@@ -11,14 +11,15 @@ import es.uji.ei1027.sape.domain.OffersSelection;
 import es.uji.ei1027.sape.model.PreferenciaAlumno;
 import es.uji.ei1027.sape.dto.PreferenciaAlumnoDTO;
 import es.uji.ei1027.sape.dao.PreferenciaAlumnoDao;
+import es.uji.ei1027.sape.dao.dto.PreferenciaAlumnoDTODao;
 import es.uji.ei1027.sape.domain.PreferencesContainer;
-import es.uji.ei1027.sape.dao.PreferenciaAlumnoDTODao;
+
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.beans.factory.annotation.Autowired;
 @Controller
-@RequestMapping("/offerPrefs")
+@RequestMapping("/offerPreferences")
 public class OfferPrefsController
 {
 	private PreferenciaAlumnoDao preferenciaAlumnoDao;
@@ -36,24 +37,21 @@ public class OfferPrefsController
 	@RequestMapping
 	public String list(HttpSession session, Model model)
 	{
-		Utils.debugLog("OfferPrefs LIST");
+		Utils.debugLog("OfferPreferences LIST");
 		Usuario user = Utils.getUser(session);
 		if (user.esEstudiante())
 		{
 			PreferencesContainer preferencesContainer = new PreferencesContainer();
 			preferencesContainer.setPreferences( preferenciaAlumnoDTODao.getAllFromStudent(user.getId()) );
 			model.addAttribute("preferencesContainer", preferencesContainer);
-			return "offers/listPref";
+			return "offers/listPreferences";
 		}
-		else
-		{
-			return "error/401";
-		}
+		return "error/401";
 	}
 	@RequestMapping(value="", method=RequestMethod.POST)
 	public String create(@ModelAttribute("offersSelection") OffersSelection offersSelection, HttpSession session)
 	{
-		Utils.debugLog("OfferPrefs CREATE");
+		Utils.debugLog("OfferPreferences CREATE");
 		if (Utils.isStudent(session))
 		{
 			int studentID = Utils.getUser(session).getId();
@@ -65,21 +63,18 @@ public class OfferPrefsController
 			for (Integer selectedOfferID : offersSelection.getSelectedOffers())
 			{
 				newPreference.incrementOrden();
-				newPreference.setIDOfertaProyecto(selectedOfferID);
+				newPreference.setIdOfertaProyecto(selectedOfferID);
 				Utils.debugLog("Selected offer with ID: " + selectedOfferID);
 				preferenciaAlumnoDao.create(newPreference);
 			}
 			return "redirect:offers";
 		}
-		else
-		{
-			return "error/401";
-		}
+		return "error/401";
 	}
 	@RequestMapping(value="/update", method=RequestMethod.POST)
 	public String update(@ModelAttribute("preferencesContainer") PreferencesContainer preferencesContainer, HttpSession session)
 	{
-		Utils.debugLog("OfferPrefs UPDATE");
+		Utils.debugLog("OfferPreferences UPDATE");
 		if (Utils.isStudent(session))
 		{
 			List<PreferenciaAlumnoDTO> preferences = preferencesContainer.getPreferences();
@@ -91,17 +86,10 @@ public class OfferPrefsController
 				{
 					preferenciaAlumnoDao.update(currPreference.getId(), new String[] {"orden"}, currPreference.getOrden());
 				}
-				return "redirect:../offerPrefs";
 			}
-			else
-			{
-				return "redirect:../offerPrefs";
-			}
+			return "redirect:../offerPreferences";
 		}
-		else
-		{
-			return "error/401";
-		}
+		return "error/401";
 	}
 	private boolean hasValidOrdering(List<PreferenciaAlumnoDTO> preferences)
 	{

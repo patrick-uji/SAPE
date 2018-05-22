@@ -59,11 +59,11 @@ public class Asignacion extends ObjetoIdentificado
 	{
 		this.estado = estado;
 	}
-	public int getIDOfertaProyecto()
+	public int getIdOfertaProyecto()
 	{
 		return idOfertaProyecto;
 	}
-	public void setIDOfertaProyecto(int idOfertaProyecto)
+	public void setIdOfertaProyecto(int idOfertaProyecto)
 	{
 		this.idOfertaProyecto = idOfertaProyecto;
 	}
@@ -75,11 +75,11 @@ public class Asignacion extends ObjetoIdentificado
 	{
 		this.idEstudiante = idEstudiante;
 	}
-	public int getIDProfesorTutor()
+	public int getIdProfesorTutor()
 	{
 		return idProfesorTutor;
 	}
-	public void setIDProfesorTutor(int idProfesorTutor)
+	public void setIdProfesorTutor(int idProfesorTutor)
 	{
 		this.idProfesorTutor = idProfesorTutor;
 	}

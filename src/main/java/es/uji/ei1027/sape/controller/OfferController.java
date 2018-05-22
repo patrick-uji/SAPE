@@ -5,9 +5,12 @@ import javax.servlet.http.HttpSession;
 import es.uji.ei1027.sape.model.Usuario;
 import es.uji.ei1027.sape.enums.EstadoOferta;
 import es.uji.ei1027.sape.model.OfertaProyecto;
+import es.uji.ei1027.sape.model.PeticionRevision;
 import es.uji.ei1027.sape.dao.EmpresaDao;
 import es.uji.ei1027.sape.dao.EstanciaDao;
 import es.uji.ei1027.sape.dao.OfertaProyectoDao;
+import es.uji.ei1027.sape.dao.PeticionRevisionDao;
+import es.uji.ei1027.sape.dao.dto.OfertaProyectoDTODao;
 import es.uji.ei1027.sape.domain.OffersSelection;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -23,6 +26,8 @@ public class OfferController
 	private EmpresaDao empresaDao;
 	private EstanciaDao estanciaDao;
 	private OfertaProyectoDao ofertaProyectoDao;
+	private PeticionRevisionDao peticionRevisionDao;
+	private OfertaProyectoDTODao ofertaProyectoDTODao;
 	@Autowired
 	public void setEmpresaDao(EmpresaDao empresaDao)
 	{
@@ -38,6 +43,16 @@ public class OfferController
     {
     	this.ofertaProyectoDao = ofertaProyectoDao;
     }
+    @Autowired
+    public void setPeticionRevisionDao(PeticionRevisionDao peticionRevisionDao)
+	{
+		this.peticionRevisionDao = peticionRevisionDao;
+	}
+    @Autowired
+    public void setOfertaProyectoDTODao(OfertaProyectoDTODao ofertaProyectoDTODao)
+	{
+		this.ofertaProyectoDTODao = ofertaProyectoDTODao;
+	}
 	@RequestMapping
     public String list(HttpSession session, Model model)
     {
@@ -48,13 +63,11 @@ public class OfferController
 			switch (user.getTipo())
 			{
 				case ADMIN:
-			        model.addAttribute("offers", ofertaProyectoDao.getAll());
-			        model.addAttribute("canAdd", false);
-			        return "offers/list";
+			        model.addAttribute("offers", ofertaProyectoDTODao.getAllAccepted());
+			        return "offers/listAccepted";
 			    //break;
 				case EMPRESA:
 					model.addAttribute( "offers", ofertaProyectoDao.getAllFromCompany(user.getId()) );
-			        model.addAttribute("canAdd", true);
 			        return "offers/list";
 			    //break;
 			    default: //case ESTUDIANTE:
@@ -64,11 +77,18 @@ public class OfferController
 				//break;
 			}
 		}
-		else
-		{
-			return "error/401";
-		}
+		return "error/401";
     }
+	@RequestMapping("/pending")
+	public String listPending(HttpSession session, Model model)
+	{
+		if (Utils.isAdmin(session))
+		{
+			model.addAttribute("offers", ofertaProyectoDTODao.getAllPending());
+			return "offers/listPending";
+		}
+		return "error/401";
+	}
     @RequestMapping("/add")
     public String add(HttpSession session, Model model)
     {
@@ -82,10 +102,52 @@ public class OfferController
 	        model.addAttribute("target", "");
 	        return "offers/edit";
 		}
-		else
-		{
-			return "error/401";
-		}
+		return "error/401";
+    }
+    @RequestMapping("/{id}/accept")
+    public String accept(@PathVariable("id") int id, HttpSession session)
+    {
+    	if (Utils.isAdmin(session))
+    	{
+    		ofertaProyectoDao.update(id, new String[] {"id_EstadoOferta"}, EstadoOferta.ACEPTADA.getID());
+    		return "redirect:../pending";
+    	}
+    	return "error/401";
+    }
+    @RequestMapping("/{id}/petition")
+    public String petition(@PathVariable("id") int id, HttpSession session, Model model)
+    {
+    	if (Utils.isAdmin(session))
+    	{
+    		model.addAttribute("offer", ofertaProyectoDTODao.get(id));
+    		model.addAttribute("petition", new PeticionRevision());
+	        model.addAttribute("target", "/" + id + "/petition");
+    		return "offers/petition";
+    	}
+    	return "error/401";
+    }
+    @RequestMapping(value="/{id}/petition", method=RequestMethod.POST)
+    public String createPetition(@PathVariable("id") int id, @ModelAttribute("petition") PeticionRevision petition, HttpSession session)
+    {
+    	if (Utils.isAdmin(session))
+    	{
+    		petition.setFecha(Utils.now());
+    		petition.setIDOfertaProyect(id);
+    		ofertaProyectoDao.update(id, new String[] {"id_EstadoOferta"}, EstadoOferta.PENDIENTE_REVISION.getID());
+    		peticionRevisionDao.create(petition);
+    		return "redirect:../pending";
+    	}
+    	return "error/401";
+    }
+    @RequestMapping("/{id}/reject")
+    public String reject(@PathVariable("id") int id, HttpSession session)
+    {
+    	if (Utils.isAdmin(session))
+    	{
+    		ofertaProyectoDao.update(id, new String[] {"id_EstadoOferta"}, EstadoOferta.RECHAZADA.getID());
+    		return "redirect:../pending";
+    	}
+    	return "error/401";
     }
     @RequestMapping(method=RequestMethod.POST)
     public String create(@ModelAttribute("offer") OfertaProyecto offer, HttpSession session, BindingResult bindingResult)
@@ -125,10 +187,7 @@ public class OfferController
 			ofertaProyectoDao.create(offer);
 	        return "redirect:offers";
 		}
-		else
-		{
-			return "error/401";
-		}
+		return "error/401";
    }
    @RequestMapping("/{id}")
    public String read(@PathVariable int id, HttpSession session, Model model)
@@ -163,10 +222,7 @@ public class OfferController
 									 offer.getTarea(), offer.getObjetivo(), offer.getItinerario(), offer.getIdEstancia(), Utils.nowDate());
 	        return "redirect:../../offers";
 		}
-		else
-		{
-			return "error/401";
-		}
+		return "error/401";
    }
    @RequestMapping("/{id}/delete")
    public String delete(@PathVariable int id, HttpSession session)

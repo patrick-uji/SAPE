@@ -24,7 +24,7 @@ nbdist/
 .nb-gradle/
 
 # Mac OSX
-#.DS_Store
+.DS_Store
 # Thumbnails
 ._*
 # Files that might appear on external disk

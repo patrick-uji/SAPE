@@ -39,10 +39,7 @@ public class AdminController
             model.addAttribute("admins", adminDao.getAll());
             return "admins/list";
     	}
-    	else
-    	{
-            return "error/401";
-    	}
+        return "error/401";
     }
     @RequestMapping("/add")
     public String add(HttpSession session, Model model)
@@ -56,10 +53,7 @@ public class AdminController
 	        model.addAttribute("target", "");
             return "admins/edit";
     	}
-    	else
-    	{
-    		return "error/401";
-    	}
+		return "error/401";
     }
     @RequestMapping(method=RequestMethod.POST)
     public String create(@ModelAttribute("user") Usuario user, @ModelAttribute("admin") Admin admin, HttpSession session, BindingResult bindingResult)
@@ -74,15 +68,9 @@ public class AdminController
         		adminDao.create(admin);
             	return "redirect:admins";
     		}
-    		else
-    		{
-    			return "admins/edit";
-    		}
+			return "admins/edit";
     	}
-    	else
-    	{
-    		return "error/401";
-    	}
+		return "error/401";
     }
 	@RequestMapping("/{id}")
 	public String read(@PathVariable int id, HttpSession session, Model model)
@@ -99,15 +87,9 @@ public class AdminController
 		        model.addAttribute("action", "Actualizar");
 				return "admins/edit";
 			}
-			else
-			{
-				return "error/404";
-			}
+			return "error/404";
     	}
-    	else
-    	{
-    		return "error/401";
-    	}
+		return "error/401";
 	}
 	@RequestMapping(value="/{id}/update", method=RequestMethod.POST)
 	public String update(@PathVariable int id, @ModelAttribute("user") Usuario user, @ModelAttribute("admin") Admin admin, HttpSession session, BindingResult bindingResult)
@@ -121,15 +103,9 @@ public class AdminController
 		        adminDao.update(admin);
 		        return "redirect:..";
 			}
-			else
-			{
-				return "admins/edit";
-			}
+			return "admins/edit";
     	}
-    	else
-    	{
-    		return "error/401";
-    	}
+		return "error/401";
 	}
 	@RequestMapping("/{id}/delete")
     public String delete(@PathVariable int id, HttpSession session)
@@ -140,10 +116,7 @@ public class AdminController
             adminDao.delete(id);
             return "redirect:..";
     	}
-    	else
-    	{
-    		return "error/401";
-    	}
+		return "error/401";
 	}
 	@RequestMapping("/delete")
     public String deleteAll(HttpSession session)
@@ -154,9 +127,6 @@ public class AdminController
         	adminDao.deleteAll();
         	return "redirect:admins";
     	}
-    	else
-    	{
-    		return "error/401";
-    	}
+		return "error/401";
     }
 }

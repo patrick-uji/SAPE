@@ -8,11 +8,11 @@ public class Estudiante extends ObjetoIdentificado
 	private int numeroCreditos;
 	private int asignaturasPendientes;
 	private int semestreInicioEstancia;
-	public String getDNI()
+	public String getDni()
 	{
 		return dni;
 	}
-	public void setDNI(String dni)
+	public void setDni(String dni)
 	{
 		this.dni = dni;
 	}

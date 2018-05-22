@@ -10,6 +10,11 @@ public class OfertaProyectoMapper implements RowMapper<OfertaProyecto>
     public OfertaProyecto mapRow(ResultSet resultSet, int rowNum) throws SQLException
     {
     	OfertaProyecto ofertaProyecto = new OfertaProyecto();
+    	mapRow(ofertaProyecto, resultSet, rowNum);
+        return ofertaProyecto;
+    }
+	public void mapRow(OfertaProyecto ofertaProyecto, ResultSet resultSet, int rowNum) throws SQLException
+	{
     	ofertaProyecto.setId(resultSet.getInt("id"));
     	ofertaProyecto.setNumero(resultSet.getInt("numero"));
     	ofertaProyecto.setTarea(resultSet.getString("tarea"));
@@ -19,6 +24,5 @@ public class OfertaProyectoMapper implements RowMapper<OfertaProyecto>
     	ofertaProyecto.setFechaAlta(resultSet.getDate("fechaAlta").toString());
     	ofertaProyecto.setFechaUltimoCambio(resultSet.getDate("fechaUltimoCambio").toString());
     	ofertaProyecto.setIdEstancia(resultSet.getInt("id_Estancia"));
-        return ofertaProyecto;
-    }
+	}
 }

@@ -1,23 +1,17 @@
 package es.uji.ei1027.sape.controller;
-
-import javax.servlet.http.HttpSession;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-
 import es.uji.ei1027.sape.Utils;
-import es.uji.ei1027.sape.dao.EstanciaDao;
-import es.uji.ei1027.sape.enums.EstadoOferta;
-import es.uji.ei1027.sape.model.Estancia;
-import es.uji.ei1027.sape.model.OfertaProyecto;
+import org.springframework.ui.Model;
+import javax.servlet.http.HttpSession;
 import es.uji.ei1027.sape.model.Usuario;
-
+import es.uji.ei1027.sape.model.Estancia;
+import es.uji.ei1027.sape.dao.EstanciaDao;
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/contactPersons")
 public class ContactPersonController
@@ -38,10 +32,7 @@ public class ContactPersonController
 			model.addAttribute( "contactPersons", estanciaDao.getAllFromCompany(user.getId()) );
 			return "contactPersons/list";
 		}
-		else
-		{
-			return "error/401";
-		}
+		return "error/401";
     }
 	@RequestMapping("/add")
 	public String add(HttpSession session, Model model)
@@ -55,10 +46,7 @@ public class ContactPersonController
 	        model.addAttribute("target", "");
 	        return "contactPersons/edit";
 		}
-		else
-		{
-			return "error/401";
-		}
+		return "error/401";
     }
     @RequestMapping(method=RequestMethod.POST)
     public String create(@ModelAttribute("contactPerson") Estancia contactPerson, HttpSession session, BindingResult bindingResult)
@@ -71,10 +59,7 @@ public class ContactPersonController
 			estanciaDao.create(contactPerson);
 	        return "redirect:contactPersons";
 		}
-		else
-		{
-			return "error/401";
-		}
+		return "error/401";
     }
     @RequestMapping("/{id}")
     public String read(@PathVariable int id, HttpSession session, Model model)
@@ -89,10 +74,7 @@ public class ContactPersonController
 	        model.addAttribute("action", "Actualizar");
 	        return "contactPersons/edit";
 		}
-		else
-		{
-			return "error/401";
-		}
+		return "error/401";
     }
     @RequestMapping(value="/{id}/update", method=RequestMethod.POST)
     public String update(@PathVariable int id, @ModelAttribute("contactPerson") Estancia contactPerson, HttpSession session, BindingResult bindingResult)
@@ -107,10 +89,7 @@ public class ContactPersonController
 	        estanciaDao.update(contactPerson);
 	        return "redirect:../../contactPersons";
 		}
-		else
-		{
-			return "error/401";
-		}
+		return "error/401";
     }
     @RequestMapping("/{id}/delete")
     public String delete(@PathVariable int id, HttpSession session)

@@ -18,7 +18,7 @@ public class PreferenciaAlumnoMapper implements RowMapper<PreferenciaAlumno>
     	preferenciaAlumno.setOrden(resultSet.getInt("orden"));
     	preferenciaAlumno.setAbierta(resultSet.getBoolean("abierta"));
     	preferenciaAlumno.setFechaUltimoCambio(resultSet.getDate("fechaUltimoCambio").toString());
-    	preferenciaAlumno.setIDOfertaProyecto(resultSet.getInt("id_OfertaProyecto"));
+    	preferenciaAlumno.setIdOfertaProyecto(resultSet.getInt("id_OfertaProyecto"));
     	preferenciaAlumno.setIDEstudiante(resultSet.getInt("id_Estudiante"));
 	}
 }

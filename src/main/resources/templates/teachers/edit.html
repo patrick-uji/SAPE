@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="templates :: head"/>
+    <body>
+        <div th:replace="templates :: header"/>
+		<div class="content">
+			<h1 th:text="${action + ' profesor'}"/>
+			<form method="POST" th:action="@{/teachers{target}( target=${target} )}" th:object="${teacher}">
+				<table class="table">
+					<tr>
+						<td class="register">Nombre</td>
+						<td><input type="text" th:field="*{nombre}"/></td>
+					</tr>
+					<tr>
+						<td class="register">Departamento</td>
+						<td><input type="text" th:field="*{departamento}"/></td>
+					</tr>
+					<tr>
+						<td class="register">Despacho</td>
+						<td><input type="text" th:field="*{despacho}"/></td>
+					</tr>
+					<tr>
+						<td class="register">Email</td>
+						<td><input type="text" th:field="*{email}"/></td>
+					</tr>
+					<tr>
+						<td class="register"><input type="submit" th:value="${action + ' profesor'}" class="button2"/></td>
+						<td><input type="reset" value="Clear data" class="button2" onclick="return confirm('Do you want to clear your data?')"/></td>
+					</tr>
+				</table>
+			</form>
+		</div>
+        <div th:replace="templates :: footer"/>
+	</body>
+</html>

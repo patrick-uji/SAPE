@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="templates :: head"/>
+    <body>
+        <div th:replace="templates :: header"/>
+		<div class="content">
+			<h1>Lista de estudiante pendientes</h1>
+			<table class="list">
+				<tr>
+					<th>DNI</th>
+					<th>Nombre</th>
+					<th>Nota Media</th>
+					<th>Itinerario</th>
+					<th>Numero Creditos</th>
+					<th>Asignaturas Pendientes</th>
+					<th>Semestre Inicio Estancia</th>
+					<th>Accion</th>
+				</tr>
+				<tr th:each="currStudent : ${students}">
+					<td th:text="${currStudent.dni}"/>
+					<td th:text="${currStudent.nombre}"/>
+					<td th:text="${currStudent.notaMedia}"/>
+					<td th:text="${currStudent.itinerario}"/>
+					<td th:text="${currStudent.numeroCreditos}"/>
+					<td th:text="${currStudent.asignaturasPendientes}"/>
+					<td th:text="${currStudent.semestreInicioEstancia}"/>
+					<td><a th:href="@{/students/{id}/assign( id=${currStudent.id} )}">Realizar asignacion</a></td>
+				</tr>
+			</table>
+		</div>
+        <div th:replace="templates :: footer"/>
+	</body>
+</html>

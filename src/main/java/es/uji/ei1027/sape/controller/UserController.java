@@ -29,10 +29,7 @@ public class UserController
             model.addAttribute("users", usuarioDao.getAll());
             return "users/list";
     	}
-    	else
-    	{
-            return "error/401";
-    	}
+        return "error/401";
     }
     @RequestMapping("/dashboard")
     public String dashboard(HttpSession session, Model model)
@@ -49,10 +46,7 @@ public class UserController
 			}
 			return null; //Shouldn't happen...
 		}
-    	else
-    	{
-    		return "error/401";
-    	}
+		return "error/401";
     }
     @RequestMapping("/add")
     public String add(HttpSession session, Model model)
@@ -65,10 +59,7 @@ public class UserController
             model.addAttribute("target", "");
             return "students/add";
     	}
-    	else
-    	{
-    		return "error/401";
-    	}
+		return "error/401";
     }
 	@RequestMapping("/{id}")
 	public String read(@PathVariable int id, HttpSession session, Model model)
@@ -81,10 +72,7 @@ public class UserController
 			model.addAttribute("action", "users/update");
 			return "students/update";
 		}
-		else
-		{
-			return "error/401";
-		}
+		return "error/401";
 	}
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
     public String delete(@PathVariable int id)
