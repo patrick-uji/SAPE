@@ -47,7 +47,7 @@ public class LoginController
 			if( user != null && Utils.hashPassword(login.getPassword()).equals(user.getPassword()) )
 			{
 				session.setAttribute("user", user);
-				return "redirect:users/dashboard";
+				return getInitialPage(user); //"redirect:users/dashboard";
 			}
 			else
 			{
@@ -55,6 +55,14 @@ public class LoginController
 			}
 		}
 		return "login";
+	}
+	private String getInitialPage(Usuario user)
+	{
+		if (user.esAdmin())
+		{
+			return "redirect:offers/pending";
+		}
+		return "redirect:offers";
 	}
 	@RequestMapping("/logout")
 	public String delete(HttpSession session)

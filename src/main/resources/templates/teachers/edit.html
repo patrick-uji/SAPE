@@ -2,8 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
     <head th:replace="templates :: head"/>
     <body>
-        <div th:replace="templates :: header"/>
-		<div class="content">
+        <div th:replace="templates :: menuCoordinador"/>
+		<div class="content1">
 			<h1 th:text="${action + ' profesor'}"/>
 			<form method="POST" th:action="@{/teachers{target}( target=${target} )}" th:object="${teacher}">
 				<table class="table">

@@ -157,29 +157,6 @@ public class OfferController
 		if (user.esEmpresa())
 		{
 			String now = Utils.now();
-	    	/*
-	        offerDao.addOffer(offer);
-	        List<Request> reqList = requestDao.getRequestsBySkillIdAndDate(offer.getSkillId(), offer.getStartDate(), offer.getEndDate() );
-	        List<String> dest = new ArrayList<>();
-			StringBuilder msg = new StringBuilder();
-	        msg.append("There is a new offer!\n\n");
-	        msg.append("ID - Start Date - End Date - Offeror - Skill Id - Description\n");
-	        msg.append(offer.toString());
-	        msg.append("\n\n\n This is an automatic response email.\nPlease, DO NOT ANSWER BACK, as this email is not supervised.\n");
-	        msg.append("\nCOPYRIGHT: EI102716GGV - SKILL SHARING\n");
-	        if(reqList.size() > 0) {
-	        	for(Request r : reqList) {
-	        		dest.add(r.getEmail());
-	        	}
-	        }
-	        if(dest.size() > 0) {
-		        try {
-					new Mail().sendMessage("SKILL SHARING - Disponible offer [DO NOT REPLY TO THIS EMAIL!]", msg.toString(), dest);
-				} catch (MessagingException e) {
-					e.printStackTrace();
-				}
-	        }
-	        */
 			offer.setFechaAlta(now);
 			offer.setFechaUltimoCambio(now);
 			offer.setEstado(EstadoOferta.INTRODUCIDA);

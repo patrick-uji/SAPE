@@ -17,6 +17,93 @@
     
     </div>
     
+    <div id="menu" th:fragment="menuCoordinador">
+        <div th:replace="templates :: header"/>
+   		<ul>
+	   		<a href="/offers/pending">
+	   		<li>
+	   		<div class="barra"></div>
+	   		<p class ="menu" style="color:white;">Oferta pendientes</p>
+	   		</li>
+	   		</a>
+	   		<a href="/assignments/pending">
+	   		<li>
+	   		<div class="barra"></div>
+	   		<p class ="menu" style="color:white;">Asignaci&oacute;n</p>
+	   		</li>
+	   		</a>
+	   		<a href="/offers">
+	   		<li>
+	   		<div class="barra"></div>
+	   		<p class ="menu" style="color:white;">Ofertas aceptadas</p>
+	   		</li>
+	   		</a>
+	   		<a href="/companies">
+	   		<li>
+	   		<div class="barra"></div>
+	   		<p class ="menu" style="color:white;">Empresas</p>
+	   		</li>
+	   		</a>
+	   		<a href="/teachers">
+	   		<li>
+	   		<div class="barra"></div>
+	   		<p class ="menu" style="color:white;">Tutores</p>
+	   		</li>
+	   		</a>
+   		</ul>
+ 		<div class="botonS"><a class="salir" href="/logout">Cerrar Sesi&oacute;n</a></div>
+   	</div>
+   	
+   	<div id="menu" th:fragment="menuEmpresa">
+   	    <div th:replace="templates :: header"/>
+		<ul>
+	   		<a href="/offers">
+	   		<li>
+	   		<div class="barra"></div>
+	   		<p class ="menu" style="color:white;">Ofertas </p>
+	   		</li>
+	   		</a>
+	   		<a href="/offers/add">
+	   		<li>
+	   		<div class="barra"></div>
+	   		<p class ="menu" style="color:white;">Crear Oferta</p>
+	   		</li>
+	   		</a>
+	   		<a href="/contactPersons">
+	   		<li>
+	   		<div class="barra"></div>
+	   		<p class ="menu" style="color:white;">Personas de contacto</p>
+	   		</li>
+	   		</a>
+   		</ul>
+		<div class="botonS"><a class="salir" href="/logout">Cerrar Sesi&oacute;n</a></div>
+   	</div>
+    
+    <div id="menu" th:fragment="menuEstudiante">
+   	    <div th:replace="templates :: header"/>
+		<ul>
+	   		<a href="/offers">
+	   		<li>
+	   		<div class="barra"></div>
+	   		<p class ="menu" style="color:white;">Ofertas</p>
+	   		</li>
+	   		</a>
+	   		<a href="/offerPreferences">
+	   		<li>
+	   		<div class="barra"></div>
+	   		<p class ="menu" style="color:white;">Preferencias</p>
+	   		</li>
+	   		</a>
+	   		<a href="/assignments">
+	   		<li>
+	   		<div class="barra"></div>
+	   		<p class ="menu" style="color:white;">Asignacion</p>
+	   		</li>
+	   		</a>
+   		</ul>
+		<div class="botonS"><a class="salir" href="/logout">Cerrar Sesi&oacute;n</a></div>
+   	</div>
+    
     <div class="footer" th:fragment="footer">
 		<p>&copy; EI102717BGM &#8226; All rights reserved &#8226; <a href="/privacy" class="footer_links">Privacy Policy</a> &#8226; <a href="/about" class="footer_links">About</a> &#8226; <a href="/contact" class="footer_links">Contact</a></p>
     </div>
