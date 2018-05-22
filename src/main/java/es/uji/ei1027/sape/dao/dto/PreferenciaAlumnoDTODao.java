@@ -1,4 +1,4 @@
-package es.uji.ei1027.sape.dao;
+package es.uji.ei1027.sape.dao.dto;
 import java.util.List;
 import java.sql.ResultSet;
 import java.sql.SQLException;

@@ -38,11 +38,11 @@ public class PreferenciaAlumno extends ObjetoIdentificado implements Comparable<
 	{
 		this.fechaUltimoCambio = fechaUltimoCambio;
 	}
-	public int getIDOfertaProyecto()
+	public int getIdOfertaProyecto()
 	{
 		return idOfertaProyecto;
 	}
-	public void setIDOfertaProyecto(int idOfertaProyecto)
+	public void setIdOfertaProyecto(int idOfertaProyecto)
 	{
 		this.idOfertaProyecto = idOfertaProyecto;
 	}

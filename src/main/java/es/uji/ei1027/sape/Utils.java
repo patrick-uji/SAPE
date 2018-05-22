@@ -31,6 +31,10 @@ public class Utils
 			return null;
 		}
 	}
+	public static String safeToString(Object object)
+	{
+		return object != null ? object.toString() : null;
+	}
 	public static String now()
 	{
 		Date nowDate = new Date(Calendar.getInstance().getTime().getTime());

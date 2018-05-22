@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="templates :: head"/>
+    <body>
+        <div th:replace="templates :: header"/>
+		<div class="content">
+			<h1>List of offers</h1>
+			<table class="list">
+				<tr>
+					<th>Nombre</th>
+					<th>Email</th>
+					<th colspan="2">Action</th>
+				</tr>
+				<tr th:each="currContactPerson : ${contactPersons}">
+					<td th:text="${currContactPerson.personaContacto}"/>
+					<td th:text="${currContactPerson.emailPersonaContacto}"/>
+					<td><a th:href="@{/contactPersons/{id}( id=${currContactPerson.id} )}">Edit</a></td>
+					<td><a th:href="@{/contactPersons/{id}/delete( id=${currContactPerson.id} )}" onclick="return confirm('Do you want to delete this offer?')">Delete</a></td>
+				</tr>
+			</table>
+			<a href="/contactPersons/add">Add</a>
+		</div>
+        <div th:replace="templates :: footer"/>
+	</body>
+</html>

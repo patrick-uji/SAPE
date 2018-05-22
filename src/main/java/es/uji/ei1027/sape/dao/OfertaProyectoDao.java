@@ -27,9 +27,9 @@ public class OfertaProyectoDao extends OwnedResourceDao<OfertaProyecto>
     {
         return rowMapper.mapRow(resultSet, rowNum);
     }
-    public OfertaProyecto getFromBusinessStay(int businessStayID)
+    public List<OfertaProyecto> getAllFromContactPerson(int contactPersonID)
     {
-    	return jdbcTemplate.queryForObject("SELECT * FROM OfertaProyecto WHERE id_Estancia = ?", new Object[] {businessStayID}, this);
+    	return jdbcTemplate.query("SELECT * FROM OfertaProyecto WHERE id_Estancia = ?", new Object[] {contactPersonID}, this);
     }
     public List<OfertaProyecto> getAllFromCompany(int companyID)
     {

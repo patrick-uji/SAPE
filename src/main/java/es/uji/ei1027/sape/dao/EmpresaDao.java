@@ -1,21 +1,22 @@
 package es.uji.ei1027.sape.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import es.uji.ei1027.sape.mappers.EmpresaMapper;
 import es.uji.ei1027.sape.model.Empresa;
 import org.springframework.stereotype.Component;
 @Component
 public class EmpresaDao extends AbstractDao<Empresa>
 {
+	private EmpresaMapper rowMapper;
+	public EmpresaDao()
+	{
+		this.rowMapper = new EmpresaMapper();
+	}
     @Override
     public Empresa mapRow(ResultSet resultSet, int rowNum) throws SQLException
     {
-    	Empresa empresa = new Empresa();
-    	empresa.setId(resultSet.getInt("id"));
-    	empresa.setCIF(resultSet.getString("cif"));
-    	empresa.setNombre(resultSet.getString("nombre"));
-    	empresa.setDomicilio(resultSet.getString("domicilio"));
-    	empresa.setTelefonoPrincipal(resultSet.getString("telefonoPrincipal"));
-        return empresa;
+    	return rowMapper.mapRow(resultSet, rowNum);
     }
     public Empresa get(String cif)
     {

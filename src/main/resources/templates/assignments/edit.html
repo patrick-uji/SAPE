@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="templates :: head"/>
+    <body>
+        <div th:replace="templates :: header"/>
+		<div class="content">
+			<h1>Crear Asignacion</h1>
+			<form method="POST" th:action="@{/students{target}( target=${target} )}" th:object="${assignment}">
+				<table class="table">
+					<tr>
+						<td class="register">Tutor</td>
+						<td>
+							<select th:field="*{idProfesorTutor}">
+								<option th:each="currTeacher : ${teachers}"
+										th:value="${currTeacher.id}" th:text="${currTeacher.nombre}"/>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td class="register">Proyecto</td>
+						<td><input th:each="currPreference : ${preferences}" th:type="radio"
+							 	   th:field="*{idOfertaProyecto}" th:value="${currPreference.idOfertaProyecto}" th:text="${currPreference.ofertaProyecto.tarea}"/></td>
+					</tr>
+					<tr>
+						<td class="register"><input type="submit" th:value="Crear" class="button2"/></td>
+						<td><input type="reset" value="Clear data" class="button2" onclick="return confirm('Do you want to clear your data?')"/></td>
+					</tr>
+				</table>
+			</form>
+		</div>
+        <div th:replace="templates :: footer"/>
+	</body>
+</html>

@@ -2,9 +2,7 @@ package es.uji.ei1027.sape.dao;
 import java.util.List;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import es.uji.ei1027.sape.Utils;
-import es.uji.ei1027.sape.model.OfertaProyecto;
 import org.springframework.stereotype.Component;
 import es.uji.ei1027.sape.model.PeticionRevision;
 @Component

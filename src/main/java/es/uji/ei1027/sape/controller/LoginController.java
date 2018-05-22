@@ -52,13 +52,9 @@ public class LoginController
 			else
 			{
 				bindingResult.rejectValue("password", "badpw", "Contraseña invalida");
-				return "login";
 			}
 		}
-		else
-		{
-			return "login";
-		}
+		return "login";
 	}
 	@RequestMapping("/logout")
 	public String delete(HttpSession session)

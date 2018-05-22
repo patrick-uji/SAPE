@@ -3,7 +3,6 @@ import es.uji.ei1027.sape.Utils;
 import org.springframework.ui.Model;
 import javax.servlet.http.HttpSession;
 import es.uji.ei1027.sape.dao.AdminDao;
-import es.uji.ei1027.sape.dao.UsuarioDao;
 import es.uji.ei1027.sape.dao.AbstractDao;
 import es.uji.ei1027.sape.model.ObjetoIdentificado;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public abstract class AbstractController<T extends ObjetoIdentificado>
 {
     private AdminDao adminDao;
-    private UsuarioDao usuarioDao;
     private String tNamePlural;
     private AbstractDao<T> dao;
     public AbstractController()
@@ -28,10 +26,7 @@ public abstract class AbstractController<T extends ObjetoIdentificado>
             model.addAttribute(tNamePlural, dao.getAll());
             return tNamePlural + "/list";
     	}
-    	else
-    	{
-            return "error/401";
-    	}
+        return "error/401";
     }
     @RequestMapping("/add")
     public abstract String add(HttpSession session, Model model);
@@ -47,10 +42,7 @@ public abstract class AbstractController<T extends ObjetoIdentificado>
 			model.addAttribute("action", "students/update");
 			return "admins/edit";
 		}
-		else
-		{
-			return "error/404";
-		}
+		return "error/404";
 	}
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
     public String delete(@PathVariable int id)

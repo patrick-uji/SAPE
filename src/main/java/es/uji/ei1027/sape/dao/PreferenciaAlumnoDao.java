@@ -31,12 +31,12 @@ public class PreferenciaAlumnoDao extends AbstractDao<PreferenciaAlumno>
     public void create(PreferenciaAlumno model)
     {
         jdbcTemplate.update("INSERT INTO PreferenciaAlumno (orden, abierta, fechaUltimoCambio, id_OfertaProyecto, id_Estudiante) VALUES (?,?,?,?,?)",
-        					model.getOrden(), model.getAbierta(), Utils.stringToDate(model.getFechaUltimoCambio()), model.getIDOfertaProyecto(), model.getIDEstudiante());
+        					model.getOrden(), model.getAbierta(), Utils.stringToDate(model.getFechaUltimoCambio()), model.getIdOfertaProyecto(), model.getIDEstudiante());
     }
     public void update(PreferenciaAlumno model)
     {
         jdbcTemplate.update("UPDATE PreferenciaAlumno SET orden = ?, abierta = ?, fechaUltimoCambio = ?, id_OfertaProyecto = ?, id_Estudiante = ? WHERE id = ?",
-							model.getOrden(), model.getAbierta(), Utils.stringToDate(model.getFechaUltimoCambio()), model.getIDOfertaProyecto(), model.getIDEstudiante(),
+							model.getOrden(), model.getAbierta(), Utils.stringToDate(model.getFechaUltimoCambio()), model.getIdOfertaProyecto(), model.getIDEstudiante(),
         					model.getId());
     }
     public int countFromStudent(int studentID)
