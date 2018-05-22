@@ -5,7 +5,7 @@
         <div th:replace="templates :: menuEstudiante"/>
 		<div class="content1">
 			<h1>List of offers</h1>
-			<form method="POST" th:action="@{/offerPrefs/update}" th:object="${preferencesContainer}">
+			<form method="POST" th:action="@{/offerPreferences/update}" th:object="${preferencesContainer}">
 				<table class="list">
 					<tr>
 						<th>Proyecto</th>
