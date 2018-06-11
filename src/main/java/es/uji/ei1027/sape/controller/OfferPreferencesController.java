@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.beans.factory.annotation.Autowired;
 @Controller
 @RequestMapping("/offerPreferences")
-public class OfferPrefsController
+public class OfferPreferencesController
 {
 	private PreferenciaAlumnoDao preferenciaAlumnoDao;
 	private PreferenciaAlumnoDTODao preferenciaAlumnoDTODao;
@@ -39,12 +39,12 @@ public class OfferPrefsController
 	{
 		Utils.debugLog("OfferPreferences LIST");
 		Usuario user = Utils.getUser(session);
-		if (user.esEstudiante())
+		if (user.esAlumno())
 		{
 			PreferencesContainer preferencesContainer = new PreferencesContainer();
 			preferencesContainer.setPreferences( preferenciaAlumnoDTODao.getAllFromStudent(user.getId()) );
 			model.addAttribute("preferencesContainer", preferencesContainer);
-			return "offers/listPreferences";
+			return "students/offers/listPreferences";
 		}
 		return "error/401";
 	}
@@ -57,9 +57,8 @@ public class OfferPrefsController
 			int studentID = Utils.getUser(session).getId();
 			PreferenciaAlumno newPreference = new PreferenciaAlumno();
 			newPreference.setOrden(preferenciaAlumnoDao.countFromStudent(studentID));
-			newPreference.setAbierta(true);
 			newPreference.setFechaUltimoCambio(Utils.now());
-			newPreference.setIDEstudiante(studentID);
+			newPreference.setIDAlumno(studentID);
 			for (Integer selectedOfferID : offersSelection.getSelectedOffers())
 			{
 				newPreference.incrementOrden();

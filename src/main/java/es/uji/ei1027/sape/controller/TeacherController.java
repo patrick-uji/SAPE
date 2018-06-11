@@ -17,7 +17,7 @@ public class TeacherController
 {
 	private ProfesorTutorDao profesorTutorDao;
 	@Autowired
-	public void setEstanciaDao(ProfesorTutorDao profesorTutorDao)
+	public void setProfesorTutorDao(ProfesorTutorDao profesorTutorDao)
 	{
 		this.profesorTutorDao = profesorTutorDao;
 	}
@@ -28,7 +28,7 @@ public class TeacherController
 		if (Utils.isAdmin(session))
 		{
 			model.addAttribute("teachers", profesorTutorDao.getAll());
-			return "teachers/list";
+			return "admins/teachers/list";
 		}
 		return "error/401";
     }
@@ -41,7 +41,7 @@ public class TeacherController
 			model.addAttribute("teacher", new ProfesorTutor());
 	        model.addAttribute("action", "Crear");
 	        model.addAttribute("target", "");
-	        return "teachers/edit";
+	        return "admins/teachers/edit";
 		}
 		return "error/401";
     }
@@ -65,7 +65,7 @@ public class TeacherController
 			model.addAttribute("teacher", profesorTutorDao.get(id));
 	        model.addAttribute("target", "/" + id + "/update");
 	        model.addAttribute("action", "Actualizar");
-	        return "teachers/edit";
+	        return "admins/teachers/edit";
 		}
 		return "error/401";
     }

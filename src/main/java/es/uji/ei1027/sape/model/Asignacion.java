@@ -2,54 +2,27 @@ package es.uji.ei1027.sape.model;
 import es.uji.ei1027.sape.enums.EstadoAsignacion;
 public class Asignacion extends ObjetoIdentificado
 {
-	private String fechaPropuesta;
-	private String fechaAceptacion;
-	private String fechaRechazo;
-	private String fechaTraspasoIGLU;
-	private String comentarioCambio; //TODO: renombrar a comentarioPeticion?
+	private String fechaCreacion;
+	private String fechaUltimoCambio;
 	private EstadoAsignacion estado;
 	private int idOfertaProyecto;
-	private int idEstudiante;
+	private int idAlumno;
 	private int idProfesorTutor;
-	public String getFechaPropuesta()
+	public String getFechaCreacion()
 	{
-		return fechaPropuesta;
+		return fechaCreacion;
 	}
-	public void setFechaPropuesta(String fechaPropuesta)
+	public void setFechaCreacion(String fechaCreacion)
 	{
-		this.fechaPropuesta = fechaPropuesta;
+		this.fechaCreacion = fechaCreacion;
 	}
-	public String getFechaAceptacion()
+	public String getFechaUltimoCambio()
 	{
-		return fechaAceptacion;
+		return fechaUltimoCambio;
 	}
-	public void setFechaAceptacion(String fechaAceptacion)
+	public void setFechaUltimoCambio(String fechaUltimoCambio)
 	{
-		this.fechaAceptacion = fechaAceptacion;
-	}
-	public String getFechaRechazo()
-	{
-		return fechaRechazo;
-	}
-	public void setFechaRechazo(String fechaRechazo)
-	{
-		this.fechaRechazo = fechaRechazo;
-	}
-	public String getFechaTraspasoIGLU()
-	{
-		return fechaTraspasoIGLU;
-	}
-	public void setFechaTraspasoIGLU(String fechaTraspasoIGLU)
-	{
-		this.fechaTraspasoIGLU = fechaTraspasoIGLU;
-	}
-	public String getComentarioCambio()
-	{
-		return comentarioCambio;
-	}
-	public void setComentarioCambio(String comentarioCambio)
-	{
-		this.comentarioCambio = comentarioCambio;
+		this.fechaUltimoCambio = fechaUltimoCambio;
 	}
 	public EstadoAsignacion getEstado()
 	{
@@ -67,13 +40,13 @@ public class Asignacion extends ObjetoIdentificado
 	{
 		this.idOfertaProyecto = idOfertaProyecto;
 	}
-	public int getIDEstudiante()
+	public int getIDAlumno()
 	{
-		return idEstudiante;
+		return idAlumno;
 	}
-	public void setIDEstudiante(int idEstudiante)
+	public void setIDAlumno(int idAlumno)
 	{
-		this.idEstudiante = idEstudiante;
+		this.idAlumno = idAlumno;
 	}
 	public int getIdProfesorTutor()
 	{

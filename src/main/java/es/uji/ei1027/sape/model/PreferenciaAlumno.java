@@ -2,10 +2,9 @@ package es.uji.ei1027.sape.model;
 public class PreferenciaAlumno extends ObjetoIdentificado implements Comparable<PreferenciaAlumno>
 {
 	private int orden;
-	private boolean abierta;
 	private String fechaUltimoCambio;
 	private int idOfertaProyecto;
-	private int idEstudiante;
+	private int idAlumno;
 	public int getOrden()
 	{
 		return orden;
@@ -21,14 +20,6 @@ public class PreferenciaAlumno extends ObjetoIdentificado implements Comparable<
 	public void decrementOrden()
 	{
 		orden--;
-	}
-	public boolean getAbierta()
-	{
-		return abierta;
-	}
-	public void setAbierta(boolean abierta)
-	{
-		this.abierta = abierta;
 	}
 	public String getFechaUltimoCambio()
 	{
@@ -46,17 +37,17 @@ public class PreferenciaAlumno extends ObjetoIdentificado implements Comparable<
 	{
 		this.idOfertaProyecto = idOfertaProyecto;
 	}
-	public int getIDEstudiante()
+	public int getIDAlumno()
 	{
-		return idEstudiante;
+		return idAlumno;
 	}
-	public void setIDEstudiante(int idEstudiante)
+	public void setIDAlumno(int idAlumno)
 	{
-		this.idEstudiante = idEstudiante;
+		this.idAlumno = idAlumno;
 	}
 	@Override
-	public int compareTo(PreferenciaAlumno o)
+	public int compareTo(PreferenciaAlumno other)
 	{
-		return Integer.compare(this.orden, o.orden);
+		return Integer.compare(this.orden, other.orden);
 	}
 }

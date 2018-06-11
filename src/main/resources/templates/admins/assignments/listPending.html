@@ -4,7 +4,7 @@
     <body>
         <div th:replace="templates :: menuCoordinador"/>
 		<div class="content1">
-			<h1>Lista de estudiante pendientes</h1>
+			<h1>Lista de alumnos pendientes</h1>
 			<table class="list">
 				<tr>
 					<th>DNI</th>
@@ -20,7 +20,7 @@
 					<td th:text="${currStudent.dni}"/>
 					<td th:text="${currStudent.nombre}"/>
 					<td th:text="${currStudent.notaMedia}"/>
-					<td th:text="${currStudent.itinerario}"/>
+					<td th:text="${currStudent.itinerario.getName()}"/>
 					<td th:text="${currStudent.numeroCreditos}"/>
 					<td th:text="${currStudent.asignaturasPendientes}"/>
 					<td th:text="${currStudent.semestreInicioEstancia}"/>

@@ -1,13 +1,13 @@
 package es.uji.ei1027.sape.enums;
 public enum EstadoOferta
 {
-	SIN_DEFINIR(1, "Sin definir"),
-	INTRODUCIDA(2, "Introducida"),
-	PENDIENTE_REVISION(3, "Pendiente revision"),
-	ACEPTADA(4, "Aceptada"),
-	RECHAZADA(5, "Rechazada"),
-	VISIBLE(6, "Visible"),
-	ASIGNADA(7, "Asignada");
+	INTRODUCIDA(1, "Introducida"),
+	PENDIENTE_REVISION(2, "Pendiente revisión"),
+	ACEPTADA(3, "Aceptada"),
+	VISIBLE(4, "Visible"),
+	ASIGNADA(5, "Asignada"),
+	RECHAZADA(6, "Rechazada"),
+	PENDIENTE_ANULACION(7, "Pendiente anulación");
 	
 	private int id;
 	private String name;

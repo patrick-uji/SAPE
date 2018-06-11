@@ -5,7 +5,7 @@ import javax.servlet.http.HttpSession;
 import es.uji.ei1027.sape.model.Usuario;
 import es.uji.ei1027.sape.model.Asignacion;
 import es.uji.ei1027.sape.dao.AsignacionDao;
-import es.uji.ei1027.sape.dao.EstudianteDao;
+import es.uji.ei1027.sape.dao.AlumnoDao;
 import es.uji.ei1027.sape.dao.ProfesorTutorDao;
 import es.uji.ei1027.sape.enums.EstadoAsignacion;
 import org.springframework.stereotype.Controller;
@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class AssignmentController
 {
 	private AsignacionDao asignacionDao;
-	private EstudianteDao estudianteDao;
+	private AlumnoDao alumnoDao;
 	private ProfesorTutorDao profesorTutorDao;
 	private AsignacionDTODao asignacionDTODao;
 	@Autowired
@@ -30,12 +30,12 @@ public class AssignmentController
 		this.asignacionDao = asignacionDao;
 	}
 	@Autowired
-	public void setEstudianteDao(EstudianteDao estudianteDao)
+	public void setAlumnoDao(AlumnoDao alumnoDao)
 	{
-		this.estudianteDao = estudianteDao;
+		this.alumnoDao = alumnoDao;
 	}
 	@Autowired
-	public void setEstanciaDao(ProfesorTutorDao profesorTutorDao)
+	public void setProfesorTutorDao(ProfesorTutorDao profesorTutorDao)
 	{
 		this.profesorTutorDao = profesorTutorDao;
 	}
@@ -53,13 +53,14 @@ public class AssignmentController
 		{
 			switch (user.getTipo())
 			{
-				case ADMIN:
+				case CCD:
+				case BTC:
 					model.addAttribute("assignments", asignacionDao.getAll());
-					return "assignments/list";
+					return "admins/assignments/list";
 				//break;
-				case ESTUDIANTE:
+				case ALUMNO:
 					model.addAttribute( "assignment", asignacionDTODao.getActiveFromStudent(user.getId()) );
-					return "assignments/view";
+					return "students/assignments/view";
 				//break;
 				default: return "error/401";
 			}
@@ -72,8 +73,8 @@ public class AssignmentController
 		Utils.debugLog("Assignments PENDINGLIST");
 		if (Utils.isAdmin(session))
 		{
-			model.addAttribute("students", estudianteDao.getAllPending());
-			return "assignments/listPending";
+			model.addAttribute("students", alumnoDao.getAllPending());
+			return "admins/assignments/listPending";
 		}
 		return "error/401";
 	}
@@ -81,10 +82,10 @@ public class AssignmentController
 	public String accept(@PathVariable("id") int id, HttpSession session)
 	{
 		Usuario user = Utils.getUser(session);
-		if (user != null && user.esEstudiante())
+		if (user != null && user.esAlumno())
 		{
 			asignacionDao.update(id, new String[] {"id_EstadoAsignacion"}, EstadoAsignacion.ACEPTADA.getID());
-			return "redirect:../../users/dashboard";
+			return "redirect:../../assignments";
 		}
 		return "error/401";
 	}
@@ -92,10 +93,10 @@ public class AssignmentController
 	public String reject(@PathVariable("id") int id, HttpSession session)
 	{
 		Usuario user = Utils.getUser(session);
-		if (user != null && user.esEstudiante())
+		if (user != null && user.esAlumno())
 		{
 			asignacionDao.update(id, new String[] {"id_EstadoAsignacion"}, EstadoAsignacion.ACEPTADA.getID());
-			return "redirect:../../users/dashboard";
+			return "redirect:../../assignments";
 		}
 		return "error/401";
 	}
@@ -108,7 +109,7 @@ public class AssignmentController
 			model.addAttribute("teacher", profesorTutorDao.get(id));
 	        model.addAttribute("target", "/" + id + "/update");
 	        model.addAttribute("action", "Actualizar");
-	        return "assignments/edit";
+	        return "admins/assignments/edit";
 		}
 		return "error/401";
     }

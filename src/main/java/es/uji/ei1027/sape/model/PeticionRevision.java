@@ -4,6 +4,7 @@ public class PeticionRevision extends ObjetoIdentificado
 	private String fecha;
 	private String textoPeticion;
 	private int idOfertaProyecto;
+	private int idAdmin;
 	public String getFecha()
 	{
 		return fecha;
@@ -27,5 +28,13 @@ public class PeticionRevision extends ObjetoIdentificado
 	public void setIDOfertaProyect(int idOfertaProyecto)
 	{
 		this.idOfertaProyecto = idOfertaProyecto;
+	}
+	public int getIDAdmin()
+	{
+		return idAdmin;
+	}
+	public void setIDAdmin(int idAdmin)
+	{
+		this.idAdmin = idAdmin;
 	}
 }

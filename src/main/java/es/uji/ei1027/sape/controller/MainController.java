@@ -4,11 +4,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class MainController
 {
-	@RequestMapping({"", "/", "/index"})
-	public String index()
-	{
-		return "index";
-	}
 	@RequestMapping("/privacy")
 	public String privacy()
 	{

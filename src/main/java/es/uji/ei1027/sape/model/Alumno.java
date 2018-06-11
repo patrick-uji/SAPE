@@ -1,10 +1,13 @@
 package es.uji.ei1027.sape.model;
-public class Estudiante extends ObjetoIdentificado
+
+import es.uji.ei1027.sape.enums.Itinerario;
+
+public class Alumno extends ObjetoIdentificado
 {
 	private String dni;
 	private String nombre;
 	private float notaMedia;
-	private String itinerario;
+	private Itinerario itinerario;
 	private int numeroCreditos;
 	private int asignaturasPendientes;
 	private int semestreInicioEstancia;
@@ -32,11 +35,11 @@ public class Estudiante extends ObjetoIdentificado
 	{
 		this.notaMedia = notaMedia;
 	}
-	public String getItinerario()
+	public Itinerario getItinerario()
 	{
 		return itinerario;
 	}
-	public void setItinerario(String itinerario)
+	public void setItinerario(Itinerario itinerario)
 	{
 		this.itinerario = itinerario;
 	}

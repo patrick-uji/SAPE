@@ -9,8 +9,8 @@ import es.uji.ei1027.sape.model.ObjetoIdentificado;
 import org.springframework.beans.factory.annotation.Autowired;
 public abstract class AbstractDao<T extends ObjetoIdentificado> implements RowMapper<T>
 {
-	private String tName;
     protected JdbcTemplate jdbcTemplate;
+	private String tName;
     public AbstractDao()
 	{
     	this.tName = Utils.getTClass(this).getSimpleName();
@@ -34,14 +34,14 @@ public abstract class AbstractDao<T extends ObjetoIdentificado> implements RowMa
     }
 	public final void update(int id, String[] fieldNames, Object... args)
 	{
-		Object[] queryArgs = Arrays.copyOf(args, args.length + 1);
+		Object[] queryArgs;
 		StringBuilder paramFields = new StringBuilder();
 		paramFields.append(fieldNames[0] + " = ?");
 		for (int currFieldIndex = 1; currFieldIndex < fieldNames.length; currFieldIndex++)
 		{
 			paramFields.append(", " + fieldNames[currFieldIndex] + " = ?");
 		}
-		queryArgs[args.length] = id;
+		queryArgs = Utils.appendArray(args, id);
         jdbcTemplate.update("UPDATE " + tName + " SET " + paramFields.toString() + " WHERE id = ?", queryArgs);
 	}
 	public final void delete(int id)

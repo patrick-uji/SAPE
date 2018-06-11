@@ -7,20 +7,18 @@
 			<h1>List of offers</h1>
 			<table class="list">
 				<tr>
-					<th>Tarea</th>
+					<th>Titulo</th>
 					<th>Empresa</th>
-					<th>Objetivo</th>
-					<th>Itinerario</th>
 					<th>FechaAlta</th>
 					<th>FechaUltimoCambio</th>
+					<th>Accion</th>
 				</tr>
 				<tr th:each="currOffer : ${offers}">
-					<td th:text="${currOffer.tarea}"/>
+					<td th:text="${currOffer.titulo}"/>
 					<td th:text="${currOffer.empresa.nombre}"/>
-					<td th:text="${currOffer.objetivo}"/>
-					<td th:text="${currOffer.itinerario}"/>
 					<td th:text="${currOffer.fechaAlta}"/>
 					<td th:text="${currOffer.fechaUltimoCambio}"/>
+					<td><a th:href="@{/offers/{id}( id=${currOffer.id} )}">Ver oferta</a></td>
 				</tr>
 			</table>
 		</div>

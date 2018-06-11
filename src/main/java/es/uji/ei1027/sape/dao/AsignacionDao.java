@@ -25,7 +25,7 @@ public class AsignacionDao extends AbstractDao<Asignacion>
     }
     public List<Asignacion> getAllFromStudent(int studentID)
     {
-    	return jdbcTemplate.query("SELECT * FROM Asignacion WHERE id_Estudiante = ?", new Object[] {studentID}, this);
+    	return jdbcTemplate.query("SELECT * FROM Asignacion WHERE id_Alumno = ?", new Object[] {studentID}, this);
     }
     public List<Asignacion> getAllFromTutor(int tutorID)
     {
@@ -34,18 +34,16 @@ public class AsignacionDao extends AbstractDao<Asignacion>
 	@Override
 	public void create(Asignacion model)
 	{
-        jdbcTemplate.update("INSERT INTO Asignacion (fechaPropuesta, fechaAceptacion, fechaRechazo, fechaTraspasoIGLU, comentarioCambio, id_EstadoAsignacion, id_OfertaProyecto, id_Estudiante, id_ProfesorTutor) VALUES (?,?,?,?,?,?,?,?,?)",
-							Utils.stringToDate(model.getFechaPropuesta()), Utils.stringToDate(model.getFechaAceptacion()), Utils.stringToDate(model.getFechaRechazo()),
-							Utils.stringToDate(model.getFechaTraspasoIGLU()), model.getComentarioCambio(), model.getEstado().getID(),
-							model.getIdOfertaProyecto(), model.getIDEstudiante(), model.getIdProfesorTutor());
+        jdbcTemplate.update("INSERT INTO Asignacion (fechaCreacion, fechaUltimoCambio, id_EstadoAsignacion, id_OfertaProyecto, id_Alumno, id_ProfesorTutor) VALUES (?,?,?,?,?,?)",
+							Utils.stringToDate(model.getFechaCreacion()), Utils.stringToDate(model.getFechaUltimoCambio()), model.getEstado().getID(),
+							model.getIdOfertaProyecto(), model.getIDAlumno(), model.getIdProfesorTutor());
 	}
 	@Override
     public void update(Asignacion model)
     {
-        jdbcTemplate.update("UPDATE Asignacion SET fechaPropuesta = ?, fechaAceptacion = ?, fechaRechazo = ?, fechaTraspasoIGLU = ?, comentarioCambio = ?, id_EstadoAsignacion = ?, id_OfertaProyecto = ?, id_Estudiante = ?, id_ProfesorTutor = ? WHERE id = ?",
-							Utils.stringToDate(model.getFechaPropuesta()), Utils.stringToDate(model.getFechaAceptacion()), Utils.stringToDate(model.getFechaRechazo()),
-							Utils.stringToDate(model.getFechaTraspasoIGLU()), model.getComentarioCambio(), model.getEstado().getID(),
-							model.getIdOfertaProyecto(), model.getIDEstudiante(), model.getIdProfesorTutor(),
-        					model.getId());
+        jdbcTemplate.update("UPDATE Asignacion SET fechaCreacion = ?, fechaUltimoCambio = ?, id_EstadoAsignacion = ?, id_OfertaProyecto = ?, id_Alumno = ?, id_ProfesorTutor = ? WHERE id = ?",
+							Utils.stringToDate(model.getFechaCreacion()), Utils.stringToDate(model.getFechaUltimoCambio()), model.getEstado().getID(),
+							model.getIdOfertaProyecto(), model.getIDAlumno(), model.getIdProfesorTutor());
+        					model.getId();
     }
 }

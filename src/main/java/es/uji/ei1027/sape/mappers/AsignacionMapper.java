@@ -18,14 +18,11 @@ public class AsignacionMapper implements RowMapper<Asignacion>
 	public void mapRow(Asignacion asignacion, ResultSet resultSet, int rowNum) throws SQLException
 	{
     	asignacion.setId(resultSet.getInt("id"));
-    	asignacion.setFechaPropuesta(resultSet.getDate("fechaPropuesta").toString());
-    	asignacion.setFechaAceptacion( Utils.safeToString(resultSet.getDate("fechaAceptacion")) );
-    	asignacion.setFechaRechazo( Utils.safeToString(resultSet.getDate("fechaRechazo")) );
-    	asignacion.setFechaTraspasoIGLU( Utils.safeToString(resultSet.getDate("fechaTraspasoIGLU")) );
-    	asignacion.setComentarioCambio(resultSet.getString("comentarioCambio"));
+    	asignacion.setFechaCreacion(resultSet.getDate("fechaCreacion").toString());
+    	asignacion.setFechaUltimoCambio( Utils.safeToString(resultSet.getDate("fechaUltimoCambio")) );
     	asignacion.setEstado( EstadoAsignacion.fromID(resultSet.getInt("id_EstadoAsignacion")) );
     	asignacion.setIdOfertaProyecto(resultSet.getInt("id_OfertaProyecto"));
-    	asignacion.setIDEstudiante(resultSet.getInt("id_Estudiante"));
+    	asignacion.setIDAlumno(resultSet.getInt("id_Alumno"));
     	asignacion.setIdProfesorTutor(resultSet.getInt("id_ProfesorTutor"));
 	}
 }

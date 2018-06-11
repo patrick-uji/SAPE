@@ -1,9 +1,10 @@
 package es.uji.ei1027.sape.enums;
 public enum TipoUsuario
 {
-	ESTUDIANTE(1),
+	ALUMNO(1),
 	EMPRESA(2),
-	ADMIN(3);
+	CCD(3),
+	BTC(4);
 	
 	private int id;
 	private TipoUsuario(int id)

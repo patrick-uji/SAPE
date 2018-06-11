@@ -4,7 +4,7 @@ import org.springframework.ui.Model;
 import javax.servlet.http.HttpSession;
 import es.uji.ei1027.sape.model.Usuario;
 import es.uji.ei1027.sape.dao.UsuarioDao;
-import es.uji.ei1027.sape.model.Estudiante;
+import es.uji.ei1027.sape.model.Alumno;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,30 +31,13 @@ public class UserController
     	}
         return "error/401";
     }
-    @RequestMapping("/dashboard")
-    public String dashboard(HttpSession session, Model model)
-    {
-    	Utils.debugLog("User DASHBOARD");
-		Usuario user = Utils.getUser(session);
-		if (user != null)
-		{
-			switch (user.getTipo())
-			{
-				case ESTUDIANTE: return "students/dashboard";
-				case EMPRESA: return "companies/dashboard";
-				case ADMIN: return "admins/dashboard";
-			}
-			return null; //Shouldn't happen...
-		}
-		return "error/401";
-    }
     @RequestMapping("/add")
     public String add(HttpSession session, Model model)
     {
     	Utils.debugLog("User ADD");
     	if (Utils.isAdmin(session))
     	{
-            model.addAttribute("student", new Estudiante());
+            model.addAttribute("student", new Alumno());
             model.addAttribute("action", "Create");
             model.addAttribute("target", "");
             return "students/add";

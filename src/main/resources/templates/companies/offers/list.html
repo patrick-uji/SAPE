@@ -2,34 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org">
     <head th:replace="templates :: head"/>
     <body>
-    	<div id="menu">
-    		 <div th:replace="templates :: header"/>
-    		<ul>
-    		<a href="/offers">
-    		<li>
-    		<div class="barra"></div>
-    		<p class ="menu" style="color:white;">Lista de ofertas </p>
-    		</li>
-    		</a>
-    		<li>
-    		<div class="barra"></div>
-    		<p class ="menu" style="color:white;">Asignaci&oacute;n</p>
-    		</li>
-    		<li>
-    		<div class="barra"></div>
-    		<p class ="menu" style="color:white;">Ofertas aceptadas</p>
-    		</li>
-    		<li>
-    		<div class="barra"></div>
-    		<p class ="menu" style="color:white;">Empresas</p>
-    		</li>
-    		
-    		</ul>
-    			<div class="botonS"><a class="salir" href="/logout">Cerrar Sesi&oacute;n</a></div>
-    	</div>
-    	
-    	<div class="content1">
-			<h1> <b>Lista de ofertas </b></h1>
+        <div th:replace="templates :: menuEmpresa"/>
+		<div class="content1">
+			<h1>Lista de ofertas</h1>
 			<table class="list">
 				<tr>
 					<th>Numero</th>
@@ -43,10 +18,10 @@
 				</tr>
 				<tr th:each="currOffer : ${offers}">
 					<td th:text="${currOffer.numero}"/>
-					<td th:text="${currOffer.tarea}"/>
+					<td th:text="${currOffer.titulo}"/>
 					<td th:text="${currOffer.objetivo}"/>
 					<td th:text="${currOffer.estado.getName()}"/>
-					<td th:text="${currOffer.itinerario}"/>
+					<td th:text="${currOffer.itinerario.getName()}"/>
 					<td th:text="${currOffer.fechaAlta}"/>
 					<td th:text="${currOffer.fechaUltimoCambio}"/>
 					<td><a th:href="@{/offers/{id}( id=${currOffer.id} )}">Edit</a></td>
@@ -54,8 +29,9 @@
 				</tr>
 			</table>
 			<a href="/offers/add">Add</a>
+			
+			 <div th:replace="templates :: footer"/>
 		</div>
-    	
-    
-    </body>
+       
+	</body>
 </html>

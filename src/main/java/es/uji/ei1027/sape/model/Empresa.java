@@ -1,11 +1,13 @@
 package es.uji.ei1027.sape.model;
 public class Empresa extends ObjetoIdentificado
 {
+	public static final String SELECT_JOIN = "e.id AS e_id, e.cif AS e_cif, e.nombre AS e_nombre, e.proyectosTotal AS e_proyectosTotal, e.domicilio AS e_domicilio, e.telefonoPersonal AS e_telefonoPersonal";
+	public static final String FROM_OFFER_JOIN = "JOIN PersonaContacto AS p ON o.id_PersonaContacto = p.id JOIN Empresa AS e ON p.id_Empresa = e.id";
 	private String cif;
 	private String nombre;
 	private String domicilio;
-	private String telefonoPrincipal;
 	private int proyectosTotal;
+	private String telefonoPersonal;
 	public String getCIF()
 	{
 		return cif;
@@ -22,6 +24,14 @@ public class Empresa extends ObjetoIdentificado
 	{
 		this.nombre = nombre;
 	}
+	public int getProyectosTotal()
+	{
+		return proyectosTotal;
+	}
+	public void setProyectosTotal(int proyectosTotal)
+	{
+		this.proyectosTotal = proyectosTotal;
+	}
 	public String getDomicilio()
 	{
 		return domicilio;
@@ -30,20 +40,12 @@ public class Empresa extends ObjetoIdentificado
 	{
 		this.domicilio = domicilio;
 	}
-	public String getTelefonoPrincipal()
+	public String getTelefonoPersonal()
 	{
-		return telefonoPrincipal;
+		return telefonoPersonal;
 	}
-	public void setTelefonoPrincipal(String telefonoPrincipal)
+	public void setTelefonoPersonal(String telefonoPersonal)
 	{
-		this.telefonoPrincipal = telefonoPrincipal;
-	}
-	public int getProyectosTotal()
-	{
-		return proyectosTotal;
-	}
-	public void setProyectosTotal(int proyectosTotal)
-	{
-		this.proyectosTotal = proyectosTotal;
+		this.telefonoPersonal = telefonoPersonal;
 	}
 }

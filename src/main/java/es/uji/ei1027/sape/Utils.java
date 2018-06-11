@@ -1,5 +1,6 @@
 package es.uji.ei1027.sape;
 import java.sql.Date;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -25,9 +26,9 @@ public class Utils
 		{
 			return new Date(DATE_FORMAT.parse(string).getTime());
 		}
-		catch (ParseException e)
+		catch (ParseException ex)
 		{
-			e.printStackTrace();
+			ex.printStackTrace();
 			return null;
 		}
 	}
@@ -61,7 +62,7 @@ public class Utils
 		{
 			return bytesToHex( MessageDigest.getInstance("MD5").digest(password.getBytes()) );
 		}
-		catch (NoSuchAlgorithmException e) { }
+		catch (NoSuchAlgorithmException ex) { }
 		return null;
 	}
 	private static String bytesToHex(byte[] bytes)
@@ -73,10 +74,28 @@ public class Utils
 		}
 		return hexBytes.toString();
 	}
+	public static <T> T[] appendArray(T[] array, T value)
+	{
+		T[] newArray = Arrays.copyOf(array, array.length + 1);
+		newArray[array.length] = value;
+		return newArray;
+	}
+	@SafeVarargs
+	public static <T> T[] appendArray(T[] array, T... appendArray)
+	{
+		int currNewIndex = array.length;
+		T[] newArray = Arrays.copyOf(array, array.length + appendArray.length);
+		for (int currIndex = 0; currIndex < appendArray.length; currIndex++)
+		{
+			newArray[currNewIndex] = appendArray[currIndex];
+			currNewIndex++;
+		}
+		return newArray;
+	}
 	public static boolean isStudent(HttpSession session)
 	{
 		Usuario user = getUser(session);
-		return user != null && user.esEstudiante();
+		return user != null && user.esAlumno();
 	}
 	public static boolean isCompany(HttpSession session)
 	{
@@ -87,6 +106,11 @@ public class Utils
 	{
 		Usuario user = getUser(session);
 		return user != null && user.esAdmin();
+	}
+	public static boolean isSuperAdmin(HttpSession session)
+	{
+		Usuario user = getUser(session);
+		return user != null && user.esSuperAdmin();
 	}
 	public static Usuario getUser(HttpSession session)
 	{

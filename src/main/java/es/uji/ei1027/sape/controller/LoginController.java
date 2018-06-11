@@ -21,7 +21,7 @@ public class LoginController
 	{
 		this.usuarioDao = usuarioDao;
 	}
-	@RequestMapping("/login")
+	@RequestMapping({"", "/", "/index", "/login"})
 	public String view(HttpSession session, Model model)
 	{
 		Utils.debugLog("Login VIEW");
@@ -33,8 +33,8 @@ public class LoginController
 		}
 		else
 		{
-			Utils.debugLog("User already logged in. Redirecting to dashboard...");
-			return "redirect:users/dashboard";
+			Utils.debugLog("User already logged in. Redirecting to initial page...");
+			return getInitialPage(user);
 		}
 	}
 	@RequestMapping(value="/login", method=RequestMethod.POST)
@@ -47,7 +47,7 @@ public class LoginController
 			if( user != null && Utils.hashPassword(login.getPassword()).equals(user.getPassword()) )
 			{
 				session.setAttribute("user", user);
-				return getInitialPage(user); //"redirect:users/dashboard";
+				return getInitialPage(user);
 			}
 			else
 			{
