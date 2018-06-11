@@ -2,21 +2,21 @@ package es.uji.ei1027.sape.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import es.uji.ei1027.sape.model.Usuario;
-import es.uji.ei1027.sape.enums.TipoUsuario;
+import es.uji.ei1027.sape.mappers.UsuarioMapper;
 import org.springframework.stereotype.Component;
 import org.springframework.dao.EmptyResultDataAccessException;
 @Component
 public class UsuarioDao extends AbstractDao<Usuario>
 {
+	private UsuarioMapper rowMapper;
+	public UsuarioDao()
+	{
+		this.rowMapper = new UsuarioMapper();
+	}
 	@Override
     public Usuario mapRow(ResultSet resultSet, int rowNum) throws SQLException
     {
-    	Usuario usuario = new Usuario();
-    	usuario.setId(resultSet.getInt("id"));
-    	usuario.setEmail(resultSet.getString("email"));
-    	usuario.setPassword(resultSet.getString("password"), false);
-    	usuario.setTipo( TipoUsuario.fromID(resultSet.getInt("id_TipoUsuario")) );
-        return usuario;
+		return rowMapper.mapRow(resultSet, rowNum);
     }
     public Usuario get(String email)
     {

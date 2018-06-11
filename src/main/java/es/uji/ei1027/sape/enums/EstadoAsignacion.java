@@ -1,9 +1,9 @@
 package es.uji.ei1027.sape.enums;
 public enum EstadoAsignacion
 {
-	ACEPTADA(1),
-	RECHAZADA(2),
-	TRASPASADA(3);
+	ENVIADA(1),
+	ACEPTADA(2),
+	RECHAZADA(3);
 	
 	private int id;
 	private EstadoAsignacion(int id)

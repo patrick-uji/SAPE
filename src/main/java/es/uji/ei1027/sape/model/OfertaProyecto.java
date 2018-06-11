@@ -1,15 +1,18 @@
 package es.uji.ei1027.sape.model;
 import es.uji.ei1027.sape.enums.EstadoOferta;
+import es.uji.ei1027.sape.enums.Itinerario;
 public class OfertaProyecto extends ObjetoIdentificado
 {
+	public static final String SELECT_JOIN = "o.id AS o_id, o.numero AS o_numero, o.titulo AS o_titulo, o.id_PersonaContacto AS o_id_PersonaContacto, " +
+											 "o.objetivo AS o_objetivo, o.fechaAlta AS o_fechaAlta, o.id_EstadoOferta AS o_id_EstadoOferta, o.id_Itinerario AS o_id_Itinerario, o.fechaUltimoCambio AS o_fechaUltimoCambio";
 	private int numero;
-	private String tarea;
+	private String titulo;
+	private int idPersonaContacto;
 	private String objetivo;
-	private EstadoOferta estado;
-	private String itinerario;
 	private String fechaAlta;
+	private EstadoOferta estado;
+	private Itinerario itinerario;
 	private String fechaUltimoCambio;
-	private int idEstancia;
 	public int getNumero()
 	{
 		return numero;
@@ -18,13 +21,21 @@ public class OfertaProyecto extends ObjetoIdentificado
 	{
 		this.numero = numero;
 	}
-	public String getTarea()
+	public String getTitulo()
 	{
-		return tarea;
+		return titulo;
 	}
-	public void setTarea(String tarea)
+	public void setTitulo(String titulo)
 	{
-		this.tarea = tarea;
+		this.titulo = titulo;
+	}
+	public int getIdPersonaContacto()
+	{
+		return idPersonaContacto;
+	}
+	public void setIdPersonaContacto(int idPersonaContacto)
+	{
+		this.idPersonaContacto = idPersonaContacto;
 	}
 	public String getObjetivo()
 	{
@@ -34,22 +45,6 @@ public class OfertaProyecto extends ObjetoIdentificado
 	{
 		this.objetivo = objetivo;
 	}
-	public EstadoOferta getEstado()
-	{
-		return estado;
-	}
-	public void setEstado(EstadoOferta estado)
-	{
-		this.estado = estado;
-	}
-	public String getItinerario()
-	{
-		return itinerario;
-	}
-	public void setItinerario(String itinerario)
-	{
-		this.itinerario = itinerario;
-	}
 	public String getFechaAlta()
 	{
 		return fechaAlta;
@@ -58,6 +53,22 @@ public class OfertaProyecto extends ObjetoIdentificado
 	{
 		this.fechaAlta = fechaAlta;
 	}
+	public EstadoOferta getEstado()
+	{
+		return estado;
+	}
+	public void setEstado(EstadoOferta estado)
+	{
+		this.estado = estado;
+	}
+	public Itinerario getItinerario()
+	{
+		return itinerario;
+	}
+	public void setItinerario(Itinerario itinerario)
+	{
+		this.itinerario = itinerario;
+	}
 	public String getFechaUltimoCambio()
 	{
 		return fechaUltimoCambio;
@@ -65,13 +76,5 @@ public class OfertaProyecto extends ObjetoIdentificado
 	public void setFechaUltimoCambio(String fechaUltimoCambio)
 	{
 		this.fechaUltimoCambio = fechaUltimoCambio;
-	}
-	public int getIdEstancia()
-	{
-		return idEstancia;
-	}
-	public void setIdEstancia(int idEstancia)
-	{
-		this.idEstancia = idEstancia;
 	}
 }

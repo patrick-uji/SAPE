@@ -19,7 +19,7 @@
 					<tr>
 						<td class="register">Proyecto</td>
 						<td><input th:each="currPreference : ${preferences}" th:type="radio"
-							 	   th:field="*{idOfertaProyecto}" th:value="${currPreference.idOfertaProyecto}" th:text="${currPreference.ofertaProyecto.tarea}"/></td>
+							 	   th:field="*{idOfertaProyecto}" th:value="${currPreference.idOfertaProyecto}" th:text="${'[' + currPreference.orden + '] ' + currPreference.ofertaProyecto.titulo}"/></td>
 					</tr>
 					<tr>
 						<td class="register"><input type="submit" th:value="Crear" class="button2"/></td>

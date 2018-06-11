@@ -2,36 +2,34 @@
 <html xmlns:th="http://www.thymeleaf.org">
     <head th:replace="templates :: head"/>
     <body>
-        <div th:replace="templates :: menuEstudiante"/>
+        <div th:replace="templates :: menuAlumno"/>
 		<div class="content1">
 			<h1>List of offers</h1>
-			<form method="POST" action="/offerPrefs" th:action="@{/offerPrefs}" th:object="${offersSelection}">
+			<form method="POST" action="/offerPreferences" th:action="@{/offerPreferences}" th:object="${offersSelection}"
+			 th:if="${!offers.isEmpty()}">
 				<table class="list">
 					<tr>
 						<th></th>
-						<th>Numero</th>
-						<th>Tarea</th>
-						<th>Objetivo</th>
-						<th>Estado</th>
-						<th>Itinerario</th>
+						<th>Titulo</th>
+						<th>Empresa</th>
 						<th>FechaAlta</th>
 						<th>FechaUltimoCambio</th>
 						<th colspan="2">Action</th>
 					</tr>
 					<tr th:each="currOffer : ${offers}">
 						<td><input type="checkbox" th:field="*{selectedOffers}" th:value="${currOffer.id}"/></td>
-						<td th:text="${currOffer.numero}"/>
-						<td th:text="${currOffer.tarea}"/>
-						<td th:text="${currOffer.objetivo}"/>
-						<td th:text="${currOffer.estado.getName()}"/>
-						<td th:text="${currOffer.itinerario}"/>
+						<td th:text="${currOffer.titulo}"/>
+						<td th:text="${currOffer.empresa.nombre}"/>
 						<td th:text="${currOffer.fechaAlta}"/>
 						<td th:text="${currOffer.fechaUltimoCambio}"/>
-						<td><a th:href="@{/companies/{id}( id=${currOffer.id} )}">Ver empresa</a></td>
+						<td><a th:href="@{/offers/{id}( id=${currOffer.id} )}">Ver oferta</a></td>
 					</tr>
 				</table>
 				<input type="submit" value="Añadir preferencias" class="button3"/>
 			</form>
+			<div th:if="${offers.isEmpty()}">
+				<h2>No hay mas ofertas disponibles...</h2>
+			</div>
 		</div>
         <div th:replace="templates :: footer"/>
 	</body>

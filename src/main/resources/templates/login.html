@@ -8,7 +8,7 @@
             <form method="POST" action="" th:action="@{/login}" th:object="${login}">
                 <table class="table">
                     <tr>
-                    	<td class="register"><label>Usuario:</label></td>
+                    	<td class="register"><label>Email:</label></td>
                         <td><input type="text" th:field="*{email}" pattern="\w+" placeholder="email" maxlength="20"/></td>
                     </tr>
                     <tr>
@@ -23,7 +23,6 @@
                     </tr>
                 </table>
 			</form>
-			<p class="p"><br/>Don't have an account?<br/>Click <a href="@{/student/add}" class="links">here</a> to register.</p> 
         </div>
         <div th:replace="templates :: footer1"/>
     </body>

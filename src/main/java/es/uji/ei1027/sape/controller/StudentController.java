@@ -5,9 +5,9 @@ import javax.servlet.http.HttpSession;
 import es.uji.ei1027.sape.model.Usuario;
 import es.uji.ei1027.sape.dao.UsuarioDao;
 import es.uji.ei1027.sape.model.Asignacion;
-import es.uji.ei1027.sape.model.Estudiante;
+import es.uji.ei1027.sape.model.Alumno;
 import es.uji.ei1027.sape.dao.AsignacionDao;
-import es.uji.ei1027.sape.dao.EstudianteDao;
+import es.uji.ei1027.sape.dao.AlumnoDao;
 import es.uji.ei1027.sape.dao.ProfesorTutorDao;
 import es.uji.ei1027.sape.enums.EstadoAsignacion;
 import org.springframework.stereotype.Controller;
@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class StudentController
 {
 	private UsuarioDao usuarioDao;
-    private EstudianteDao estudianteDao;
+    private AlumnoDao alumnoDao;
 	private AsignacionDao asignacionDao;
 	private ProfesorTutorDao profesorTutorDao;
 	private PreferenciaAlumnoDTODao preferenciaAlumnoDTODao;
@@ -34,9 +34,9 @@ public class StudentController
 		this.usuarioDao = usuarioDao;
 	}
     @Autowired
-    public void setEstudianteDao(EstudianteDao estudianteDao)
+    public void setAlumnoDao(AlumnoDao alumnoDao)
     {
-        this.estudianteDao = estudianteDao;
+        this.alumnoDao = alumnoDao;
     }
     @Autowired
     public void setAsignacionDao(AsignacionDao asignacionDao)
@@ -59,7 +59,7 @@ public class StudentController
     	Utils.debugLog("Students LIST");
     	if (Utils.isAdmin(session))
     	{
-            model.addAttribute("students", estudianteDao.getAll());
+            model.addAttribute("students", alumnoDao.getAll());
             return "students/list";
     	}
         return "error/401";
@@ -70,7 +70,7 @@ public class StudentController
     	Utils.debugLog("Students ADD");
     	if (Utils.isAdmin(session))
     	{
-            model.addAttribute("student", new Estudiante());
+            model.addAttribute("student", new Alumno());
             model.addAttribute("action", "students/add");
             return "students/add";
     	}
@@ -84,10 +84,10 @@ public class StudentController
 		{
 			model.addAttribute("preferences", preferenciaAlumnoDTODao.getAllFromStudent(id));
 			model.addAttribute("teachers", profesorTutorDao.getAll());
-			model.addAttribute("student", estudianteDao.get(id));
+			model.addAttribute("student", alumnoDao.get(id));
 			model.addAttribute("assignment", new Asignacion());
 	        model.addAttribute("target", "/" + id + "/assign");
-	        return "assignments/edit";
+	        return "admins/assignments/edit";
 		}
 		return "error/401";
     }
@@ -97,27 +97,24 @@ public class StudentController
 		Utils.debugLog("Assignments CREATE");
 		if (Utils.isAdmin(session))
 		{
-			assignment.setEstado(EstadoAsignacion.TRASPASADA);
-			assignment.setFechaPropuesta(Utils.now());
-			assignment.setComentarioCambio("");
-			assignment.setFechaTraspasoIGLU("");
-			assignment.setFechaAceptacion("");
-			assignment.setFechaRechazo("");
-			assignment.setIDEstudiante(id);
+			assignment.setEstado(EstadoAsignacion.ENVIADA);
+			assignment.setFechaCreacion(Utils.now());
+			assignment.setFechaUltimoCambio("");
+			assignment.setIDAlumno(id);
 			asignacionDao.create(assignment);
 	        return "redirect:../../assignments/pending";
 		}
 		return "error/401";
     }
     @RequestMapping(method=RequestMethod.POST)
-    public String create(@ModelAttribute("user") Usuario user, @ModelAttribute("student") Estudiante student, HttpSession session, BindingResult bindingResult)
+    public String create(@ModelAttribute("user") Usuario user, @ModelAttribute("student") Alumno student, HttpSession session, BindingResult bindingResult)
     {
     	Utils.debugLog("Students CREATE");
     	if (Utils.validateUser(user, bindingResult) &&
     		Utils.validate(null, student, bindingResult))
 		{
     		usuarioDao.create(user);
-    		estudianteDao.create(student);
+    		alumnoDao.create(student);
         	return "redirect:students";
     	}
 		return "students/edit";
@@ -129,19 +126,19 @@ public class StudentController
 		Usuario user = Utils.getUser(session);
 		if (user != null && (user.esAdmin() || user.getId() == id))
 		{
-			model.addAttribute("student", estudianteDao.get(id));
+			model.addAttribute("student", alumnoDao.get(id));
 			model.addAttribute("action", "students/update");
 			return "students/update";
 		}
 		return "error/404";
 	}
 	@RequestMapping(value="/{id}/update", method=RequestMethod.POST)
-	public String update(@ModelAttribute("student") Estudiante student, HttpSession session, BindingResult bindingResult)
+	public String update(@ModelAttribute("student") Alumno student, HttpSession session, BindingResult bindingResult)
 	{
     	Utils.debugLog("Students UPDATE");
     	if (Utils.validate(new StudentValidator(), student, bindingResult))
 		{
-            estudianteDao.update(student);
+            alumnoDao.update(student);
             return "redirect:..";
 		}
 		return "student/update";

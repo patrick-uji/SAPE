@@ -25,22 +25,22 @@ public class PreferenciaAlumnoDao extends AbstractDao<PreferenciaAlumno>
     }
     public List<PreferenciaAlumno> getAllFromStudent(int studentID)
     {
-    	return jdbcTemplate.query("SELECT * FROM PreferenciaAlumno WHERE id_Estudiante = ?", new Object[] {studentID}, this);
+    	return jdbcTemplate.query("SELECT * FROM PreferenciaAlumno WHERE id_Alumno = ?", new Object[] {studentID}, this);
     }
     @Override
     public void create(PreferenciaAlumno model)
     {
-        jdbcTemplate.update("INSERT INTO PreferenciaAlumno (orden, abierta, fechaUltimoCambio, id_OfertaProyecto, id_Estudiante) VALUES (?,?,?,?,?)",
-        					model.getOrden(), model.getAbierta(), Utils.stringToDate(model.getFechaUltimoCambio()), model.getIdOfertaProyecto(), model.getIDEstudiante());
+        jdbcTemplate.update("INSERT INTO PreferenciaAlumno (orden, fechaUltimoCambio, id_OfertaProyecto, id_Alumno) VALUES (?,?,?,?)",
+        					model.getOrden(), Utils.stringToDate(model.getFechaUltimoCambio()), model.getIdOfertaProyecto(), model.getIDAlumno());
     }
     public void update(PreferenciaAlumno model)
     {
-        jdbcTemplate.update("UPDATE PreferenciaAlumno SET orden = ?, abierta = ?, fechaUltimoCambio = ?, id_OfertaProyecto = ?, id_Estudiante = ? WHERE id = ?",
-							model.getOrden(), model.getAbierta(), Utils.stringToDate(model.getFechaUltimoCambio()), model.getIdOfertaProyecto(), model.getIDEstudiante(),
+        jdbcTemplate.update("UPDATE PreferenciaAlumno SET orden = ?, fechaUltimoCambio = ?, id_OfertaProyecto = ?, id_Alumno = ? WHERE id = ?",
+							model.getOrden(), Utils.stringToDate(model.getFechaUltimoCambio()), model.getIdOfertaProyecto(), model.getIDAlumno(),
         					model.getId());
     }
     public int countFromStudent(int studentID)
     {
-    	return jdbcTemplate.queryForObject("SELECT COUNT(*) FROM PreferenciaAlumno WHERE id_Estudiante = ?", new Object[] {studentID}, Integer.class);
+    	return jdbcTemplate.queryForObject("SELECT COUNT(*) FROM PreferenciaAlumno WHERE id_Alumno = ?", new Object[] {studentID}, Integer.class);
     }
 }

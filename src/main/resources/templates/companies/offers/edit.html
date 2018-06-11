@@ -8,28 +8,28 @@
 			<form method="POST" th:action="@{/offers{target}( target=${target} )}" th:object="${offer}">
 				<table class="table">
 					<tr>
-						<td class="register">Tarea</td>
-						<td><input type="text" th:field="*{tarea}"/></td>
+						<td class="register">Titulo</td>
+						<td><input type="text" th:field="*{titulo}"/></td>
 					</tr>
 					<tr>
 						<td class="register">Objetivo</td>
-						<td><input type="text" th:field="*{objetivo}"/></td>
+						<td><textarea th:field="*{objetivo}"/></td>
 					</tr>
 					<tr>
 						<td class="register">Itinerario</td>
-						<td><input type="text" th:field="*{itinerario}"/></td>
-						<!-- Lo dejo por si nos interesa en un futuro usar Enums para los itinerarios
-						<option th:each="currStatus : ${T(es.uji.ei1027.sape.enums.EstadoOferta).values()}"
-								th:value="${currStatus}" th:text="${currStatus}"/>
-						
-						-->
+						<td>
+							<select th:field="*{itinerario}">
+								<option th:each="currItinerary : ${T(es.uji.ei1027.sape.enums.Itinerario).values()}"
+										th:value="${currItinerary}" th:text="${currItinerary.name}"/>
+							</select>
+						</td>
 					</tr>
 					<tr>
 						<td class="register">Persona de contacto</td>
 						<td>
-							<select th:field="*{idEstancia}">
+							<select th:field="*{idPersonaContacto}">
 								<option th:each="currContactPerson : ${contactPersons}"
-										th:value="${currContactPerson.id}" th:text="${currContactPerson.personaContacto}"/>
+										th:value="${currContactPerson.id}" th:text="${currContactPerson.nombre}"/>
 							</select>
 						</td>
 					</tr>
@@ -40,6 +40,9 @@
 				</table>
 			</form>
 		</div>
+		
+		<div th:replace="templates :: listaPeticionCambios"/>
+		
         <div th:replace="templates :: footer"/>
 	</body>
 </html>

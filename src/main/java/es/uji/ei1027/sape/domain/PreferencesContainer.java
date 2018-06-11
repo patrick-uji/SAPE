@@ -21,4 +21,8 @@ public class PreferencesContainer
 	{
 		this.selectedPreferences = selectedPreferences;
 	}
+	public boolean isEmpty()
+	{
+		return preferences.isEmpty();
+	}
 }

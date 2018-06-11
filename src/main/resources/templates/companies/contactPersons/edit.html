@@ -9,15 +9,15 @@
 				<table class="table">
 					<tr>
 						<td class="register">Nombre</td>
-						<td><input type="text" th:field="*{personaContacto}"/></td>
+						<td><input type="text" th:field="*{nombre}"/></td>
 					</tr>
 					<tr>
 						<td class="register">Email</td>
-						<td><input type="text" th:field="*{emailPersonaContacto}"/></td>
+						<td><input type="text" th:field="*{email}"/></td>
 					</tr>
 					<tr>
-						<td class="register">Descripcion</td>
-						<td><input type="text" th:field="*{descripcionPracticas}"/></td>
+						<td class="register">Descripción</td>
+						<td><textarea th:field="*{descripcionPracticas}"/></td>
 					</tr>
 					<tr>
 						<td class="register"><input type="submit" th:value="${action + ' persona de contacto'}" class="button2"/></td>

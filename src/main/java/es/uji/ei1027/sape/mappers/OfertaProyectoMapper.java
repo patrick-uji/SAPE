@@ -2,10 +2,16 @@ package es.uji.ei1027.sape.mappers;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import es.uji.ei1027.sape.enums.EstadoOferta;
+import es.uji.ei1027.sape.enums.Itinerario;
 import es.uji.ei1027.sape.model.OfertaProyecto;
 import org.springframework.jdbc.core.RowMapper;
-public class OfertaProyectoMapper implements RowMapper<OfertaProyecto>
+public class OfertaProyectoMapper extends PrefixableMapper implements RowMapper<OfertaProyecto>
 {
+	public OfertaProyectoMapper() { }
+	public OfertaProyectoMapper(String prefix)
+	{
+		super(prefix);
+	}
 	@Override
     public OfertaProyecto mapRow(ResultSet resultSet, int rowNum) throws SQLException
     {
@@ -15,14 +21,14 @@ public class OfertaProyectoMapper implements RowMapper<OfertaProyecto>
     }
 	public void mapRow(OfertaProyecto ofertaProyecto, ResultSet resultSet, int rowNum) throws SQLException
 	{
-    	ofertaProyecto.setId(resultSet.getInt("id"));
-    	ofertaProyecto.setNumero(resultSet.getInt("numero"));
-    	ofertaProyecto.setTarea(resultSet.getString("tarea"));
-    	ofertaProyecto.setObjetivo(resultSet.getString("objetivo"));
-    	ofertaProyecto.setEstado( EstadoOferta.fromID(resultSet.getInt("id_EstadoOferta")) );
-    	ofertaProyecto.setItinerario(resultSet.getString("itinerario"));
-    	ofertaProyecto.setFechaAlta(resultSet.getDate("fechaAlta").toString());
-    	ofertaProyecto.setFechaUltimoCambio(resultSet.getDate("fechaUltimoCambio").toString());
-    	ofertaProyecto.setIdEstancia(resultSet.getInt("id_Estancia"));
+    	ofertaProyecto.setId(resultSet.getInt(prefix + "id"));
+    	ofertaProyecto.setNumero(resultSet.getInt(prefix + "numero"));
+    	ofertaProyecto.setTitulo(resultSet.getString(prefix + "titulo"));
+    	ofertaProyecto.setObjetivo(resultSet.getString(prefix + "objetivo"));
+    	ofertaProyecto.setEstado( EstadoOferta.fromID(resultSet.getInt(prefix + "id_EstadoOferta")) );
+    	ofertaProyecto.setItinerario( Itinerario.fromID(resultSet.getInt(prefix + "id_Itinerario")) );
+    	ofertaProyecto.setFechaAlta(resultSet.getDate(prefix + "fechaAlta").toString());
+    	ofertaProyecto.setFechaUltimoCambio(resultSet.getDate(prefix + "fechaUltimoCambio").toString());
+    	ofertaProyecto.setIdPersonaContacto(resultSet.getInt(prefix + "id_PersonaContacto"));
 	}
 }

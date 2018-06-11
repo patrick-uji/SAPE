@@ -3,19 +3,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import es.uji.ei1027.sape.model.ProfesorTutor;
 import org.springframework.stereotype.Component;
+import es.uji.ei1027.sape.mappers.ProfesorTutorMapper;
 @Component
 public class ProfesorTutorDao extends AbstractDao<ProfesorTutor>
 {
-	@Override
+	private ProfesorTutorMapper rowMapper;
+	public ProfesorTutorDao()
+	{
+		this.rowMapper = new ProfesorTutorMapper();
+	}
+    @Override
     public ProfesorTutor mapRow(ResultSet resultSet, int rowNum) throws SQLException
     {
-    	ProfesorTutor profesorTutor = new ProfesorTutor();
-    	profesorTutor.setId(resultSet.getInt("id"));
-    	profesorTutor.setNombre(resultSet.getString("nombre"));
-    	profesorTutor.setDepartamento(resultSet.getString("departamento"));
-    	profesorTutor.setDespacho(resultSet.getString("despacho"));
-    	profesorTutor.setEmail(resultSet.getString("email"));
-        return profesorTutor;
+    	return rowMapper.mapRow(resultSet, rowNum);
     }
 	@Override
     public void create(ProfesorTutor model)
@@ -26,7 +26,7 @@ public class ProfesorTutorDao extends AbstractDao<ProfesorTutor>
 	@Override
     public void update(ProfesorTutor model)
     {
-        jdbcTemplate.update("UPDATE ProfesorTutor SET orden = ?, abierta = ?, fechaUltimoCambio = ? WHERE id = ?",
+        jdbcTemplate.update("UPDATE ProfesorTutor SET nombre = ?, departamento = ?, despacho = ?, email = ? WHERE id = ?",
 							model.getNombre(), model.getDepartamento(), model.getDespacho(), model.getEmail(),
         					model.getId());
     }

@@ -17,40 +17,44 @@
     
     </div>
     
-     
-    
     <div id="menu" th:fragment="menuCoordinador">
         <div th:replace="templates :: header"/>
    		<ul>
 	   		<a href="/offers/pending" class="menu">
 	   		<li>
-	   		<div class="barra"></div>
-	   		<p class ="menu" style="color:white;">Oferta pendientes</p>
-	   		</li>
+		   		<div class="barra"></div>
+		   		<p class ="menu" style="color:white;">Oferta pendientes</p>
+		   		</li>
 	   		</a>
 	   		<a href="/assignments/pending" class="menu">
-	   		<li>
-	   		<div class="barra"></div>
-	   		<p class ="menu" style="color:white;">Asignaci&oacute;n</p>
-	   		</li>
+		   		<li>
+		   		<div class="barra"></div>
+		   		<p class ="menu" style="color:white;">Asignar Alumno</p>
+		   		</li>
 	   		</a>
 	   		<a href="/offers" class="menu">
-	   		<li>
-	   		<div class="barra"></div>
-	   		<p class ="menu" style="color:white;">Ofertas aceptadas</p>
-	   		</li>
+		   		<li>
+		   		<div class="barra"></div>
+		   		<p class ="menu" style="color:white;">Ofertas aceptadas</p>
+		   		</li>
+	   		</a>
+	   		<a href="/assignments" class="menu">
+		   		<li>
+		   		<div class="barra"></div>
+		   		<p class ="menu" style="color:white;">Asignaciones</p>
+		   		</li>
 	   		</a>
 	   		<a href="/companies" class="menu">
-	   		<li>
-	   		<div class="barra"></div>
-	   		<p class ="menu" style="color:white;">Empresas</p>
-	   		</li>
+		   		<li>
+		   		<div class="barra"></div>
+		   		<p class ="menu" style="color:white;">Empresas</p>
+		   		</li>
 	   		</a>
 	   		<a href="/teachers" class="menu">
-	   		<li>
-	   		<div class="barra"></div>
-	   		<p class ="menu" style="color:white;">Tutores</p>
-	   		</li>
+		   		<li>
+		   		<div class="barra"></div>
+		   		<p class ="menu" style="color:white;">Tutores</p>
+		   		</li>
 	   		</a>
    		</ul>
  		<div class="botonS"><a class="salir" href="/logout">Cerrar Sesi&oacute;n</a></div>
@@ -60,56 +64,63 @@
    	    <div th:replace="templates :: header"/>
 		<ul>
 	   		<a href="/offers" class="menu">
-	   		<li>
-	   		<div class="barra"></div>
-	   		<p class ="menu" style="color:white;">Ofertas </p>
-	   		</li>
+	   			<li>
+		   		<div class="barra"></div>
+		   		<p class ="menu" style="color:white;">Ofertas </p>
+		   		</li>
 	   		</a>
 	   		<a href="/offers/add" class="menu">
-	   		<li>
-	   		<div class="barra"></div>
-	   		<p class ="menu" style="color:white;">Crear Oferta</p>
-	   		</li>
+		   		<li>
+		   		<div class="barra"></div>
+		   		<p class ="menu" style="color:white;">Crear Oferta</p>
+		   		</li>
 	   		</a>
 	   		<a href="/contactPersons" class="menu">
-	   		<li>
-	   		<div class="barra"></div>
-	   		<p class ="menu" style="color:white;">Personas de contacto</p>
-	   		</li>
+		   		<li>
+		   		<div class="barra"></div>
+		   		<p class ="menu" style="color:white;">Personas de contacto</p>
+		   		</li>
 	   		</a>
    		</ul>
 		<div class="botonS"><a class="salir" href="/logout">Cerrar Sesi&oacute;n</a></div>
    	</div>
     
-    <div id="menu" th:fragment="menuEstudiante">
+    <div id="menu" th:fragment="menuAlumno">
    	    <div th:replace="templates :: header"/>
 		<ul>
 	   		<a href="/offers" class="menu">
-	   		<li>
-	   		<div class="barra"></div>
-	   		<p class ="menu" style="color:white;">Ofertas</p>
-	   		</li>
+		   		<li>
+		   		<div class="barra"></div>
+		   		<p class ="menu" style="color:white;">Ofertas</p>
+		   		</li>
 	   		</a>
 	   		<a href="/offerPreferences" class="menu">
-	   		<li>
-	   		<div class="barra"></div>
-	   		<p class ="menu" style="color:white;">Preferencias</p>
-	   		</li>
+		   		<li>
+		   		<div class="barra"></div>
+		   		<p class ="menu" style="color:white;">Preferencias</p>
+		   		</li>
 	   		</a>
 	   		<a href="/assignments" class="menu">
-	   		<li>
-	   		<div class="barra"></div>
-	   		<p class ="menu" style="color:white;">Asignacion</p>
-	   		</li>
+		   		<li>
+		   		<div class="barra"></div>
+		   		<p class ="menu" style="color:white;">Asignacion</p>
+		   		</li>
 	   		</a>
    		</ul>
 		<div class="botonS"><a class="salir" href="/logout">Cerrar Sesi&oacute;n</a></div>
    	</div>
+   	
+   	<div th:fragment="listaPeticionCambios">
+   		<div th:each="currPetition : ${petitions}">
+   			<!-- TODO: Usar "nombre" en vez de "email" (Aun no esta en la BBDD) -->
+   			<h1 th:text="${currPetition.usuario.email + ' @ ' + currPetition.fecha}"/>
+   			<h2>------------------------------</h2>
+   			<h2 th:text="${currPetition.textoPeticion}"/>
+   			<h2>------------------------------</h2>
+   		</div>
+   	</div>
     
     <div class="footer" th:fragment="footer">
-		<p>&copy; EI102717BGM &#8226; All rights reserved &#8226; <a href="/privacy" class="footer_links">Privacy Policy</a> &#8226; <a href="/about" class="footer_links">About</a> &#8226; <a href="/contact" class="footer_links">Contact</a></p>
-    </div>
-    <div class="footer1" th:fragment="footer1">
 		<p>&copy; EI102717BGM &#8226; All rights reserved &#8226; <a href="/privacy" class="footer_links">Privacy Policy</a> &#8226; <a href="/about" class="footer_links">About</a> &#8226; <a href="/contact" class="footer_links">Contact</a></p>
     </div>
 </html>
