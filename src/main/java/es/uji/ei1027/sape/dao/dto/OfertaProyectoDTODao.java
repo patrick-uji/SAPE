@@ -11,7 +11,6 @@ import es.uji.ei1027.sape.mappers.EmpresaMapper;
 import es.uji.ei1027.sape.mappers.OfertaProyectoMapper;
 import es.uji.ei1027.sape.mappers.PersonaContactoMapper;
 import es.uji.ei1027.sape.model.Empresa;
-import es.uji.ei1027.sape.model.OfertaProyecto;
 import es.uji.ei1027.sape.model.PersonaContacto;
 @Component
 public class OfertaProyectoDTODao extends AbstractDTODao<OfertaProyectoDTO>
@@ -50,9 +49,13 @@ public class OfertaProyectoDTODao extends AbstractDTODao<OfertaProyectoDTO>
     {
     	return jdbcTemplate.query(BASE_QUERY + " WHERE id_EstadoOferta IN (?,?)", new Object[] {EstadoOferta.INTRODUCIDA.getID(), EstadoOferta.PENDIENTE_REVISION.getID()}, this);
     }
+    public List<OfertaProyectoDTO> getAllCancelRequested()
+    {
+    	return jdbcTemplate.query(BASE_QUERY + " WHERE id_EstadoOferta = ?", new Object[] {EstadoOferta.PENDIENTE_ANULACION.getID()}, this);
+    }
     public List<OfertaProyectoDTO> getAllAccepted()
     {
-    	return jdbcTemplate.query(BASE_QUERY + " WHERE id_EstadoOferta = ?", new Object[] {EstadoOferta.ACEPTADA.getID()}, this);
+    	return jdbcTemplate.query(BASE_QUERY + " WHERE id_EstadoOferta NOT IN (?,?,?)", new Object[] {EstadoOferta.INTRODUCIDA.getID(), EstadoOferta.PENDIENTE_REVISION.getID(), EstadoOferta.RECHAZADA.getID()}, this);
     }
     public List<OfertaProyectoDTO> getAllChoosable(int studentID)
     {
@@ -60,10 +63,4 @@ public class OfertaProyectoDTODao extends AbstractDTODao<OfertaProyectoDTO>
     	return jdbcTemplate.query(BASE_QUERY + " WHERE id_EstadoOferta = ? AND p.id NOT IN (SELECT id_OfertaProyecto FROM PreferenciaAlumno WHERE id_Alumno = ?)",
     							  new Object[] {EstadoOferta.ACEPTADA.getID(), studentID}, this);
     }
-	/*
-	public List<OfertaProyectoDTO> getAllFromStudent(int studentID)
-	{
-    	return jdbcTemplate.query(BASE_QUERY + " WHERE id_Alumno = ? ORDER BY orden", new Object[] {studentID}, this);
-	}
-	*/
 }

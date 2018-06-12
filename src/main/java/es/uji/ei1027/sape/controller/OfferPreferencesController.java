@@ -8,8 +8,10 @@ import javax.servlet.http.HttpSession;
 import es.uji.ei1027.sape.model.Usuario;
 import org.springframework.stereotype.Controller;
 import es.uji.ei1027.sape.domain.OffersSelection;
+import es.uji.ei1027.sape.model.Alumno;
 import es.uji.ei1027.sape.model.PreferenciaAlumno;
 import es.uji.ei1027.sape.dto.PreferenciaAlumnoDTO;
+import es.uji.ei1027.sape.dao.AlumnoDao;
 import es.uji.ei1027.sape.dao.PreferenciaAlumnoDao;
 import es.uji.ei1027.sape.dao.dto.PreferenciaAlumnoDTODao;
 import es.uji.ei1027.sape.domain.PreferencesContainer;
@@ -22,8 +24,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 @RequestMapping("/offerPreferences")
 public class OfferPreferencesController
 {
+	private AlumnoDao alumnoDao;
 	private PreferenciaAlumnoDao preferenciaAlumnoDao;
 	private PreferenciaAlumnoDTODao preferenciaAlumnoDTODao;
+    @Autowired
+    public void setAlumnoDao(AlumnoDao alumnoDao)
+    {
+    	this.alumnoDao = alumnoDao;
+    }
     @Autowired
     public void setPreferenciaAlumnoDao(PreferenciaAlumnoDao preferenciaAlumnoDao)
     {
@@ -39,10 +47,13 @@ public class OfferPreferencesController
 	{
 		Utils.debugLog("OfferPreferences LIST");
 		Usuario user = Utils.getUser(session);
-		if (user.esAlumno())
+		if (Utils.isStudent(user))
 		{
+			int userID = user.getId();
+			Alumno student = alumnoDao.get(userID);
 			PreferencesContainer preferencesContainer = new PreferencesContainer();
-			preferencesContainer.setPreferences( preferenciaAlumnoDTODao.getAllFromStudent(user.getId()) );
+			preferencesContainer.setInternshipSemester(student.getSemestreInicioEstancia());
+			preferencesContainer.setPreferences(preferenciaAlumnoDTODao.getAllFromStudent(userID));
 			model.addAttribute("preferencesContainer", preferencesContainer);
 			return "students/offers/listPreferences";
 		}
@@ -52,9 +63,10 @@ public class OfferPreferencesController
 	public String create(@ModelAttribute("offersSelection") OffersSelection offersSelection, HttpSession session)
 	{
 		Utils.debugLog("OfferPreferences CREATE");
-		if (Utils.isStudent(session))
+		Usuario user = Utils.getUser(session);
+		if (Utils.isStudent(user))
 		{
-			int studentID = Utils.getUser(session).getId();
+			int studentID = user.getId();
 			PreferenciaAlumno newPreference = new PreferenciaAlumno();
 			newPreference.setOrden(preferenciaAlumnoDao.countFromStudent(studentID));
 			newPreference.setFechaUltimoCambio(Utils.now());
@@ -74,7 +86,8 @@ public class OfferPreferencesController
 	public String update(@ModelAttribute("preferencesContainer") PreferencesContainer preferencesContainer, HttpSession session)
 	{
 		Utils.debugLog("OfferPreferences UPDATE");
-		if (Utils.isStudent(session))
+		Usuario user = Utils.getUser(session);
+		if (Utils.isStudent(user))
 		{
 			List<PreferenciaAlumnoDTO> preferences = preferencesContainer.getPreferences();
 			if (hasValidOrdering(preferences))
@@ -85,6 +98,7 @@ public class OfferPreferencesController
 				{
 					preferenciaAlumnoDao.update(currPreference.getId(), new String[] {"orden"}, currPreference.getOrden());
 				}
+				alumnoDao.update(user.getId(), new String[] {"semestreInicioEstancia"}, preferencesContainer.getInternshipSemester());
 			}
 			return "redirect:../offerPreferences";
 		}

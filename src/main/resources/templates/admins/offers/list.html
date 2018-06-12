@@ -4,14 +4,15 @@
     <body>
         <div th:replace="templates :: menuCoordinador"/>
 		<div class="content1">
-			<h1>List of offers</h1>
-			<table class="list">
+			<h1 th:text="${'Lista de ofertas ' + type}"/>
+			<table class="list"
+			 th:if="${!offers.isEmpty()}">
 				<tr>
 					<th>Titulo</th>
 					<th>Empresa</th>
 					<th>FechaAlta</th>
 					<th>FechaUltimoCambio</th>
-					<th>Accion</th>
+					<th>Acción</th>
 				</tr>
 				<tr th:each="currOffer : ${offers}">
 					<td th:text="${currOffer.titulo}"/>
@@ -21,6 +22,9 @@
 					<td><a th:href="@{/offers/{id}( id=${currOffer.id} )}">Ver oferta</a></td>
 				</tr>
 			</table>
+			<div th:if="${offers.isEmpty()}">
+				<h2 th:text="${'No hay ofertas ' + type + '...'}"/>
+			</div>
 		</div>
         <div th:replace="templates :: footer"/>
 	</body>
