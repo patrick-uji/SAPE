@@ -1,13 +1,38 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-    <head th:replace="templates :: head"/>
+    <head>
+    	<meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, height=device-height, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+        <script th:inline="javascript">
+    		/*<![CDATA[*/
+    		var currSelectID;
+        	var lastOrderIDs = [];
+        	var lastIDOrders = {};
+        	var totalOffers = [[${preferencesContainer.preferences.size()}]];
+    		for (currIndex = 0; currIndex < totalOffers; currIndex++)
+			{
+				currSelectID = "preferences" + currIndex + ".orden";
+				lastIDOrders[currSelectID] = currIndex;
+				lastOrderIDs.push(currSelectID);
+			}
+   		    /*]]>*/
+    	</script>
+    	<script type="text/javascript" src="/js/linkPreferencesOrder.js" th:src="@{/js/linkPreferencesOrder.js}"/>
+        <link rel="stylesheet" href="/css/styles.css" th:href="@{/css/styles.css}"/>
+        <title>SAPE</title>
+    </head>
     <body>
         <div th:replace="templates :: menuAlumno"/>
 		<div class="content1">
 			<h1>Lista de ofertas</h1>
-			<form method="POST" th:action="@{/offerPreferences/update}" th:object="${preferencesContainer}"
-			 th:if="${!preferencesContainer.isEmpty()}">
-				<table class="list">
+			<form id="preferencesForm" method="POST" th:action="@{/offerPreferences/update}" th:object="${preferencesContainer}">
+				<label>Semestre inicio estancia:</label>
+				<select th:field="*{internshipSemester}">
+					<option value="1">Primero</option>
+					<option value="2">Segundo</option>
+				</select>
+				<table class="list"
+				 th:if="${!preferencesContainer.isEmpty()}">
 					<tr>
 						<th>Proyecto</th>
 						<th>Empresa</th>
@@ -18,15 +43,20 @@
 						<input type="hidden" th:field="*{preferences[__${currPrefKey.index}__].id}"/>
 						<td th:text="${currPreference.ofertaProyecto.titulo}"/>
 						<td th:text="${currPreference.empresa.nombre}"/>
-						<td><input type="number" th:field="*{preferences[__${currPrefKey.index}__].orden}"/></td>
+						<td>
+							<select onchange="handleOrderChange(this)" th:field="*{preferences[__${currPrefKey.index}__].orden}">
+								<option th:each="currNumber: ${#numbers.sequence(1, preferencesContainer.preferences.size())}"
+										th:value="${currNumber}" th:text="${currNumber}"/>
+							</select>
+						</td>
 						<td><input type="checkbox" th:field="*{selectedPreferences}" th:value="${currPreference.id}"/></td>
 					</tr>
 				</table>
+				<div th:if="${preferencesContainer.isEmpty()}">
+					<h2>No tienes ofertas preferentes...</h2>
+				</div>
 				<input type="submit" value="Aplicar cambios" class="button3"/>
 			</form>
-			<div th:if="${preferencesContainer.isEmpty()}">
-				<h2>No tienes ninguna preferencia...</h2>
-			</div>
 		</div>
         <div th:replace="templates :: footer"/>
 	</body>

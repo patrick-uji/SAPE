@@ -1,6 +1,5 @@
 package es.uji.ei1027.sape.dao;
 import java.util.List;
-import java.util.Arrays;
 import javax.sql.DataSource;
 import es.uji.ei1027.sape.Utils;
 import org.springframework.jdbc.core.RowMapper;

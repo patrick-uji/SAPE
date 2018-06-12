@@ -8,11 +8,11 @@ public class Empresa extends ObjetoIdentificado
 	private String domicilio;
 	private int proyectosTotal;
 	private String telefonoPersonal;
-	public String getCIF()
+	public String getCif()
 	{
 		return cif;
 	}
-	public void setCIF(String cif)
+	public void setCif(String cif)
 	{
 		this.cif = cif;
 	}

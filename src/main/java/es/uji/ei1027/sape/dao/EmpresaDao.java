@@ -26,13 +26,13 @@ public class EmpresaDao extends AbstractDao<Empresa>
     public void create(Empresa model)
     {
         jdbcTemplate.update("INSERT INTO Empresa VALUES (?,?,?,?,?)",
-        					model.getId(), model.getCIF(), model.getNombre(), model.getDomicilio(), model.getTelefonoPersonal());
+        					model.getId(), model.getCif(), model.getNombre(), model.getDomicilio(), model.getTelefonoPersonal());
     }
     @Override
     public void update(Empresa model)
     {
         jdbcTemplate.update("UPDATE Empresa SET cif = ?, nombre = ?, domicilio = ?, telefonoPersonal = ? WHERE id = ?",
-        					model.getCIF(), model.getNombre(), model.getDomicilio(), model.getTelefonoPersonal(), 
+        					model.getCif(), model.getNombre(), model.getDomicilio(), model.getTelefonoPersonal(), 
         					model.getId());
     }
 }

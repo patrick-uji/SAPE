@@ -8,8 +8,7 @@
 			<table class="list">
 				<tr>
 					<th>Numero</th>
-					<th>Tarea</th>
-					<th>Objetivo</th>
+					<th>Titulo</th>
 					<th>Estado</th>
 					<th>Itinerario</th>
 					<th>FechaAlta</th>
@@ -19,7 +18,6 @@
 				<tr th:each="currOffer : ${offers}">
 					<td th:text="${currOffer.numero}"/>
 					<td th:text="${currOffer.titulo}"/>
-					<td th:text="${currOffer.objetivo}"/>
 					<td th:text="${currOffer.estado.getName()}"/>
 					<td th:text="${currOffer.itinerario.getName()}"/>
 					<td th:text="${currOffer.fechaAlta}"/>

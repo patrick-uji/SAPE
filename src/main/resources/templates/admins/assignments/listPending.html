@@ -11,19 +11,13 @@
 					<th>Nombre</th>
 					<th>Nota Media</th>
 					<th>Itinerario</th>
-					<th>Numero Creditos</th>
-					<th>Asignaturas Pendientes</th>
-					<th>Semestre Inicio Estancia</th>
-					<th>Accion</th>
+					<th>Acción</th>
 				</tr>
 				<tr th:each="currStudent : ${students}">
 					<td th:text="${currStudent.dni}"/>
 					<td th:text="${currStudent.nombre}"/>
 					<td th:text="${currStudent.notaMedia}"/>
 					<td th:text="${currStudent.itinerario.getName()}"/>
-					<td th:text="${currStudent.numeroCreditos}"/>
-					<td th:text="${currStudent.asignaturasPendientes}"/>
-					<td th:text="${currStudent.semestreInicioEstancia}"/>
 					<td><a th:href="@{/students/{id}/assign( id=${currStudent.id} )}">Realizar asignacion</a></td>
 				</tr>
 			</table>
