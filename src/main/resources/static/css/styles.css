@@ -104,6 +104,12 @@ div.content {
 	width: 170px;
 	height: 100x;
 	backgroud-color: DARKSLATEGRAY;
+	color: black;
+}
+
+div#content1 {
+	color: black;
+	
 }
 
 div#menu {
@@ -193,11 +199,12 @@ h2 {
 }
 
 h3 {
-    color: white;
+    color: black;
 }
 
 table {
-    color: white;
+    color: black;
+    aling: center;
 	border-collapse: collapse;
 	margin: auto;
 }
@@ -221,7 +228,7 @@ div.login {
     position: absolute;
     font-size: 16px;
     text-align: right;
-    color: white;
+    color: black;
 }
 
 div.login h3 {
@@ -242,9 +249,18 @@ div.login h3 {
 	padding: 3px;
 	width: 10%;
 }
+
+.izquierda{
+		 top: 40px;
+		 margin:10px;
+		 width : 120px;
+}
 .register {
+	font-family: serif;
     text-align: right;
-    color: white;
+    color: black;
+    font-size: 25px;
+    font-weight: bold;
 }
 
 .center {
@@ -255,6 +271,7 @@ div.login h3 {
 
 .center td:hover {
 	background-color: coral;
+	 font-size: 15px;
 }
 
 .center tr {
@@ -264,6 +281,7 @@ div.login h3 {
 
 .table {
     border: 1px solid darkorange;
+     
 }
 
 .table td {
@@ -302,6 +320,8 @@ div.login h3 {
 .about h1 {
 	font-family: serif;
 	color: white;
+	 font-weight: bold;
+	 font-size: 25px;
 }
 
 .leftTitle {
@@ -313,7 +333,7 @@ div.login h3 {
 }
 
 .leftText {
-    color: white;
+    color: black;
     font-size: 20px;
     text-align: justify;
     padding-bottom: 50px;
@@ -322,7 +342,7 @@ div.login h3 {
 }
 
 .rightText {
-    color: white;
+    color:black;
     font-size: 20px;
     text-align: justify;
     padding-bottom: 50px;
@@ -381,5 +401,18 @@ select, input {
 
 .exit {
 	right: 0;
-	padding-right: 15px;
+	padding-right: 10px;
+}
+
+div.aceptar1{
+	margin:10px;
+}
+
+.addPersona{
+	 width : 250px;
+	 margin: 10px;
+}
+.addOferta{
+	 width : 150px;
+	 margin: 10px;
 }

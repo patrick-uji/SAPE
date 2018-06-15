@@ -4,7 +4,7 @@
     <body>
         <div th:replace="templates :: menuAlumno"/>
 		<div class="content1">
-			<h1>Lista de ofertas</h1>
+			<h1>Lista de preferencias</h1>
 			<form method="POST" th:action="@{/offerPreferences/update}" th:object="${preferencesContainer}"
 			 th:if="${!preferencesContainer.isEmpty()}">
 				<table class="list">

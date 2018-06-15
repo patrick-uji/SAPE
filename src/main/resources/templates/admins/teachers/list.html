@@ -4,7 +4,7 @@
     <body>
         <div th:replace="templates :: menuCoordinador"/>
 		<div class="content1">
-			<h1>List of offers</h1>
+			<h1>Lista de tutores</h1>
 			<table class="list">
 				<tr>
 					<th>Nombre</th>
@@ -22,7 +22,7 @@
 					<td><a th:href="@{/teachers/{id}/delete( id=${currTeacher.id} )}" onclick="return confirm('Do you want to delete this offer?')">Delete</a></td>
 				</tr>
 			</table>
-			<a href="/teachers/add">Add</a>
+			<input type="button" class = "addOferta" onclick=" location.href='/teachers/add' " value="A&ntilde;adir tutor" name="boton" /> 
 		</div>
         <div th:replace="templates :: footer"/>
 	</body>

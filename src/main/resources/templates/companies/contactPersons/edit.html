@@ -20,12 +20,13 @@
 						<td><textarea th:field="*{descripcionPracticas}"/></td>
 					</tr>
 					<tr>
-						<td class="register"><input type="submit" th:value="${action + ' persona de contacto'}" class="button2"/></td>
+						<td ><input type="submit" th:value="${action + ' persona de contacto'}" class="button2"/></td>
 						<td><input type="reset" value="Clear data" class="button2" onclick="return confirm('Do you want to clear your data?')"/></td>
 					</tr>
 				</table>
 			</form>
 		</div>
+		<input type="button" class = "izquierda" onclick=" location.href='/contactPersons' " value="Atras" name="boton" /> 
         <div th:replace="templates :: footer"/>
 	</body>
 </html>

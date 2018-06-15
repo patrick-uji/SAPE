@@ -7,35 +7,35 @@
 			<h1>Información Oferta</h1>
 			<table class="table">
 				<tr>
-					<td>Titulo</td>
+					<td>Titulo:</td>
 					<td th:text="${offer.titulo}"/>
 				</tr>
 				<tr>
-					<td>Itinerario</td>
+					<td>Itinerario:</td>
 					<td th:text="${offer.itinerario.getName()}"/>
 				</tr>
 				<tr>
-					<td>Objetivo</td>
+					<td>Objetivo:</td>
 					<td th:text="${offer.objetivo}"/>
 				</tr>
 				<tr>
-					<td>Empresa</td>
+					<td>Empresa:</td>
 					<td th:text="${offer.empresa.nombre}"/>
 				</tr>
 				<tr>
-					<td>Persona Contacto</td>
+					<td>Persona Contacto:</td>
 					<td th:text="${offer.personaContacto.nombre}"/>
 				</tr>
 				<tr>
-					<td>Email Persona Contacto</td>
+					<td>Email Persona Contacto:</td>
 					<td th:text="${offer.personaContacto.email}"/>
 				</tr>
 				<tr>
-					<td>Descripcion Practicas (Persona de Contacto)</td>
+					<td>Descripcion Practicas (Persona de Contacto):</td>
 					<td th:text="${offer.personaContacto.descripcionPracticas}"/>
 				</tr>
 			</table>
-			<div th:if="${isSuperAdmin}">
+			<div th:if="${isSuperAdmin}" class="aceptar1">
 				<a th:href="@{/offers/{id}/reject( id=${offer.id} )}" onclick="return confirm('Seguro que quieres rechazar esta oferta?')">Rechazar</a>
 				<a th:href="@{/offers/{id}/accept( id=${offer.id} )}" onclick="return confirm('Seguro que quieres aceptar esta oferta?')">Aceptar</a>
 			</div>
@@ -50,7 +50,7 @@
 						<td><textarea th:field="*{textoPeticion}"/></td>
 					</tr>
 					<tr>
-						<td class="register"><input type="submit" value="Enviar petición" class="button2"/></td>
+						<td ><input type="submit" value="Enviar petición" class="button2"/></td>
 						<td><input type="reset" value="Clear data" class="button2" onclick="return confirm('Do you want to clear your data?')"/></td>
 					</tr>
 				</table>
