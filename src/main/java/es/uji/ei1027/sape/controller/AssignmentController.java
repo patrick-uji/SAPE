@@ -20,19 +20,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/assignments")
 public class AssignmentController
 {
-	private AsignacionDao asignacionDao;
 	private AlumnoDao alumnoDao;
+	private AsignacionDao asignacionDao;
 	private ProfesorTutorDao profesorTutorDao;
 	private AsignacionDTODao asignacionDTODao;
-	@Autowired
-	public void setAsignacionDao(AsignacionDao asignacionDao)
-	{
-		this.asignacionDao = asignacionDao;
-	}
 	@Autowired
 	public void setAlumnoDao(AlumnoDao alumnoDao)
 	{
 		this.alumnoDao = alumnoDao;
+	}
+	@Autowired
+	public void setAsignacionDao(AsignacionDao asignacionDao)
+	{
+		this.asignacionDao = asignacionDao;
 	}
 	@Autowired
 	public void setProfesorTutorDao(ProfesorTutorDao profesorTutorDao)
@@ -82,7 +82,7 @@ public class AssignmentController
 	public String accept(@PathVariable("id") int id, HttpSession session)
 	{
 		Usuario user = Utils.getUser(session);
-		if (user != null && user.esAlumno())
+		if (Utils.isStudent(user))
 		{
 			asignacionDao.update(id, new String[] {"id_EstadoAsignacion"}, EstadoAsignacion.ACEPTADA.getID());
 			return "redirect:../../assignments";
@@ -93,7 +93,7 @@ public class AssignmentController
 	public String reject(@PathVariable("id") int id, HttpSession session)
 	{
 		Usuario user = Utils.getUser(session);
-		if (user != null && user.esAlumno())
+		if (Utils.isStudent(user))
 		{
 			asignacionDao.update(id, new String[] {"id_EstadoAsignacion"}, EstadoAsignacion.ACEPTADA.getID());
 			return "redirect:../../assignments";

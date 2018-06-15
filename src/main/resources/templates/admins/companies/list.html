@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="templates :: head"/>
+    <body>
+        <div th:replace="templates :: menuCoordinador"/>
+		<div class="content1">
+			<h1>Lista de empresas</h1>
+			<table class="list">
+				<tr>
+					<th>CIF</th>
+					<th>Nombre</th>
+					<th>Proyectos Total</th>
+					<th>Acción</th>
+				</tr>
+				<tr th:each="currCompany : ${companies}">
+					<td th:text="${currCompany.cif}"/>
+					<td th:text="${currCompany.nombre}"/>
+					<td th:text="${currCompany.proyectosTotal}"/>
+					<td><a th:href="@{/companies/{id}( id=${currCompany.id} )}">Ver empresa</a></td>
+				</tr>
+			</table>
+		</div>
+        <div th:replace="templates :: footer"/>
+	</body>
+</html>

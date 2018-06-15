@@ -22,15 +22,18 @@ public class Utils
 	}
 	public static Date stringToDate(String string)
 	{
-		try
+		if (string != null && string != "")
 		{
-			return new Date(DATE_FORMAT.parse(string).getTime());
+			try
+			{
+				return new Date(DATE_FORMAT.parse(string).getTime());
+			}
+			catch (ParseException ex)
+			{
+				ex.printStackTrace();
+			}
 		}
-		catch (ParseException ex)
-		{
-			ex.printStackTrace();
-			return null;
-		}
+		return null;
 	}
 	public static String safeToString(Object object)
 	{
@@ -94,22 +97,34 @@ public class Utils
 	}
 	public static boolean isStudent(HttpSession session)
 	{
-		Usuario user = getUser(session);
+		return isStudent(getUser(session));
+	}
+	public static boolean isStudent(Usuario user)
+	{
 		return user != null && user.esAlumno();
 	}
 	public static boolean isCompany(HttpSession session)
 	{
-		Usuario user = getUser(session);
+		return isCompany(getUser(session));
+	}
+	public static boolean isCompany(Usuario user)
+	{
 		return user != null && user.esEmpresa();
 	}
 	public static boolean isAdmin(HttpSession session)
 	{
-		Usuario user = getUser(session);
+		return isAdmin(getUser(session));
+	}
+	public static boolean isAdmin(Usuario user)
+	{
 		return user != null && user.esAdmin();
 	}
 	public static boolean isSuperAdmin(HttpSession session)
 	{
-		Usuario user = getUser(session);
+		return isSuperAdmin(getUser(session));
+	}
+	public static boolean isSuperAdmin(Usuario user)
+	{
 		return user != null && user.esSuperAdmin();
 	}
 	public static Usuario getUser(HttpSession session)

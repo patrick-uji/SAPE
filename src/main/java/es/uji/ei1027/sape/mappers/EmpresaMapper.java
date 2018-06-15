@@ -15,7 +15,7 @@ public class EmpresaMapper extends PrefixableMapper implements RowMapper<Empresa
     {
 		Empresa empresa = new Empresa();
     	empresa.setId(resultSet.getInt(prefix + "id"));
-    	empresa.setCIF(resultSet.getString(prefix + "cif"));
+    	empresa.setCif(resultSet.getString(prefix + "cif"));
     	empresa.setNombre(resultSet.getString(prefix + "nombre"));
     	empresa.setDomicilio(resultSet.getString(prefix + "domicilio"));
     	empresa.setProyectosTotal(resultSet.getInt(prefix + "proyectosTotal"));

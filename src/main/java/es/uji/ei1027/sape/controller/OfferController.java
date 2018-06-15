@@ -72,6 +72,7 @@ public class OfferController
 				case BTC:
 				case CCD:
 			        model.addAttribute("offers", ofertaProyectoDTODao.getAllAccepted());
+			        model.addAttribute("type", "aceptadas");
 			        return "admins/offers/list";
 			    //break;
 				case EMPRESA:
@@ -93,6 +94,18 @@ public class OfferController
 		if (Utils.isAdmin(session))
 		{
 			model.addAttribute("offers", ofertaProyectoDTODao.getAllPending());
+	        model.addAttribute("type", "pendientes");
+			return "admins/offers/list";
+		}
+		return "error/401";
+	}
+	@RequestMapping("/cancelRequests")
+	public String listCancelRequests(HttpSession session, Model model)
+	{
+		if (Utils.isAdmin(session))
+		{
+			model.addAttribute("offers", ofertaProyectoDTODao.getAllCancelRequested());
+	        model.addAttribute("type", "a cancelar");
 			return "admins/offers/list";
 		}
 		return "error/401";
