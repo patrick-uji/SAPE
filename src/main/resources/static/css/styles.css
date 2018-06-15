@@ -41,7 +41,7 @@ body {
 	
     aling: center;
     margin: 10px;
-   position:absolute; /*El div será ubicado con relación a la pantalla*/
+   position:absolute; /*El div serï¿½ ubicado con relaciï¿½n a la pantalla*/
 	left:240px; /*A la derecha deje un espacio de 0px*/
 	right:0px; /*A la izquierda deje un espacio de 0px*/
 	bottom:0px; /*Abajo deje un espacio de 0px*/
@@ -60,7 +60,7 @@ body {
 	height: 100%;
     aling: center;
     margin: 10px;
-    position:absolute; /*El div será ubicado con relación a la pantalla*/
+    position:absolute; /*El div serï¿½ ubicado con relaciï¿½n a la pantalla*/
 	left:0px; /*A la derecha deje un espacio de 0px*/
 	right:0px; /*A la izquierda deje un espacio de 0px*/
 	bottom:0px; /*Abajo deje un espacio de 0px*/
@@ -190,12 +190,13 @@ div.botonS{
 
 h1 {
     padding: 15px;
-    color: darkorange;
+    font-weight: bold;
+    color: DARKSLATEGRAY;
 }
 
 
 h2 {
-    color: darkorange;
+    color: DARKSLATEGRAY;
 }
 
 h3 {

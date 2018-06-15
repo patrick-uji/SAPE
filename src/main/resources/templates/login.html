@@ -12,14 +12,17 @@
                         <td><input type="text" th:field="*{email}" pattern="\w+" placeholder="email" maxlength="20"/></td>
                     </tr>
                     <tr>
-                        <td class="register"><label>Password:</label></td>
-                        <td><input type="password" th:field="*{password}" placeholder="password"/>
-                        <!-- pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}" -->
-                    	<th:errors class="error" path="password"/></td>
+                        <td class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"/>
                     </tr>
                     <tr>
-                        <td ><input type="submit" value="Log in " class="button2"/></td>
-                        <td><input type="reset" value="Clear data" class="button2"/></td>
+                        <td class="register"><label>Password:</label></td>
+                        <td><input type="password" th:field="*{password}" placeholder="password"/></td>
+                        <!-- pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}" -->
+                        <td class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"/>
+                    </tr>
+                    <tr>
+                        <td><input type="submit" value="Log in " class="button2"/></td>
+						<td><input th:replace="templates :: botonRestablecer"/></td>
                     </tr>
                 </table>
 			</form>

@@ -3,6 +3,7 @@ import es.uji.ei1027.sape.Utils;
 import org.springframework.ui.Model;
 import javax.servlet.http.HttpSession;
 import es.uji.ei1027.sape.model.ProfesorTutor;
+import es.uji.ei1027.sape.validation.TeacherValidator;
 import es.uji.ei1027.sape.dao.ProfesorTutorDao;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -39,20 +40,27 @@ public class TeacherController
 		if (Utils.isAdmin(session))
 		{
 			model.addAttribute("teacher", new ProfesorTutor());
-	        model.addAttribute("action", "Crear");
-	        model.addAttribute("target", "");
+			Utils.setupCreateModel(model);
 	        return "admins/teachers/edit";
 		}
 		return "error/401";
     }
     @RequestMapping(method=RequestMethod.POST)
-    public String create(@ModelAttribute("teacher") ProfesorTutor teacher, HttpSession session, BindingResult bindingResult)
+    public String create(@ModelAttribute("teacher") ProfesorTutor teacher, HttpSession session, Model model, BindingResult bindingResult)
     {
 		Utils.debugLog("TutorTeacher CREATE");
 		if (Utils.isAdmin(session))
 		{
-			profesorTutorDao.create(teacher);
-	        return "redirect:teachers";
+			if (Utils.validate(new TeacherValidator(), teacher, bindingResult))
+			{
+				profesorTutorDao.create(teacher);
+		        return "redirect:teachers";
+			}
+			else
+			{
+				Utils.setupCreateModel(model);
+				return "admins/teachers/edit";
+			}
 		}
 		return "error/401";
     }
@@ -63,21 +71,27 @@ public class TeacherController
 		if (Utils.isAdmin(session))
 		{
 			model.addAttribute("teacher", profesorTutorDao.get(id));
-	        model.addAttribute("target", "/" + id + "/update");
-	        model.addAttribute("action", "Actualizar");
+			Utils.setupUpdateModel(model, id);
 	        return "admins/teachers/edit";
 		}
 		return "error/401";
     }
     @RequestMapping(value="/{id}/update", method=RequestMethod.POST)
-    public String update(@PathVariable int id, @ModelAttribute("teacher") ProfesorTutor teacher, HttpSession session, BindingResult bindingResult)
+    public String update(@PathVariable int id, @ModelAttribute("teacher") ProfesorTutor teacher, HttpSession session, Model model, BindingResult bindingResult)
     {
 		Utils.debugLog("Offers UPDATE[" + id + "]");
 		if (Utils.isAdmin(session))
 		{
-	        //if(bindingResult.hasErrors()) return "offers/update";
-	        profesorTutorDao.update(teacher);
-	        return "redirect:../../teachers";
+			if (Utils.validate(new TeacherValidator(), teacher, bindingResult))
+			{
+		        profesorTutorDao.update(teacher);
+		        return "redirect:../../teachers";
+			}
+			else
+			{
+				Utils.setupUpdateModel(model, id);
+				return "admins/teachers/edit";
+			}
 		}
 		return "error/401";
     }
