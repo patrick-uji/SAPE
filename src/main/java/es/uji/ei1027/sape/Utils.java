@@ -10,15 +10,24 @@ import es.uji.ei1027.sape.model.Usuario;
 import java.lang.reflect.ParameterizedType;
 import java.security.NoSuchAlgorithmException;
 import org.springframework.validation.Validator;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import es.uji.ei1027.sape.validation.LoginValidator;
 public class Utils
 {
 	private static final boolean DEBUG = true;
-	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
 	public static boolean isEmptyString(String string)
 	{
 		return string != null && string.trim().equals("");
+	}
+	public static String safeFormatDate(Date date)
+	{
+		return date != null ? formatDate(date) : null;
+	}
+	public static String formatDate(Date date)
+	{
+		return DATE_FORMAT.format(date);
 	}
 	public static Date stringToDate(String string)
 	{
@@ -34,10 +43,6 @@ public class Utils
 			}
 		}
 		return null;
-	}
-	public static String safeToString(Object object)
-	{
-		return object != null ? object.toString() : null;
 	}
 	public static String now()
 	{
@@ -139,6 +144,16 @@ public class Utils
 	{
 		validator.validate(obj, bindingResult);
 		return !bindingResult.hasErrors();
+	}
+	public static void setupCreateModel(Model model)
+	{
+        model.addAttribute("action", "Crear");
+        model.addAttribute("target", "");
+	}
+	public static void setupUpdateModel(Model model, int id)
+	{
+        model.addAttribute("target", "/" + id + "/update");
+        model.addAttribute("action", "Actualizar");
 	}
 	public static void debugLog(String message)
 	{

@@ -107,21 +107,27 @@ public class AssignmentController
 		if (Utils.isAdmin(session))
 		{
 			model.addAttribute("teacher", profesorTutorDao.get(id));
-	        model.addAttribute("target", "/" + id + "/update");
-	        model.addAttribute("action", "Actualizar");
+			Utils.setupUpdateModel(model, id);
 	        return "admins/assignments/edit";
 		}
 		return "error/401";
     }
     @RequestMapping(value="/{id}/update", method=RequestMethod.POST)
-    public String update(@PathVariable int id, @ModelAttribute("assignment") Asignacion assignment, HttpSession session, BindingResult bindingResult)
+    public String update(@PathVariable int id, @ModelAttribute("assignment") Asignacion assignment, HttpSession session, Model model, BindingResult bindingResult)
     {
 		Utils.debugLog("Assignments UPDATE[" + id + "]");
 		if (Utils.isAdmin(session))
 		{
-	        //if(bindingResult.hasErrors()) return "offers/update";
-			asignacionDao.update(assignment);
-	        return "redirect:../../assignments";
+			if (Utils.validate(null, assignment, bindingResult))
+			{
+				asignacionDao.update(assignment);
+		        return "redirect:../../assignments";
+			}
+			else
+			{
+				Utils.setupUpdateModel(model, id);
+		        return "admins/assignments/edit";
+			}
 		}
 		return "error/401";
     }

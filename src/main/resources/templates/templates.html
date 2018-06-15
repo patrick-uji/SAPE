@@ -19,6 +19,7 @@
     
     <div id="menu" th:fragment="menuCoordinador">
         <div th:replace="templates :: header"/>
+        <div th:text="${'Bienvenido ' + username}"/>
    		<ul>
 	   		<a href="/offers/pending" class="menu">
 	   		<li>
@@ -115,6 +116,8 @@
    		</ul>
 		<div class="botonS"><a class="salir" href="/logout">Cerrar Sesi&oacute;n</a></div>
    	</div>
+   	
+   	<input type="reset" value="Restablecer" class="button2" onclick="return confirm('¿Quieres restablecer los campos?')" th:fragment="botonRestablecer"/>
    	
    	<div th:fragment="listaPeticionCambios">
    		<div th:each="currPetition : ${petitions}">

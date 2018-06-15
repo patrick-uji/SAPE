@@ -1,6 +1,8 @@
 package es.uji.ei1027.sape.mappers;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import es.uji.ei1027.sape.Utils;
 import es.uji.ei1027.sape.enums.EstadoOferta;
 import es.uji.ei1027.sape.enums.Itinerario;
 import es.uji.ei1027.sape.model.OfertaProyecto;
@@ -27,8 +29,8 @@ public class OfertaProyectoMapper extends PrefixableMapper implements RowMapper<
     	ofertaProyecto.setObjetivo(resultSet.getString(prefix + "objetivo"));
     	ofertaProyecto.setEstado( EstadoOferta.fromID(resultSet.getInt(prefix + "id_EstadoOferta")) );
     	ofertaProyecto.setItinerario( Itinerario.fromID(resultSet.getInt(prefix + "id_Itinerario")) );
-    	ofertaProyecto.setFechaAlta(resultSet.getDate(prefix + "fechaAlta").toString());
-    	ofertaProyecto.setFechaUltimoCambio(resultSet.getDate(prefix + "fechaUltimoCambio").toString());
+    	ofertaProyecto.setFechaAlta( Utils.formatDate(resultSet.getDate(prefix + "fechaAlta")) );
+    	ofertaProyecto.setFechaUltimoCambio( Utils.formatDate(resultSet.getDate(prefix + "fechaUltimoCambio")) );
     	ofertaProyecto.setIdPersonaContacto(resultSet.getInt(prefix + "id_PersonaContacto"));
 	}
 }

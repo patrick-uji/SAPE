@@ -3,6 +3,7 @@ import es.uji.ei1027.sape.Utils;
 import org.springframework.ui.Model;
 import javax.servlet.http.HttpSession;
 import es.uji.ei1027.sape.model.Usuario;
+import es.uji.ei1027.sape.validation.OfferValidator;
 import es.uji.ei1027.sape.enums.EstadoOferta;
 import es.uji.ei1027.sape.model.OfertaProyecto;
 import es.uji.ei1027.sape.model.PeticionRevision;
@@ -71,9 +72,11 @@ public class OfferController
 			{
 				case BTC:
 				case CCD:
+					//TODO: Populate with visibles offers
+					model.addAttribute("offersSelection", new OffersSelection());
 			        model.addAttribute("offers", ofertaProyectoDTODao.getAllAccepted());
 			        model.addAttribute("type", "aceptadas");
-			        return "admins/offers/list";
+			        return "admins/offers/listAccepted";
 			    //break;
 				case EMPRESA:
 					model.addAttribute( "offers", ofertaProyectoDao.getAllFromCompany(user.getId()) );
@@ -93,6 +96,7 @@ public class OfferController
 	{
 		if (Utils.isAdmin(session))
 		{
+			model.addAttribute("username", "ESTO ES UN USUARIO MUY LARGO");
 			model.addAttribute("offers", ofertaProyectoDTODao.getAllPending());
 	        model.addAttribute("type", "pendientes");
 			return "admins/offers/list";
@@ -119,8 +123,7 @@ public class OfferController
 		{
 			model.addAttribute( "contactPersons", personaContactoDao.getAllFromCompany(user.getId()) );
 	        model.addAttribute("offer", new OfertaProyecto());
-	        model.addAttribute("action", "Crear");
-	        model.addAttribute("target", "");
+	        Utils.setupCreateModel(model);
 	        return "companies/offers/edit";
 		}
 		return "error/401";
@@ -161,22 +164,30 @@ public class OfferController
     	return "error/401";
     }
     @RequestMapping(method=RequestMethod.POST)
-    public String create(@ModelAttribute("offer") OfertaProyecto offer, HttpSession session, BindingResult bindingResult)
+    public String create(@ModelAttribute("offer") OfertaProyecto offer, HttpSession session, Model model, BindingResult bindingResult)
     {
 		Utils.debugLog("Offers CREATE");
 		Usuario user = Utils.getUser(session);
 		if (user.esEmpresa())
 		{
-			int totalProjects = empresaDao.get(user.getId()).getProyectosTotal() + 1;
-			String now = Utils.now();
-			offer.setFechaAlta(now);
-			offer.setFechaUltimoCambio(now);
-			offer.setEstado(EstadoOferta.INTRODUCIDA);
-			offer.setNumero(totalProjects);
-			ofertaProyectoDao.create(offer);
-			Utils.debugLog("proyectosTotal = " + totalProjects);
-			empresaDao.update(user.getId(), new String[] {"proyectosTotal"}, totalProjects);
-	        return "redirect:offers";
+			if (Utils.validate(new OfferValidator(), offer, bindingResult))
+			{
+				int totalProjects = empresaDao.get(user.getId()).getProyectosTotal() + 1;
+				String now = Utils.now();
+				offer.setFechaAlta(now);
+				offer.setFechaUltimoCambio(now);
+				offer.setEstado(EstadoOferta.INTRODUCIDA);
+				offer.setNumero(totalProjects);
+				ofertaProyectoDao.create(offer);
+				empresaDao.update(user.getId(), new String[] {"proyectosTotal"}, totalProjects);
+		        return "redirect:offers";
+			}
+			else
+			{
+				model.addAttribute( "contactPersons", personaContactoDao.getAllFromCompany(user.getId()) );
+		        Utils.setupCreateModel(model);
+		        return "companies/offers/edit";
+			}
 		}
 		return "error/401";
    }
@@ -201,23 +212,31 @@ public class OfferController
 				model.addAttribute("petitions", peticionRevisionDTODao.getAllFromOffer(id));
 		        model.addAttribute("offer", ofertaProyectoDao.get(id));
 				model.addAttribute("statuses", EstadoOferta.values());
-		        model.addAttribute("target", "/" + id + "/update");
-		        model.addAttribute("action", "Actualizar");
+				Utils.setupUpdateModel(model, id);
 		        return "companies/offers/edit";
 			//break;
 			default: return "error/401";
 		}
    }
    @RequestMapping(value="/{id}/update", method=RequestMethod.POST)
-   public String update(@PathVariable int id, @ModelAttribute("offer") OfertaProyecto offer, HttpSession session, BindingResult bindingResult)
+   public String update(@PathVariable int id, @ModelAttribute("offer") OfertaProyecto offer, HttpSession session, Model model, BindingResult bindingResult)
    {
 		Utils.debugLog("Offers UPDATE[" + id + "]");
-		if (Utils.isCompany(session))
+		Usuario user = Utils.getUser(session);
+		if (Utils.isCompany(user))
 		{
-	        //if(bindingResult.hasErrors()) return "offers/update";
-			ofertaProyectoDao.update(id, new String[] {"titulo", "objetivo", "id_Itinerario", "id_PersonaContacto", "fechaUltimoCambio"},
-									 offer.getTitulo(), offer.getObjetivo(), offer.getItinerario().getID(), offer.getIdPersonaContacto(), Utils.nowDate());
-	        return "redirect:../../offers";
+			if (Utils.validate(new OfferValidator(), offer, bindingResult))
+			{
+				ofertaProyectoDao.update(id, new String[] {"titulo", "objetivo", "id_Itinerario", "id_PersonaContacto", "fechaUltimoCambio"},
+										 offer.getTitulo(), offer.getObjetivo(), offer.getItinerario().getID(), offer.getIdPersonaContacto(), Utils.nowDate());
+		        return "redirect:../../offers";
+			}
+			else
+			{
+				model.addAttribute( "contactPersons", personaContactoDao.getAllFromCompany(user.getId()) );
+				Utils.setupUpdateModel(model, id);
+		        return "companies/offers/edit";
+			}
 		}
 		return "error/401";
    }

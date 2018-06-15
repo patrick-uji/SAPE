@@ -3,6 +3,7 @@ import es.uji.ei1027.sape.Utils;
 import org.springframework.ui.Model;
 import javax.servlet.http.HttpSession;
 import es.uji.ei1027.sape.model.Usuario;
+import es.uji.ei1027.sape.validation.ContactPersonValidator;
 import es.uji.ei1027.sape.model.PersonaContacto;
 import es.uji.ei1027.sape.dao.PersonaContactoDao;
 import org.springframework.stereotype.Controller;
@@ -41,23 +42,30 @@ public class ContactPersonController
 		Usuario user = Utils.getUser(session);
 		if (user.esEmpresa())
 		{
+			Utils.setupCreateModel(model);
 			model.addAttribute("contactPerson", new PersonaContacto());
-	        model.addAttribute("action", "Crear");
-	        model.addAttribute("target", "");
 	        return "companies/contactPersons/edit";
 		}
 		return "error/401";
     }
     @RequestMapping(method=RequestMethod.POST)
-    public String create(@ModelAttribute("contactPerson") PersonaContacto contactPerson, HttpSession session, BindingResult bindingResult)
+    public String create(@ModelAttribute("contactPerson") PersonaContacto contactPerson, HttpSession session, Model model, BindingResult bindingResult)
     {
 		Utils.debugLog("ContactPersons CREATE");
 		Usuario user = Utils.getUser(session);
 		if (user.esEmpresa())
 		{
-			contactPerson.setIDEmpresa(user.getId());
-			personaContactoDao.create(contactPerson);
-	        return "redirect:contactPersons";
+			if (Utils.validate(new ContactPersonValidator(), contactPerson, bindingResult))
+			{
+				contactPerson.setIDEmpresa(user.getId());
+				personaContactoDao.create(contactPerson);
+		        return "redirect:contactPersons";
+			}
+			else
+			{
+				Utils.setupCreateModel(model);
+		        return "companies/contactPersons/edit";
+			}
 		}
 		return "error/401";
     }
@@ -70,24 +78,30 @@ public class ContactPersonController
 		{
 			//TODO: Check if he owns the resource
 			model.addAttribute("contactPerson", personaContactoDao.get(id));
-	        model.addAttribute("target", "/" + id + "/update");
-	        model.addAttribute("action", "Actualizar");
+			Utils.setupUpdateModel(model, id);
 	        return "companies/contactPersons/edit";
 		}
 		return "error/401";
     }
     @RequestMapping(value="/{id}/update", method=RequestMethod.POST)
-    public String update(@PathVariable int id, @ModelAttribute("contactPerson") PersonaContacto contactPerson, HttpSession session, BindingResult bindingResult)
+    public String update(@PathVariable int id, @ModelAttribute("contactPerson") PersonaContacto contactPerson, HttpSession session, Model model, BindingResult bindingResult)
     {
 		Utils.debugLog("Offers UPDATE[" + id + "]");
 		Usuario user = Utils.getUser(session);
 		if (user.esEmpresa())
 		{
-	        //if(bindingResult.hasErrors()) return "offers/update";
-			contactPerson.setId(id);
-			contactPerson.setIDEmpresa(user.getId());
-	        personaContactoDao.update(contactPerson);
-	        return "redirect:../../contactPersons";
+			if (Utils.validate(new ContactPersonValidator(), contactPerson, bindingResult))
+			{
+				contactPerson.setId(id);
+				contactPerson.setIDEmpresa(user.getId());
+		        personaContactoDao.update(contactPerson);
+		        return "redirect:../../contactPersons";
+			}
+			else
+			{
+				Utils.setupUpdateModel(model, id);
+		        return "companies/contactPersons/edit";
+			}
 		}
 		return "error/401";
     }

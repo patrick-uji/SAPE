@@ -10,10 +10,12 @@
 					<tr>
 						<td class="register">Titulo</td>
 						<td><input type="text" th:field="*{titulo}"/></td>
+						<td class="error" th:if="${#fields.hasErrors('titulo')}" th:errors="*{titulo}"/>
 					</tr>
 					<tr>
 						<td class="register">Objetivo</td>
 						<td><textarea th:field="*{objetivo}"/></td>
+						<td class="error" th:if="${#fields.hasErrors('objetivo')}" th:errors="*{objetivo}"/>
 					</tr>
 					<tr>
 						<td class="register">Itinerario</td>
@@ -35,7 +37,7 @@
 					</tr>
 					<tr>
 						<td><input type="submit" th:value="${action + ' oferta'}" class="button2"/></td>
-						<td><input type="reset" value="Clear data" class="button2" onclick="return confirm('Do you want to clear your data?')"/></td>
+						<td><input th:replace="templates :: botonRestablecer"/></td>
 					</tr>
 				</table>
 			</form>
