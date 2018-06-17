@@ -1,12 +1,18 @@
 package es.uji.ei1027.sape.controller;
 import es.uji.ei1027.sape.Utils;
 import org.springframework.ui.Model;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 import es.uji.ei1027.sape.model.Usuario;
 import es.uji.ei1027.sape.validation.OfferValidator;
 import es.uji.ei1027.sape.enums.EstadoOferta;
+import es.uji.ei1027.sape.model.Alumno;
 import es.uji.ei1027.sape.model.OfertaProyecto;
 import es.uji.ei1027.sape.model.PeticionRevision;
+import es.uji.ei1027.sape.dao.AlumnoDao;
 import es.uji.ei1027.sape.dao.EmpresaDao;
 import es.uji.ei1027.sape.dao.PersonaContactoDao;
 import es.uji.ei1027.sape.dao.OfertaProyectoDao;
@@ -14,6 +20,8 @@ import es.uji.ei1027.sape.dao.PeticionRevisionDao;
 import es.uji.ei1027.sape.dao.dto.OfertaProyectoDTODao;
 import es.uji.ei1027.sape.dao.dto.PeticionRevisionDTODao;
 import es.uji.ei1027.sape.domain.OffersSelection;
+import es.uji.ei1027.sape.dto.OfertaProyectoDTO;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,12 +33,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 @RequestMapping("/offers")
 public class OfferController
 {
+	private AlumnoDao alumnoDao;
 	private EmpresaDao empresaDao;
 	private OfertaProyectoDao ofertaProyectoDao;
 	private PersonaContactoDao personaContactoDao;
 	private PeticionRevisionDao peticionRevisionDao;
 	private OfertaProyectoDTODao ofertaProyectoDTODao;
 	private PeticionRevisionDTODao peticionRevisionDTODao;
+	@Autowired
+	public void setAlumnoDao(AlumnoDao alumnoDao)
+	{
+		this.alumnoDao = alumnoDao;
+	}
 	@Autowired
 	public void setEmpresaDao(EmpresaDao empresaDao)
 	{
@@ -72,10 +86,19 @@ public class OfferController
 			{
 				case BTC:
 				case CCD:
-					//TODO: Populate with visibles offers
-					model.addAttribute("offersSelection", new OffersSelection());
-			        model.addAttribute("offers", ofertaProyectoDTODao.getAllAccepted());
-			        model.addAttribute("type", "aceptadas");
+					List<OfertaProyectoDTO> offers = ofertaProyectoDTODao.getAllAccepted();
+					OffersSelection offersSelection = new OffersSelection();
+					List<Integer> selectedOffers = new ArrayList<Integer>();
+					offersSelection.setSelectedOffers(selectedOffers);
+					for (OfertaProyectoDTO currOffer : offers)
+					{
+						if (currOffer.getEstado() == EstadoOferta.VISIBLE)
+						{
+							selectedOffers.add(currOffer.getId());
+						}
+					}
+					model.addAttribute("offersSelection", offersSelection);
+			        model.addAttribute("offers", offers);
 			        return "admins/offers/listAccepted";
 			    //break;
 				case EMPRESA:
@@ -83,7 +106,8 @@ public class OfferController
 			        return "companies/offers/list";
 			    //break;
 			    default: //case ALUMNO:
-			        model.addAttribute( "offers", ofertaProyectoDTODao.getAllChoosable(user.getId()) );
+			    	Alumno student = alumnoDao.get(user.getId());
+			        model.addAttribute( "offers", ofertaProyectoDTODao.getAllChoosable(user.getId(), student.getItinerario()) );
 			        model.addAttribute("offersSelection", new OffersSelection());
 			        return "students/offers/list";
 				//break;
@@ -96,20 +120,8 @@ public class OfferController
 	{
 		if (Utils.isAdmin(session))
 		{
-			model.addAttribute("username", "ESTO ES UN USUARIO MUY LARGO");
-			model.addAttribute("offers", ofertaProyectoDTODao.getAllPending());
-	        model.addAttribute("type", "pendientes");
-			return "admins/offers/list";
-		}
-		return "error/401";
-	}
-	@RequestMapping("/cancelRequests")
-	public String listCancelRequests(HttpSession session, Model model)
-	{
-		if (Utils.isAdmin(session))
-		{
-			model.addAttribute("offers", ofertaProyectoDTODao.getAllCancelRequested());
-	        model.addAttribute("type", "a cancelar");
+			model.addAttribute("cancelRequestedOffers", ofertaProyectoDTODao.getAllCancelRequested());
+			model.addAttribute("pendingOffers", ofertaProyectoDTODao.getAllPending());
 			return "admins/offers/list";
 		}
 		return "error/401";
@@ -119,7 +131,7 @@ public class OfferController
     {
 		Utils.debugLog("Offers ADD");
 		Usuario user = Utils.getUser(session);
-		if (user.esEmpresa())
+		if (Utils.isCompany(user))
 		{
 			model.addAttribute( "contactPersons", personaContactoDao.getAllFromCompany(user.getId()) );
 	        model.addAttribute("offer", new OfertaProyecto());
@@ -133,21 +145,25 @@ public class OfferController
     {
     	if (Utils.isAdmin(session))
     	{
-    		ofertaProyectoDao.update(id, new String[] {"id_EstadoOferta"}, EstadoOferta.ACEPTADA.getID());
+    		setOfferStatus(id, EstadoOferta.ACEPTADA);
     		return "redirect:../pending";
     	}
     	return "error/401";
+    }
+    private void setOfferStatus(int id, EstadoOferta status)
+    {
+    	ofertaProyectoDao.update(id, new String[] {"id_EstadoOferta"}, status.getID());
     }
     @RequestMapping(value="/{id}/petition", method=RequestMethod.POST)
     public String createPetition(@PathVariable("id") int id, @ModelAttribute("petition") PeticionRevision petition, HttpSession session)
     {
     	Usuario user = Utils.getUser(session);
-    	if (user.esSuperAdmin())
+    	if (Utils.isSuperAdmin(user))
     	{
     		petition.setFecha(Utils.now());
     		petition.setIDOfertaProyect(id);
     		petition.setIDAdmin(user.getId());
-    		ofertaProyectoDao.update(id, new String[] {"id_EstadoOferta"}, EstadoOferta.PENDIENTE_REVISION.getID());
+    		setOfferStatus(id, EstadoOferta.PENDIENTE_REVISION);
     		peticionRevisionDao.create(petition);
     		return "redirect:../pending";
     	}
@@ -158,11 +174,61 @@ public class OfferController
     {
     	if (Utils.isAdmin(session))
     	{
-    		ofertaProyectoDao.update(id, new String[] {"id_EstadoOferta"}, EstadoOferta.RECHAZADA.getID());
+    		setOfferStatus(id, EstadoOferta.RECHAZADA);
     		return "redirect:../pending";
     	}
     	return "error/401";
     }
+	@RequestMapping("/{id}/show")
+	public String show(@PathVariable("id") int id, HttpSession session)
+	{
+		if (Utils.isSuperAdmin(session))
+		{
+    		setOfferStatus(id, EstadoOferta.VISIBLE);
+    		return "redirect:../../offers";
+		}
+		return "error/401";
+	}
+	@RequestMapping("/{id}/hide")
+	public String hide(@PathVariable("id") int id, HttpSession session)
+	{
+		if (Utils.isSuperAdmin(session))
+		{
+    		setOfferStatus(id, EstadoOferta.ACEPTADA);
+    		return "redirect:../../offers";
+		}
+		return "error/401";
+	}
+	@RequestMapping("/{id}/cancel")
+	public String cancel(@PathVariable("id") int id, HttpSession session)
+	{
+		Usuario user = Utils.getUser(session);
+		switch (user.getTipo())
+		{
+			case BTC:
+	    		setOfferStatus(id, EstadoOferta.ANULADA);
+				return "redirect:../../offers";
+			//break;
+			case EMPRESA:
+				OfertaProyecto offer = ofertaProyectoDao.get(id);
+		    	ofertaProyectoDao.update(id, new String[] {"id_EstadoOferta", "id_EstadoOfertaPreAnulacion"},
+		    							 EstadoOferta.PENDIENTE_ANULACION.getID(), offer.getEstado().getID());
+				return "redirect:../../offers";
+			//break;
+			default: return "error/401";
+		}
+	}
+	@RequestMapping("/{id}/restore")
+	public String restore(@PathVariable("id") int id, HttpSession session)
+	{
+		if (Utils.isSuperAdmin(session))
+		{
+			OfertaProyecto offer = ofertaProyectoDao.get(id);
+			setOfferStatus(id, offer.getEstadoPreAnulacion());
+    		return "redirect:../../offers";
+		}
+		return "error/401";
+	}
     @RequestMapping(method=RequestMethod.POST)
     public String create(@ModelAttribute("offer") OfertaProyecto offer, HttpSession session, Model model, BindingResult bindingResult)
     {
@@ -199,7 +265,6 @@ public class OfferController
 		switch (user.getTipo())
 		{
 			case BTC:
-				model.addAttribute("isSuperAdmin", true);
 	    		model.addAttribute("petition", new PeticionRevision());
 			case CCD:
 				model.addAttribute("petitions", peticionRevisionDTODao.getAllFromOffer(id));

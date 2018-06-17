@@ -78,7 +78,7 @@ public class OfferPreferencesController
 				Utils.debugLog("Selected offer with ID: " + selectedOfferID);
 				preferenciaAlumnoDao.create(newPreference);
 			}
-			return "redirect:offers";
+			return "redirect:offerPreferences";
 		}
 		return "error/401";
 	}
@@ -114,7 +114,7 @@ public class OfferPreferencesController
 			if (currPreferenceOrder > preferences.size())
 			{
 				//ERROR: Order must be in range!
-				Utils.debugLog("Order must be in range!");
+				Utils.debugLog("ERROR: Order must be in range!");
 				return false;
 			}
 			else if (seenOrders.contains(currPreferenceOrder))

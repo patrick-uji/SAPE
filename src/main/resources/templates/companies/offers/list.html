@@ -11,19 +11,27 @@
 					<th>Titulo</th>
 					<th>Estado</th>
 					<th>Itinerario</th>
-					<th>FechaAlta</th>
-					<th>FechaUltimoCambio</th>
-					<th colspan="2">Action</th>
+					<th colspan="3">Action</th>
 				</tr>
 				<tr th:each="currOffer : ${offers}">
 					<td th:text="${currOffer.numero}"/>
 					<td th:text="${currOffer.titulo}"/>
 					<td th:text="${currOffer.estado.getName()}"/>
 					<td th:text="${currOffer.itinerario.getName()}"/>
-					<td th:text="${currOffer.fechaAlta}"/>
-					<td th:text="${currOffer.fechaUltimoCambio}"/>
-					<td><a th:href="@{/offers/{id}( id=${currOffer.id} )}">Edit</a></td>
-					<td><a th:href="@{/offers/{id}/delete( id=${currOffer.id} )}" onclick="return confirm('Do you want to delete this offer?')">Delete</a></td>
+					<td>
+						<a th:href="@{/offers/{id}( id=${currOffer.id} )}" th:text="Editar"
+						   th:if="${T(es.uji.ei1027.sape.ThymeUtils).canEditOffer(currOffer)}"/>
+						<a class="disabledLink" th:text="Editar"
+						   th:if="${!T(es.uji.ei1027.sape.ThymeUtils).canEditOffer(currOffer)}"/>
+					</td>
+					<td>
+						<a th:href="@{/offers/{id}/delete( id=${currOffer.id} )}" onclick="return confirm('Seguro que quieres eliminar esta oferta?')" th:text="Eliminar"
+						   th:if="${T(es.uji.ei1027.sape.ThymeUtils).canDeleteOffer(currOffer)}"/>
+						<a th:href="@{/offers/{id}/cancel( id=${currOffer.id} )}" onclick="return confirm('Seguro que quieres anular esta oferta?')" th:text="Anular"
+						   th:if="${T(es.uji.ei1027.sape.ThymeUtils).canCancelOffer(currOffer)}"/>
+						<a class="disabledLink" th:text="Anular"
+						   th:if="${currOffer.estado == T(es.uji.ei1027.sape.enums.EstadoOferta).PENDIENTE_ANULACION}"/>
+					</td>
 				</tr>
 			</table>
 			<input type="button" class = "addOferta" onclick=" location.href='/offers/add' " value="A&ntilde;adir oferta" name="boton" /> 

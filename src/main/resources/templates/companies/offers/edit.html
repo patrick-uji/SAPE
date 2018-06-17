@@ -29,14 +29,18 @@
 					<tr>
 						<td class="register">Persona de contacto</td>
 						<td>
-							<select th:field="*{idPersonaContacto}">
+							<select th:field="*{idPersonaContacto}"
+							 th:if="${!contactPersons.isEmpty()}">
 								<option th:each="currContactPerson : ${contactPersons}"
 										th:value="${currContactPerson.id}" th:text="${currContactPerson.nombre}"/>
 							</select>
+							<div th:if="${contactPersons.isEmpty()}">
+								<h3>Por favor, cree una persona de contacto</h3>
+							</div>
 						</td>
 					</tr>
 					<tr>
-						<td><input type="submit" th:value="${action + ' oferta'}" class="button2"/></td>
+						<td><input type="submit" class="button2" th:value="${action + ' oferta'}" th:disabled="${contactPersons.isEmpty()}"/></td>
 						<td><input th:replace="templates :: botonRestablecer"/></td>
 					</tr>
 				</table>

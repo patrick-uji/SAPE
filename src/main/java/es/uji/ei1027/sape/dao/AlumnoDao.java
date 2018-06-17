@@ -5,24 +5,22 @@ import java.util.List;
 
 import es.uji.ei1027.sape.enums.EstadoAsignacion;
 import es.uji.ei1027.sape.enums.Itinerario;
+import es.uji.ei1027.sape.mappers.AlumnoMapper;
+import es.uji.ei1027.sape.mappers.ProfesorTutorMapper;
 import es.uji.ei1027.sape.model.Alumno;
 import org.springframework.stereotype.Component;
 @Component
 public class AlumnoDao extends AbstractDao<Alumno>
 {
+	private AlumnoMapper rowMapper;
+	public AlumnoDao()
+	{
+		this.rowMapper = new AlumnoMapper();
+	}
 	@Override
 	public Alumno mapRow(ResultSet resultSet, int rowNum) throws SQLException
     {
-    	Alumno alumno = new Alumno();
-    	alumno.setId(resultSet.getInt("id"));
-    	alumno.setDni(resultSet.getString("dni"));
-    	alumno.setNombre(resultSet.getString("nombre"));
-    	alumno.setNotaMedia(resultSet.getFloat("notaMedia"));
-    	alumno.setItinerario( Itinerario.fromID(resultSet.getInt("id_Itinerario")) );
-    	alumno.setNumeroCreditos(resultSet.getInt("numeroCreditos"));
-    	alumno.setAsignaturasPendientes(resultSet.getInt("asignaturasPendientes"));
-    	alumno.setSemestreInicioEstancia(resultSet.getInt("semestreInicioEstancia"));
-        return alumno;
+		return rowMapper.mapRow(resultSet, rowNum);
     }
     public Alumno get(String dni)
     {
@@ -30,7 +28,9 @@ public class AlumnoDao extends AbstractDao<Alumno>
     }
 	public List<Alumno> getAllPending()
 	{
-		return jdbcTemplate.query("SELECT * FROM Alumno WHERE id NOT IN (SELECT id_Alumno FROM Asignacion WHERE id_EstadoAsignacion != ?)", new Object[] {EstadoAsignacion.RECHAZADA.getID()}, this);
+		return jdbcTemplate.query("SELECT * FROM Alumno WHERE id NOT IN (SELECT id_Alumno FROM Asignacion WHERE id_EstadoAsignacion IN (?,?)) AND " +
+														     "id IN (SELECT a.id FROM Alumno AS a JOIN PreferenciaAlumno AS p ON p.id_Alumno = a.id GROUP BY a.id HAVING COUNT(p.id) >= 5) GROUP BY id",
+								  new Object[] {EstadoAsignacion.ENVIADA.getID(), EstadoAsignacion.ACEPTADA.getID()}, this);
 	}
 	@Override
     public void create(Alumno model)

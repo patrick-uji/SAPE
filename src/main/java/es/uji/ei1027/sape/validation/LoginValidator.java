@@ -10,11 +10,11 @@ public class LoginValidator extends BaseValidator<Login>
 		Login user = (Login)obj;
 		if ( Utils.isEmptyString(user.getEmail()) )
 		{
-			errors.rejectValue("email", "Error", "Por favor introduce tu email");
+			errors.rejectValue("email", "no_email", "Por favor introduce tu email");
 		}
 		if ( Utils.isEmptyString(user.getPassword()) )
 		{
-			errors.rejectValue("password", "Error", "Por favor introduce tu password");
+			errors.rejectValue("password", "no_password", "Por favor introduce tu password");
 		}
 	}
 }

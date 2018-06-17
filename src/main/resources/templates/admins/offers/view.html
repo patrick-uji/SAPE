@@ -35,26 +35,41 @@
 					<td th:text="${offer.personaContacto.descripcionPracticas}"/>
 				</tr>
 			</table>
-			<div th:if="${isSuperAdmin}" class="aceptar1">
-				<a th:href="@{/offers/{id}/reject( id=${offer.id} )}" onclick="return confirm('Seguro que quieres rechazar esta oferta?')">Rechazar</a>
-				<a th:href="@{/offers/{id}/accept( id=${offer.id} )}" onclick="return confirm('Seguro que quieres aceptar esta oferta?')">Aceptar</a>
+			
+			<div th:if="${T(es.uji.ei1027.sape.ThymeUtils).canAcceptDeclineOffer(offer)}">
+				<div class="aceptar1">
+					<a th:href="@{/offers/{id}/reject( id=${offer.id} )}" onclick="return confirm('Seguro que quieres rechazar esta oferta?')">Rechazar</a>
+					<a th:href="@{/offers/{id}/accept( id=${offer.id} )}" onclick="return confirm('Seguro que quieres aceptar esta oferta?')">Aceptar</a>
+				</div>
+				
+				<div th:replace="templates :: listaPeticionCambios"/>
+				
+				<form method="POST" th:action="@{/offers/{id}/petition( id=${offer.id} )}" th:object="${petition}"
+				 th:if="${session.user.esSuperAdmin()}">
+					<table class="table">
+						<tr>
+							<td class="register">Mensaje</td>
+							<td><textarea th:field="*{textoPeticion}"/></td>
+						</tr>
+						<tr>
+							<td><input type="submit" value="Enviar petición" class="button2"/></td>
+							<td><input th:replace="templates :: botonRestablecer"/></td>
+						</tr>
+					</table>
+				</form>
 			</div>
-			
-			<div th:replace="templates :: listaPeticionCambios"/>
-			
-			<form method="POST" th:action="@{/offers/{id}/petition( id=${offer.id} )}" th:object="${petition}"
-			 th:if="${isSuperAdmin}">
-				<table class="table">
-					<tr>
-						<td class="register">Texto</td>
-						<td><textarea th:field="*{textoPeticion}"/></td>
-					</tr>
-					<tr>
-						<td ><input type="submit" value="Enviar petición" class="button2"/></td>
-						<td><input type="reset" value="Clear data" class="button2" onclick="return confirm('Do you want to clear your data?')"/></td>
-					</tr>
-				</table>
-			</form>
+			<div class="aceptar1" th:if="${session.user.esSuperAdmin()}">
+				<div th:if="${T(es.uji.ei1027.sape.ThymeUtils).canHideShowOffer(offer)}">
+					<a th:href="@{/offers/{id}/show( id=${offer.id} )}" th:text="${'Hacer visible'}" onclick="return confirm('Seguro que quieres hacer visible esta oferta?')"
+					   th:if="${offer.estado == T(es.uji.ei1027.sape.enums.EstadoOferta).ACEPTADA}"/>
+					<a th:href="@{/offers/{id}/hide( id=${offer.id} )}" th:text="${'Ocultar oferta'}" onclick="return confirm('Seguro que quieres hacer ocultar esta oferta?')"
+					   th:if="${offer.estado == T(es.uji.ei1027.sape.enums.EstadoOferta).VISIBLE}"/>
+				</div>
+				<div th:if="${offer.estado == T(es.uji.ei1027.sape.enums.EstadoOferta).PENDIENTE_ANULACION}">
+					<a th:href="@{/offers/{id}/restore( id=${offer.id} )}" onclick="return confirm('Seguro que quieres restaurar esta oferta?')">Restaurar oferta</a>
+					<a th:href="@{/offers/{id}/cancel( id=${offer.id} )}" onclick="return confirm('Seguro que quieres anular esta oferta?')">Anular oferta</a>
+				</div>
+			</div>
 		</div>
         <div th:replace="templates :: footer"/>
 	</body>

@@ -4,9 +4,9 @@
     <body>
         <div th:replace="templates :: menuCoordinador"/>
 		<div class="content1">
-			<h1 th:text="${'Lista de ofertas ' + type}"/>
+			<h1>Lista de ofertas pendientes</h1>
 			<table class="list"
-			 th:if="${!offers.isEmpty()}">
+			 th:if="${!pendingOffers.isEmpty()}">
 				<tr>
 					<th>Titulo</th>
 					<th>Empresa</th>
@@ -14,7 +14,7 @@
 					<th>FechaUltimoCambio</th>
 					<th>Acción</th>
 				</tr>
-				<tr th:each="currOffer : ${offers}">
+				<tr th:each="currOffer : ${pendingOffers}">
 					<td th:text="${currOffer.titulo}"/>
 					<td th:text="${currOffer.empresa.nombre}"/>
 					<td th:text="${currOffer.fechaAlta}"/>
@@ -22,8 +22,30 @@
 					<td><a th:href="@{/offers/{id}( id=${currOffer.id} )}">Ver oferta</a></td>
 				</tr>
 			</table>
-			<div th:if="${offers.isEmpty()}">
-				<h2 th:text="${'No hay ofertas ' + type + '...'}"/>
+			<div th:if="${pendingOffers.isEmpty()}">
+				<h2>No hay ofertas pendientes...</h2>
+			</div>
+			
+			<div th:if="${session.user.esSuperAdmin()}">
+				<h1>Lista de ofertas a cancelar</h1>
+				<table class="list"
+				 th:if="${!cancelRequestedOffers.isEmpty()}">
+					<tr>
+						<th>Titulo</th>
+						<th>Empresa</th>
+						<th>FechaAlta</th>
+						<th>Acción</th>
+					</tr>
+					<tr th:each="currOffer : ${cancelRequestedOffers}">
+						<td th:text="${currOffer.titulo}"/>
+						<td th:text="${currOffer.empresa.nombre}"/>
+						<td th:text="${currOffer.fechaAlta}"/>
+						<td><a th:href="@{/offers/{id}( id=${currOffer.id} )}">Ver oferta</a></td>
+					</tr>
+				</table>
+				<div th:if="${cancelRequestedOffers.isEmpty()}">
+					<h2>No hay ofertas a cancelar...</h2>
+				</div>
 			</div>
 		</div>
         <div th:replace="templates :: footer"/>

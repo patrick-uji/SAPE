@@ -14,11 +14,11 @@ public class OfferValidator extends BaseValidator<OfertaProyecto>
 		OfertaProyecto offer = (OfertaProyecto)obj;
 		if ( Utils.isEmptyString(offer.getTitulo()) )
 		{
-			errors.rejectValue("titulo", "Error", "Por favor introduce un titulo");
+			errors.rejectValue("titulo", "no_title", "Por favor introduce un titulo");
 		}
 		if ( Utils.isEmptyString(offer.getObjetivo()) )
 		{
-			errors.rejectValue("objetivo", "Error", "Por favor introduce un objetivo");
+			errors.rejectValue("objetivo", "no_objective", "Por favor introduce un objetivo");
 		}
 	}
 }

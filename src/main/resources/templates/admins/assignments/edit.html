@@ -4,8 +4,8 @@
     <body>
         <div th:replace="templates :: menuCoordinador"/>
 		<div class="content1">
-			<h1>Crear Asignacion</h1>
-			<form method="POST" th:action="@{/students{target}( target=${target} )}" th:object="${assignment}">
+			<h1 th:text="${action + ' Asignación'}"/>
+			<form method="POST" th:action="@{{target}( target=${target} )}" th:object="${assignment}">
 				<table class="table">
 					<tr>
 						<td>DNI</td>
@@ -35,24 +35,41 @@
 						<td>Semestre Inicio Estancia</td>
 						<td th:text="${student.semestreInicioEstancia}"/>
 					</tr>
+				<div th:if="${T(es.uji.ei1027.sape.ThymeUtils).canEditAssignment(assignment, session.user)}">
 					<tr>
 						<td class="register">Tutor</td>
 						<td>
-							<select th:field="*{idProfesorTutor}">
+							<select th:field="*{idProfesorTutor}"
+							 th:if="${!teachers.isEmpty()}">
 								<option th:each="currTeacher : ${teachers}"
 										th:value="${currTeacher.id}" th:text="${currTeacher.nombre}"/>
 							</select>
+							<div th:if="${teachers.isEmpty()}">
+								<h3>Por favor, cree un profesor tutor</h3>
+							</div>
 						</td>
 					</tr>
 					<tr>
 						<td class="register">Proyecto</td>
-						<td><input th:each="currPreference : ${preferences}" th:type="radio"
-							 	   th:field="*{idOfertaProyecto}" th:value="${currPreference.idOfertaProyecto}" th:text="${'[' + currPreference.orden + '] ' + currPreference.ofertaProyecto.titulo}"/></td>
+						<td th:if="${!preferences.isEmpty()}">
+							<input th:each="currPreference : ${preferences}" th:type="radio"
+							 	   th:field="*{idOfertaProyecto}" th:value="${currPreference.idOfertaProyecto}" th:text="${'[' + currPreference.orden + '] ' + currPreference.ofertaProyecto.titulo}"/>
+				 	   </td>
+				 	   <td th:if="${preferences.isEmpty()}">
+							<h3>Este alumno no tiene preferencias disponibles</h3>
+				 	   </td>
 					</tr>
 					<tr>
-						<td class="register"><input type="submit" th:value="Crear" class="button2"/></td>
-						<td><input type="reset" value="Clear data" class="button2" onclick="return confirm('Do you want to clear your data?')"/></td>
+						<td class="register"><input type="submit" th:value="${action}" class="button2"/></td>
+						<td><input th:replace="templates :: botonRestablecer"/></td>
 					</tr>
+				</div>
+				<div th:if="${!T(es.uji.ei1027.sape.ThymeUtils).canEditAssignment(assignment, session.user)}">
+					<tr>
+						<td>Tutor</td>
+						<td th:text="${teacher.nombre}"/>
+					</tr>
+				</div>
 				</table>
 			</form>
 			

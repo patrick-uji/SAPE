@@ -1,15 +1,25 @@
 package es.uji.ei1027.sape.dto;
 import es.uji.ei1027.sape.model.Empresa;
+import es.uji.ei1027.sape.model.Alumno;
 import es.uji.ei1027.sape.model.Asignacion;
 import es.uji.ei1027.sape.model.ProfesorTutor;
 import es.uji.ei1027.sape.model.OfertaProyecto;
 import es.uji.ei1027.sape.model.PersonaContacto;
 public class AsignacionDTO extends Asignacion
 {
+	private Alumno alumno;
 	private Empresa empresa;
 	private ProfesorTutor profesorTutor;
 	private OfertaProyecto ofertaProyecto;
 	private PersonaContacto personaContacto;
+	public Alumno getAlumno()
+	{
+		return alumno;
+	}
+	public void setAlumno(Alumno alumno)
+	{
+		this.alumno = alumno;
+	}
 	public Empresa getEmpresa()
 	{
 		return empresa;

@@ -13,15 +13,15 @@ public class ContactPersonValidator extends BaseValidator<PersonaContacto>
 		PersonaContacto contactPerson = (PersonaContacto)obj;
 		if ( Utils.isEmptyString(contactPerson.getNombre()) )
 		{
-			errors.rejectValue("nombre", "Error", "Por favor introduce un nombre");
+			errors.rejectValue("nombre", "no_name", "Por favor introduce un nombre");
 		}
 		if ( Utils.isEmptyString(contactPerson.getEmail()) )
 		{
-			errors.rejectValue("email", "Error", "Por favor introduce un email");
+			errors.rejectValue("email", "no_email", "Por favor introduce un email");
 		}
 		if ( Utils.isEmptyString(contactPerson.getDescripcionPracticas()) )
 		{
-			errors.rejectValue("descripcionPracticas", "Error", "Por favor introduce una descripción");
+			errors.rejectValue("descripcionPracticas", "no_description", "Por favor introduce una descripción");
 		}
 	}
 }

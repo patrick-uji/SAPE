@@ -25,11 +25,11 @@ public abstract class AbstractDao<T extends ObjetoIdentificado> implements RowMa
     }
     public final List<T> getAll()
     {
-        return jdbcTemplate.query("SELECT * FROM " + tName, this);
+        return jdbcTemplate.query("SELECT * FROM " + tName + " ORDER BY id DESC", this);
     }
     public final List<T> getAllWhere(String where, Object... args)
     {
-        return jdbcTemplate.query("SELECT * FROM " + tName + " " + where, args, this);
+        return jdbcTemplate.query("SELECT * FROM " + tName + " " + where + " ORDER BY id DESC", args, this);
     }
 	public final void update(int id, String[] fieldNames, Object... args)
 	{

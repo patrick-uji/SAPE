@@ -12,19 +12,19 @@ public class TeacherValidator extends BaseValidator<ProfesorTutor>
 		ProfesorTutor teacher = (ProfesorTutor)obj;
 		if ( Utils.isEmptyString(teacher.getNombre()) )
 		{
-			errors.rejectValue("nombre", "Error", "Por favor introduce un nombre");
+			errors.rejectValue("nombre", "no_name", "Por favor introduce un nombre");
 		}
 		if ( Utils.isEmptyString(teacher.getDepartamento()) )
 		{
-			errors.rejectValue("departamento", "Error", "Por favor introduce un departamento");
+			errors.rejectValue("departamento", "no_department", "Por favor introduce un departamento");
 		}
 		if ( Utils.isEmptyString(teacher.getDespacho()) )
 		{
-			errors.rejectValue("despacho", "Error", "Por favor introduce un despacho");
+			errors.rejectValue("despacho", "no_office", "Por favor introduce un despacho");
 		}
 		if ( Utils.isEmptyString(teacher.getEmail()) )
 		{
-			errors.rejectValue("email", "Error", "Por favor introduce un email");
+			errors.rejectValue("email", "no_email", "Por favor introduce un email");
 		}
 	}
 }
