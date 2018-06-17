@@ -34,10 +34,10 @@ public class PeticionRevisionDTODao extends AbstractDTODao<PeticionRevisionDTO>
 	@Override
 	public List<PeticionRevisionDTO> getAll()
 	{
-    	return jdbcTemplate.query(BASE_QUERY, this);
+    	return jdbcTemplate.query(BASE_QUERY + " ORDER BY id DESC", this);
 	}
 	public List<PeticionRevisionDTO> getAllFromOffer(int offerID)
 	{
-    	return jdbcTemplate.query(BASE_QUERY + " WHERE id_OfertaProyecto = ?", new Object[] {offerID}, this);
+    	return jdbcTemplate.query(BASE_QUERY + " WHERE id_OfertaProyecto = ? ORDER BY id DESC", new Object[] {offerID}, this);
 	}
 }

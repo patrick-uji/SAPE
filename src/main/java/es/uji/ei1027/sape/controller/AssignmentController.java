@@ -4,12 +4,18 @@ import org.springframework.ui.Model;
 import javax.servlet.http.HttpSession;
 import es.uji.ei1027.sape.model.Usuario;
 import es.uji.ei1027.sape.model.Asignacion;
+import es.uji.ei1027.sape.model.ProfesorTutor;
 import es.uji.ei1027.sape.dao.AsignacionDao;
+import es.uji.ei1027.sape.dao.OfertaProyectoDao;
 import es.uji.ei1027.sape.dao.AlumnoDao;
 import es.uji.ei1027.sape.dao.ProfesorTutorDao;
 import es.uji.ei1027.sape.enums.EstadoAsignacion;
+import es.uji.ei1027.sape.enums.EstadoOferta;
+
 import org.springframework.stereotype.Controller;
 import es.uji.ei1027.sape.dao.dto.AsignacionDTODao;
+import es.uji.ei1027.sape.dao.dto.PreferenciaAlumnoDTODao;
+
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,6 +30,8 @@ public class AssignmentController
 	private AsignacionDao asignacionDao;
 	private ProfesorTutorDao profesorTutorDao;
 	private AsignacionDTODao asignacionDTODao;
+	private OfertaProyectoDao ofertaProyectoDao;
+	private PreferenciaAlumnoDTODao preferenciaAlumnoDTODao;
 	@Autowired
 	public void setAlumnoDao(AlumnoDao alumnoDao)
 	{
@@ -44,6 +52,16 @@ public class AssignmentController
 	{
 		this.asignacionDTODao = asignacionDTODao;
 	}
+    @Autowired
+    public void setOfertaProyectoDao(OfertaProyectoDao ofertaProyectoDao)
+	{
+		this.ofertaProyectoDao = ofertaProyectoDao;
+	}
+    @Autowired
+    public void setPreferenciaAlumnoDTODao(PreferenciaAlumnoDTODao preferenciaAlumnoDTODao)
+	{
+		this.preferenciaAlumnoDTODao = preferenciaAlumnoDTODao;
+	}
 	@RequestMapping
     public String list(HttpSession session, Model model)
     {
@@ -55,7 +73,7 @@ public class AssignmentController
 			{
 				case CCD:
 				case BTC:
-					model.addAttribute("assignments", asignacionDao.getAll());
+					model.addAttribute("assignments", asignacionDTODao.getAll());
 					return "admins/assignments/list";
 				//break;
 				case ALUMNO:
@@ -95,7 +113,23 @@ public class AssignmentController
 		Usuario user = Utils.getUser(session);
 		if (Utils.isStudent(user))
 		{
-			asignacionDao.update(id, new String[] {"id_EstadoAsignacion"}, EstadoAsignacion.ACEPTADA.getID());
+			unlinkAssignment(id, EstadoAsignacion.RECHAZADA);
+			return "redirect:../../assignments";
+		}
+		return "error/401";
+	}
+	private void unlinkAssignment(int assignmentID, EstadoAsignacion newStatus)
+	{
+		Asignacion assignment = asignacionDao.get(assignmentID);
+		ofertaProyectoDao.update(assignment.getIdOfertaProyecto(), new String[] {"id_EstadoOferta"}, EstadoOferta.VISIBLE.getID());
+		asignacionDao.update(assignmentID, new String[] {"id_EstadoAsignacion"}, newStatus.getID());
+	}
+	@RequestMapping("/{id}/cancel")
+	public String cancel(@PathVariable("id") int id, HttpSession session)
+	{
+		if (Utils.isSuperAdmin(session))
+		{
+			unlinkAssignment(id, EstadoAsignacion.ANULADA);
 			return "redirect:../../assignments";
 		}
 		return "error/401";
@@ -104,10 +138,24 @@ public class AssignmentController
     public String read(@PathVariable int id, HttpSession session, Model model)
     {
 		Utils.debugLog("Assignments READ");
-		if (Utils.isAdmin(session))
+		Usuario user = Utils.getUser(session);
+		if (Utils.isAdmin(user))
 		{
-			model.addAttribute("teacher", profesorTutorDao.get(id));
-			Utils.setupUpdateModel(model, id);
+			Asignacion assignment = asignacionDao.get(id);
+			if (user.esSuperAdmin())
+			{
+				model.addAttribute( "preferences", preferenciaAlumnoDTODao.getAllAvailableFromStudent(assignment.getIDAlumno()) );
+		        model.addAttribute("target", "/assignments/" + id + "/update");
+				model.addAttribute("teachers", profesorTutorDao.getAll());
+		        model.addAttribute("action", "Actualizar");
+			}
+			else //user == CCD
+			{
+		        model.addAttribute("action", "Ver");
+			}
+			model.addAttribute( "teacher", profesorTutorDao.get(assignment.getIdProfesorTutor()) );
+			model.addAttribute( "student", alumnoDao.get(assignment.getIDAlumno()) );
+			model.addAttribute("assignment", assignment);
 	        return "admins/assignments/edit";
 		}
 		return "error/401";
@@ -118,16 +166,20 @@ public class AssignmentController
 		Utils.debugLog("Assignments UPDATE[" + id + "]");
 		if (Utils.isAdmin(session))
 		{
-			if (Utils.validate(null, assignment, bindingResult))
+			Asignacion oldAssignment = asignacionDao.get(id);
+			int newAssignmentOfferID = assignment.getIdOfertaProyecto();
+			int oldAssignmentOfferID = oldAssignment.getIdOfertaProyecto();
+			if (newAssignmentOfferID != oldAssignmentOfferID)
 			{
-				asignacionDao.update(assignment);
-		        return "redirect:../../assignments";
+				ofertaProyectoDao.update(newAssignmentOfferID, new String[] {"id_EstadoOferta"}, EstadoOferta.ASIGNADA.getID());
+				ofertaProyectoDao.update(oldAssignmentOfferID, new String[] {"id_EstadoOferta"}, EstadoOferta.VISIBLE.getID());
 			}
-			else
-			{
-				Utils.setupUpdateModel(model, id);
-		        return "admins/assignments/edit";
-			}
+			assignment.setFechaCreacion(oldAssignment.getFechaCreacion());
+			assignment.setIDAlumno(oldAssignment.getIDAlumno());
+			assignment.setEstado(EstadoAsignacion.ENVIADA);
+			assignment.setFechaUltimoCambio(Utils.now());
+			asignacionDao.update(assignment);
+	        return "redirect:../../assignments";
 		}
 		return "error/401";
     }

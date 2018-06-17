@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import es.uji.ei1027.sape.dto.OfertaProyectoDTO;
 import es.uji.ei1027.sape.enums.EstadoOferta;
+import es.uji.ei1027.sape.enums.Itinerario;
 import es.uji.ei1027.sape.mappers.EmpresaMapper;
 import es.uji.ei1027.sape.mappers.OfertaProyectoMapper;
 import es.uji.ei1027.sape.mappers.PersonaContactoMapper;
@@ -43,24 +44,23 @@ public class OfertaProyectoDTODao extends AbstractDTODao<OfertaProyectoDTO>
 	@Override
 	public List<OfertaProyectoDTO> getAll()
 	{
-    	return jdbcTemplate.query(BASE_QUERY, this);
+    	return jdbcTemplate.query(BASE_QUERY + " ORDER BY id DESC", this);
 	}
     public List<OfertaProyectoDTO> getAllPending()
     {
-    	return jdbcTemplate.query(BASE_QUERY + " WHERE id_EstadoOferta IN (?,?)", new Object[] {EstadoOferta.INTRODUCIDA.getID(), EstadoOferta.PENDIENTE_REVISION.getID()}, this);
+    	return jdbcTemplate.query(BASE_QUERY + " WHERE id_EstadoOferta IN (?,?) ORDER BY id DESC", new Object[] {EstadoOferta.INTRODUCIDA.getID(), EstadoOferta.PENDIENTE_REVISION.getID()}, this);
     }
     public List<OfertaProyectoDTO> getAllCancelRequested()
     {
-    	return jdbcTemplate.query(BASE_QUERY + " WHERE id_EstadoOferta = ?", new Object[] {EstadoOferta.PENDIENTE_ANULACION.getID()}, this);
+    	return jdbcTemplate.query(BASE_QUERY + " WHERE id_EstadoOferta = ? ORDER BY id DESC", new Object[] {EstadoOferta.PENDIENTE_ANULACION.getID()}, this);
     }
     public List<OfertaProyectoDTO> getAllAccepted()
     {
-    	return jdbcTemplate.query(BASE_QUERY + " WHERE id_EstadoOferta NOT IN (?,?,?)", new Object[] {EstadoOferta.INTRODUCIDA.getID(), EstadoOferta.PENDIENTE_REVISION.getID(), EstadoOferta.RECHAZADA.getID()}, this);
+    	return jdbcTemplate.query(BASE_QUERY + " WHERE id_EstadoOferta IN (?,?,?) ORDER BY id DESC", new Object[] {EstadoOferta.ACEPTADA.getID(), EstadoOferta.VISIBLE.getID(), EstadoOferta.ASIGNADA.getID()}, this);
     }
-    public List<OfertaProyectoDTO> getAllChoosable(int studentID)
+    public List<OfertaProyectoDTO> getAllChoosable(int studentID, Itinerario itinerary)
     {
-    	//TODO: show the ones related to the student's itinerary
-    	return jdbcTemplate.query(BASE_QUERY + " WHERE id_EstadoOferta = ? AND p.id NOT IN (SELECT id_OfertaProyecto FROM PreferenciaAlumno WHERE id_Alumno = ?)",
-    							  new Object[] {EstadoOferta.ACEPTADA.getID(), studentID}, this);
+    	return jdbcTemplate.query(BASE_QUERY + " WHERE id_EstadoOferta = ? AND id_Itinerario = ? AND p.id NOT IN (SELECT id_OfertaProyecto FROM PreferenciaAlumno WHERE id_Alumno = ?) ORDER BY id DESC",
+    							  new Object[] {EstadoOferta.VISIBLE.getID(), itinerary.getID(), studentID}, this);
     }
 }

@@ -1,33 +1,45 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-    <head th:replace="templates :: head"/>
+    <head>
+    	<meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, height=device-height, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+        <link rel="stylesheet" href="/css/styles.css" th:href="@{/css/styles.css}"/>
+        <title>SAPE</title>
+    </head>
     <body>
         <div th:replace="templates :: menuCoordinador"/>
 		<div class="content1">
-			<h1 th:text="${'Lista de ofertas ' + type}"/>
+			<h1>Lista de ofertas aceptadas</h1>
 			<form method="POST" action="/offers/update/visibility" th:action="@{/offers/update/visibility}" th:object="${offersSelection}"
 			 th:if="${!offers.isEmpty()}">
 				<table class="list">
 					<tr>
 						<th>Titulo</th>
 						<th>Empresa</th>
+						<th>Estado</th>
 						<th>FechaAlta</th>
-						<th>Visible</th>
+						<th th:if="${session.user.esSuperAdmin()}">Visible</th>
 						<th>Acción</th>
 					</tr>
 					<tr th:each="currOffer : ${offers}">
 						<td th:text="${currOffer.titulo}"/>
 						<td th:text="${currOffer.empresa.nombre}"/>
+						<td th:text="${currOffer.estado.getName()}"/>
 						<td th:text="${currOffer.fechaAlta}"/>
-						<td><input type="checkbox" th:field="*{selectedOffers}" th:value="${currOffer.id}"/></td>
+						<td th:if="${session.user.esSuperAdmin()}">
+							<input type="checkbox" th:field="*{selectedOffers}" th:value="${currOffer.id}" th:disabled="${currOffer.estado == T(es.uji.ei1027.sape.enums.EstadoOferta).ASIGNADA}"/>
+						</td>
 						<td><a th:href="@{/offers/{id}( id=${currOffer.id} )}">Ver oferta</a></td>
 					</tr>
 				</table>
-				<input type="submit" value="Aplicar cambios" class="button3"/>
-				<input type="button" class = "izquierda" onclick=" location.href='/offers/cancelRequests' " value="Ofertas rechazadas" name="boton" />
+				<div th:if="${session.user.esSuperAdmin()}">
+					<input type="button" onclick="selectAll(false)" value="Deseleccionar todo"/>
+					<input type="button" onclick="selectAll(true)" value="Seleccionar todo"/>
+					<input type="submit" value="Aplicar cambios" class="button3"/>
+				</div>
 			</form>
 			<div th:if="${offers.isEmpty()}">
-				<h2 th:text="${'No hay ofertas ' + type + '...'}"/>
+				<h2>No hay ofertas aceptadas...</h2>
 			</div>
 		</div>
         <div th:replace="templates :: footer"/>

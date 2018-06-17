@@ -5,8 +5,11 @@ import javax.servlet.http.HttpSession;
 import es.uji.ei1027.sape.dao.AlumnoDao;
 import es.uji.ei1027.sape.model.Asignacion;
 import es.uji.ei1027.sape.dao.AsignacionDao;
+import es.uji.ei1027.sape.dao.OfertaProyectoDao;
 import es.uji.ei1027.sape.dao.ProfesorTutorDao;
 import es.uji.ei1027.sape.enums.EstadoAsignacion;
+import es.uji.ei1027.sape.enums.EstadoOferta;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import es.uji.ei1027.sape.dao.dto.PreferenciaAlumnoDTODao;
@@ -21,8 +24,9 @@ public class StudentController
 {
     private AlumnoDao alumnoDao;
 	private AsignacionDao asignacionDao;
-	private ProfesorTutorDao profesorTutorDao;
-	private PreferenciaAlumnoDTODao preferenciaAlumnoDTODao;
+    private ProfesorTutorDao profesorTutorDao;
+    private OfertaProyectoDao ofertaProyectoDao;
+    private PreferenciaAlumnoDTODao preferenciaAlumnoDTODao;
     @Autowired
     public void setAlumnoDao(AlumnoDao alumnoDao)
     {
@@ -37,6 +41,11 @@ public class StudentController
     public void setProfesorTutorDao(ProfesorTutorDao profesorTutorDao)
 	{
 		this.profesorTutorDao = profesorTutorDao;
+	}
+    @Autowired
+    public void setOfertaProyectoDao(OfertaProyectoDao ofertaProyectoDao)
+	{
+		this.ofertaProyectoDao = ofertaProyectoDao;
 	}
     @Autowired
     public void setPreferenciaAlumnoDTODao(PreferenciaAlumnoDTODao preferenciaAlumnoDTODao)
@@ -60,11 +69,12 @@ public class StudentController
 		Utils.debugLog("Assignments ADD");
 		if (Utils.isAdmin(session))
 		{
-			model.addAttribute("preferences", preferenciaAlumnoDTODao.getAllFromStudent(id));
+			model.addAttribute("preferences", preferenciaAlumnoDTODao.getAllAvailableFromStudent(id));
+	        model.addAttribute("target", "/students/" + id + "/assign");
 			model.addAttribute("teachers", profesorTutorDao.getAll());
-			model.addAttribute("student", alumnoDao.get(id));
 			model.addAttribute("assignment", new Asignacion());
-	        model.addAttribute("target", "/" + id + "/assign");
+			model.addAttribute("student", alumnoDao.get(id));
+	        model.addAttribute("action", "Crear");
 	        return "admins/assignments/edit";
 		}
 		return "error/401";
@@ -75,6 +85,7 @@ public class StudentController
 		Utils.debugLog("Assignments CREATE");
 		if (Utils.isAdmin(session))
 		{
+			ofertaProyectoDao.update(assignment.getIdOfertaProyecto(), new String[] {"id_EstadoOferta"}, EstadoOferta.ASIGNADA.getID());
 			assignment.setEstado(EstadoAsignacion.ENVIADA);
 			assignment.setFechaCreacion(Utils.now());
 			assignment.setFechaUltimoCambio("");

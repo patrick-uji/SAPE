@@ -29,11 +29,11 @@ public class OfertaProyectoDao extends OwnedResourceDao<OfertaProyecto>
     }
     public List<OfertaProyecto> getAllFromContactPerson(int contactPersonID)
     {
-    	return jdbcTemplate.query("SELECT * FROM OfertaProyecto WHERE id_PersonaContacto = ?", new Object[] {contactPersonID}, this);
+    	return jdbcTemplate.query("SELECT * FROM OfertaProyecto WHERE id_PersonaContacto = ? ORDER BY id DESC", new Object[] {contactPersonID}, this);
     }
     public List<OfertaProyecto> getAllFromCompany(int companyID)
     {
-    	return jdbcTemplate.query("SELECT o.* FROM PersonaContacto AS p JOIN OfertaProyecto AS o ON p.id = o.id_PersonaContacto WHERE p.id_Empresa = ?", new Object[] {companyID}, this);
+    	return jdbcTemplate.query("SELECT o.* FROM PersonaContacto AS p JOIN OfertaProyecto AS o ON p.id = o.id_PersonaContacto WHERE p.id_Empresa = ? ORDER BY id DESC", new Object[] {companyID}, this);
     }
     @Override
     public void create(OfertaProyecto model)

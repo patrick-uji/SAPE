@@ -7,7 +7,8 @@ public enum EstadoOferta
 	VISIBLE(4, "Visible"),
 	ASIGNADA(5, "Asignada"),
 	RECHAZADA(6, "Rechazada"),
-	PENDIENTE_ANULACION(7, "Pendiente anulación");
+	PENDIENTE_ANULACION(7, "Pendiente anulación"),
+	ANULADA(8, "Anulada");
 	
 	private int id;
 	private String name;

@@ -20,7 +20,7 @@ public class PersonaContactoDao extends AbstractDao<PersonaContacto>
     }
     public List<PersonaContacto> getAllFromCompany(int companyID)
     {
-    	return jdbcTemplate.query("SELECT * FROM PersonaContacto WHERE id_Empresa = ?", new Object[] {companyID}, this);
+    	return jdbcTemplate.query("SELECT * FROM PersonaContacto WHERE id_Empresa = ? ORDER BY id DESC", new Object[] {companyID}, this);
     }
 	@Override
     public void create(PersonaContacto model)

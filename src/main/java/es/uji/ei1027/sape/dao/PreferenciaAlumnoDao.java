@@ -21,11 +21,11 @@ public class PreferenciaAlumnoDao extends AbstractDao<PreferenciaAlumno>
     }
     public List<PreferenciaAlumno> getAllFromOffer(int offerID)
     {
-    	return jdbcTemplate.query("SELECT * FROM PreferenciaAlumno WHERE id_OfertaProyecto = ?", new Object[] {offerID}, this);
+    	return jdbcTemplate.query("SELECT * FROM PreferenciaAlumno WHERE id_OfertaProyecto = ? ORDER BY id DESC", new Object[] {offerID}, this);
     }
     public List<PreferenciaAlumno> getAllFromStudent(int studentID)
     {
-    	return jdbcTemplate.query("SELECT * FROM PreferenciaAlumno WHERE id_Alumno = ?", new Object[] {studentID}, this);
+    	return jdbcTemplate.query("SELECT * FROM PreferenciaAlumno WHERE id_Alumno = ? ORDER BY orden", new Object[] {studentID}, this);
     }
     @Override
     public void create(PreferenciaAlumno model)

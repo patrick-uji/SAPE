@@ -98,6 +98,13 @@ a.links {
     color: lightgray;
 }
 
+.disabledLink {
+  color: currentColor;
+  cursor: not-allowed;
+  opacity: 0.5;
+  text-decoration: none;
+}
+
 div.content {
   	position: absolute;
   	aling: center;

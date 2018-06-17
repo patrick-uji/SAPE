@@ -46,12 +46,11 @@ public class Utils
 	}
 	public static String now()
 	{
-		Date nowDate = new Date(Calendar.getInstance().getTime().getTime());
-		return nowDate.toString();
+		return formatDate(nowDate());
 	}
 	public static Date nowDate()
 	{
-		return stringToDate(now());
+		return new Date(Calendar.getInstance().getTime().getTime());
 	}
 	public static Class<?> getTClass(Object genericInstance)
 	{

@@ -51,7 +51,7 @@ public class LoginController
 			}
 			else
 			{
-				bindingResult.rejectValue("password", "badpw", "Contraseña invalida");
+				bindingResult.rejectValue("password", "bad_password", "Contraseña invalida");
 			}
 		}
 		return "login";

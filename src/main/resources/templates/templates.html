@@ -17,9 +17,11 @@
     
     </div>
     
+    <div th:text="${'Bienvenido: ' + session.user.email}" th:fragment="welcome"/>
+    
     <div id="menu" th:fragment="menuCoordinador">
         <div th:replace="templates :: header"/>
-        <!--  <div th:text="${'Bienvenido ' + username}"/>-->
+        <div th:replace="templates :: welcome"/>
    		<ul>
 	   		<a href="/offers/pending" class="menu">
 	   		<li>
@@ -27,13 +29,13 @@
 		   		<p class ="menu" style="color:white;">Oferta pendientes</p>
 		   		</li>
 	   		</a>
-	   		<a href="/assignments/pending" class="menu">
+	   		<a href="/assignments/pending" class="menu"
+	   		 th:if="${session.user.esSuperAdmin()}">
 		   		<li>
 		   		<div class="barra"></div>
 		   		<p class ="menu" style="color:white;">Asignar Alumno</p>
 		   		</li>
 	   		</a>
-	   		
 	   		<a href="/offers" class="menu">
 		   		<li>
 		   		<div class="barra"></div>
@@ -64,6 +66,7 @@
    	
    	<div id="menu" th:fragment="menuEmpresa">
    	    <div th:replace="templates :: header"/>
+        <div th:replace="templates :: welcome"/>
 		<ul>
 	   		<a href="/offers" class="menu">
 	   			<li>
@@ -89,6 +92,7 @@
     
     <div id="menu" th:fragment="menuAlumno">
    	    <div th:replace="templates :: header"/>
+        <div th:replace="templates :: welcome"/>
 		<ul>
 	   		<a href="/offers" class="menu">
 		   		<li>
@@ -117,7 +121,6 @@
    	<div th:fragment="listaPeticionCambios">
    		<div th:each="currPetition : ${petitions}">
    			<!-- TODO: Usar "nombre" en vez de "email" (Aun no esta en la BBDD) -->
-   			
    			<h1 th:text="${currPetition.usuario.email + ' @ ' + currPetition.fecha}"/>
    			
    			<h2 th:text="${currPetition.textoPeticion}"/>

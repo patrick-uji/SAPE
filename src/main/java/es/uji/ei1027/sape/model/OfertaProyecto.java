@@ -3,8 +3,8 @@ import es.uji.ei1027.sape.enums.EstadoOferta;
 import es.uji.ei1027.sape.enums.Itinerario;
 public class OfertaProyecto extends ObjetoIdentificado
 {
-	public static final String SELECT_JOIN = "o.id AS o_id, o.numero AS o_numero, o.titulo AS o_titulo, o.id_PersonaContacto AS o_id_PersonaContacto, " +
-											 "o.objetivo AS o_objetivo, o.fechaAlta AS o_fechaAlta, o.id_EstadoOferta AS o_id_EstadoOferta, o.id_Itinerario AS o_id_Itinerario, o.fechaUltimoCambio AS o_fechaUltimoCambio";
+	public static final String SELECT_JOIN = "o.id AS o_id, o.numero AS o_numero, o.titulo AS o_titulo, o.id_PersonaContacto AS o_id_PersonaContacto, o.objetivo AS o_objetivo, o.fechaAlta AS o_fechaAlta, " +
+											 "o.id_EstadoOferta AS o_id_EstadoOferta, o.id_EstadoOfertaPreAnulacion AS o_id_EstadoOfertaPreAnulacion, o.id_Itinerario AS o_id_Itinerario, o.fechaUltimoCambio AS o_fechaUltimoCambio";
 	private int numero;
 	private String titulo;
 	private int idPersonaContacto;
@@ -13,6 +13,7 @@ public class OfertaProyecto extends ObjetoIdentificado
 	private EstadoOferta estado;
 	private Itinerario itinerario;
 	private String fechaUltimoCambio;
+	private EstadoOferta estadoPreAnulacion;
 	public int getNumero()
 	{
 		return numero;
@@ -76,5 +77,13 @@ public class OfertaProyecto extends ObjetoIdentificado
 	public void setFechaUltimoCambio(String fechaUltimoCambio)
 	{
 		this.fechaUltimoCambio = fechaUltimoCambio;
+	}
+	public EstadoOferta getEstadoPreAnulacion()
+	{
+		return estadoPreAnulacion;
+	}
+	public void setEstadoPreAnulacion(EstadoOferta estadoPreAnulacion)
+	{
+		this.estadoPreAnulacion = estadoPreAnulacion;
 	}
 }
