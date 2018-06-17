@@ -9,22 +9,25 @@
 				<table class="table">
 					<tr>
 						<td class="register">Nombre</td>
-						<td><input type="text" th:field="*{nombre}"/></td>
+						<td class="inputs"><input type="text" th:field="*{nombre}" class="textoCentrar" placeholder="Nombre de contacto"/></td>
+						
 						<td class="error" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"/>
+					
 					</tr>
 					<tr>
 						<td class="register">Email</td>
-						<td><input type="text" th:field="*{email}"/></td>
+						<td class="inputs"><input type="text" th:field="*{email}" class="textoCentrar" placeholder="Ejem: sape@uji.es"/></td>
 						<td class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"/>
 					</tr>
 					<tr>
 						<td class="register">Descripción</td>
-						<td><textarea th:field="*{descripcionPracticas}"/></td>
+						<td class="inputs"><textarea th:field="*{descripcionPracticas}" class="medio"/></td>
 						<td class="error" th:if="${#fields.hasErrors('descripcionPracticas')}" th:errors="*{descripcionPracticas}"/>
 					</tr>
 					<tr>
-						<td ><input type="submit" th:value="${action + ' persona de contacto'}" class="button2"/></td>
-						<td><input th:replace="templates :: botonRestablecer"/></td>
+						<td ></td>
+						<td class="inputs"><input type="submit" th:value="${action + ' contacto'}" class="button2"/><input th:replace="templates :: botonRestablecer"/></td>
+						
 					</tr>
 				</table>
 			</form>

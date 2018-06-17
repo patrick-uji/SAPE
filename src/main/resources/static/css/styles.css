@@ -41,7 +41,7 @@ body {
 	
     aling: center;
     margin: 10px;
-   position:absolute; /*El div ser� ubicado con relaci�n a la pantalla*/
+   	position:fixed; /*El div ser� ubicado con relaci�n a la pantalla*/
 	left:240px; /*A la derecha deje un espacio de 0px*/
 	right:0px; /*A la izquierda deje un espacio de 0px*/
 	bottom:0px; /*Abajo deje un espacio de 0px*/
@@ -53,7 +53,7 @@ body {
     color: lightgray;
     border-top: thin solid darkorange;
     background-color: DARKSLATEGRAY;
-  
+ 	margin-top:50px;
 }
 
 .footer1 {
@@ -102,7 +102,7 @@ div.content {
   	position: absolute;
   	aling: center;
 	width: 170px;
-	height: 100x;
+	height: 100px;
 	backgroud-color: DARKSLATEGRAY;
 	color: black;
 }
@@ -113,7 +113,7 @@ div#content1 {
 }
 
 div#menu {
-	position: absolute;
+	position: fixed;
 	width: 240px;
 	height: 100%;
 	background-color: DARKSLATEGRAY;
@@ -152,7 +152,7 @@ div.barra{
 	-webkit-transition: width 1s;
 }
 li:hover div.barra{
-	width: 300px;
+	width: 240px; /*barra del menu largo*/
 }
 
 li:hover p.menu{
@@ -210,6 +210,14 @@ table {
 	margin: auto;
 }
 
+tableFor{
+	color: black;
+    aling: left;
+	border-collapse: collapse;
+	margin: auto;
+	text-align: left;
+}
+
 th, td {
 	padding: 10px;
 }
@@ -217,7 +225,7 @@ th, td {
 th {
 	background-color: DARKSLATEGRAY;
 	color: darkorange;
-	text-align: left;
+	text-align: center;
 }
 
 div.login {
@@ -243,7 +251,9 @@ div.login h3 {
 
 .button2 {
 	padding: 3px;
-	width: 100%;
+	width: 120px;
+	text-align: center;
+	margin: 0 10px 0 10px;
 }
 .button3 {
 	margin:20px;
@@ -262,6 +272,21 @@ div.login h3 {
     color: black;
     font-size: 25px;
     font-weight: bold;
+}
+.registerFor {
+	font-family: serif;
+    text-align: center;
+    color: black;
+    font-size: 25px;
+    font-weight: bold;
+}
+.inputs {
+	text-align: left;
+
+}
+
+.tama{
+		width: 200%;
 }
 
 .center {
@@ -282,7 +307,12 @@ div.login h3 {
 
 .table {
     border: 1px solid darkorange;
+    
      
+}
+
+.tableFor{
+	border: 1px solid darkorange;
 }
 
 .table td {
@@ -307,7 +337,7 @@ div.login h3 {
 .p {
 	font-weight: bold;
 	font-size: 25px;
-	color: darkorange;
+	color: DARKSLATEGRAY;
 	margin-bottom: 25px;
 }
 
@@ -389,7 +419,7 @@ select, input {
 }
 
 .privacyText {
-    color: white;
+    color: DARKSLATEGRAY;
     font-size: 20px;
     text-align: justify;
     padding-bottom: 50px;
@@ -416,4 +446,30 @@ div.aceptar1{
 .addOferta{
 	 width : 150px;
 	 margin: 10px;
+}
+.medio{ 
+    height: 10em;
+   width: 500px;
+   text-align:center;
+}
+.textoCentrar{
+	text-align-last:center;
+	width: 300px;
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #ABB2B9;
+    opacity: 1; /* Firefox */
+}
+
+.enlaces {
+	top: 20px;
+	padding: 20px;
+	width: 120px;
+	text-align: center;
+	
+}
+
+.enlaces1{
+	padding: 20px; /* para separar los divs*/
 }

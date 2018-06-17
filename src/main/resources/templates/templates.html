@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/> 
     <head th:fragment="head">
-        <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, height=device-height, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
         <link rel="stylesheet" href="/css/styles.css" th:href="@{/css/styles.css}"/>
         <title>SAPE</title>
@@ -19,7 +19,7 @@
     
     <div id="menu" th:fragment="menuCoordinador">
         <div th:replace="templates :: header"/>
-        <div th:text="${'Bienvenido ' + username}"/>
+        <!--  <div th:text="${'Bienvenido ' + username}"/>-->
    		<ul>
 	   		<a href="/offers/pending" class="menu">
 	   		<li>
@@ -33,12 +33,7 @@
 		   		<p class ="menu" style="color:white;">Asignar Alumno</p>
 		   		</li>
 	   		</a>
-	   		<a href="/offers/cancelRequests" class="menu">
-		   		<li>
-		   		<div class="barra"></div>
-		   		<p class ="menu" style="color:white;">Ofertas a cancelar</p>
-			   	</li>
-	   		</a>
+	   		
 	   		<a href="/offers" class="menu">
 		   		<li>
 		   		<div class="barra"></div>
@@ -130,6 +125,6 @@
    	</div>
     
     <div class="footer" th:fragment="footer">
-		<p>&copy; EI102717BGM &#8226; All rights reserved &#8226; <a href="/privacy" class="footer_links">Privacy Policy</a> &#8226; <a href="/about" class="footer_links">About</a> &#8226; <a href="/contact" class="footer_links">Contact</a></p>
+		<p>&copy; EI102717BGM &#8226; All rights reserved &#8226; <a href="/privacy" class="footer_links">Política de privacidad</a> &#8226; <a href="/about" class="footer_links">Acerda de</a> &#8226; <a href="/contact" class="footer_links">Contacto</a></p>
     </div>
 </html>

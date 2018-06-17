@@ -6,7 +6,7 @@
 		<div class="content1">
 			<h1>Mi Asignación</h1>
 			<div th:if="${assignment != null}">
-				<table class="list" >
+				<table class="table" >
 					<tr>
 						<td>Proyecto =></td>
 						<td th:text="${assignment.ofertaProyecto.titulo}"/>
@@ -48,8 +48,8 @@
 						<td th:text="${assignment.personaContacto.descripcionPracticas}"/>
 					</tr>
 				</table>
-				<div th:if="${assignment.estado != T(es.uji.ei1027.sape.enums.EstadoAsignacion).ACEPTADA}">
-					<a th:href="@{/assignments/{id}/reject( id=${assignment.id} )}" onclick="return confirm('Seguro que quiere rechazar esta asignación?')">Rechazar</a>
+				<div class="enlaces1" th:if="${assignment.estado != T(es.uji.ei1027.sape.enums.EstadoAsignacion).ACEPTADA}">
+					<a th:href="@{/assignments/{id}/reject( id=${assignment.id} )}" onclick="return confirm('Seguro que quiere rechazar esta asignación?')" class="enlaces">Rechazar</a>
 					<a th:href="@{/assignments/{id}/accept( id=${assignment.id} )}" onclick="return confirm('Seguro que quiere aceptar esta asignación?')">Aceptar</a>
 				</div>
 			</div>

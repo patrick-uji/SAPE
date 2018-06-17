@@ -1,26 +1,23 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/> 
     <head th:replace="templates :: head"/>
     <body>
         <div th:replace="templates :: menuEmpresa"/>
 		<div class="content1">
-			<h1 th:text="${action + ' offer'}"/>
+			<h1 th:text="${action + ' oferta'}"/>
 			<form method="POST" th:action="@{/offers{target}( target=${target} )}" th:object="${offer}">
-				<table class="table">
+				<table class="tableFor">
 					<tr>
-						<td class="register">Titulo</td>
-						<td><input type="text" th:field="*{titulo}"/></td>
+						<td class="register">Título</td>
+						<td class="inputs"><input type="text" th:field="*{titulo}" class="textoCentrar" placeholder="Título oferta"/></td>
 						<td class="error" th:if="${#fields.hasErrors('titulo')}" th:errors="*{titulo}"/>
 					</tr>
-					<tr>
-						<td class="register">Objetivo</td>
-						<td><textarea th:field="*{objetivo}"/></td>
-						<td class="error" th:if="${#fields.hasErrors('objetivo')}" th:errors="*{objetivo}"/>
-					</tr>
+					
 					<tr>
 						<td class="register">Itinerario</td>
-						<td>
-							<select th:field="*{itinerario}">
+						<td class="inputs">
+							<select th:field="*{itinerario}" class="textoCentrar">
 								<option th:each="currItinerary : ${T(es.uji.ei1027.sape.enums.Itinerario).values()}"
 										th:value="${currItinerary}" th:text="${currItinerary.name}"/>
 							</select>
@@ -28,16 +25,23 @@
 					</tr>
 					<tr>
 						<td class="register">Persona de contacto</td>
-						<td>
-							<select th:field="*{idPersonaContacto}">
+						<td class="inputs">
+							<select th:field="*{idPersonaContacto}" class="textoCentrar">
 								<option th:each="currContactPerson : ${contactPersons}"
 										th:value="${currContactPerson.id}" th:text="${currContactPerson.nombre}"/>
 							</select>
 						</td>
 					</tr>
 					<tr>
-						<td><input type="submit" th:value="${action + ' oferta'}" class="button2"/></td>
-						<td><input th:replace="templates :: botonRestablecer"/></td>
+						<td class="register">Objetivo</td>
+						<td class="inputs"><textarea th:field="*{objetivo}" class="medio"/></td>
+						<td class="error" th:if="${#fields.hasErrors('objetivo')}" th:errors="*{objetivo}"/>
+					</tr>
+					<tr>
+						<td></td>
+						<td class="inputs"><input type="submit" th:value="${action + ' oferta'}" class="button2"/>
+						<input th:replace="templates :: botonRestablecer" class="button2"/></td>
+						
 					</tr>
 				</table>
 			</form>

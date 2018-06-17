@@ -36,8 +36,8 @@
 				</tr>
 			</table>
 			<div th:if="${isSuperAdmin}" class="aceptar1">
-				<a th:href="@{/offers/{id}/reject( id=${offer.id} )}" onclick="return confirm('Seguro que quieres rechazar esta oferta?')">Rechazar</a>
-				<a th:href="@{/offers/{id}/accept( id=${offer.id} )}" onclick="return confirm('Seguro que quieres aceptar esta oferta?')">Aceptar</a>
+				<a th:href="@{/offers/{id}/reject( id=${offer.id} )}" onclick="return confirm('Seguro que quieres rechazar esta oferta?')" class="button2">Rechazar</a>
+				<a th:href="@{/offers/{id}/accept( id=${offer.id} )}" onclick="return confirm('Seguro que quieres aceptar esta oferta?')">Aceptar </a> 
 			</div>
 			
 			<div th:replace="templates :: listaPeticionCambios"/>
@@ -47,11 +47,12 @@
 				<table class="table">
 					<tr>
 						<td class="register">Texto</td>
-						<td><textarea th:field="*{textoPeticion}"/></td>
+						<td><textarea th:field="*{textoPeticion}" class="medio"/></td>
 					</tr>
 					<tr>
-						<td ><input type="submit" value="Enviar petición" class="button2"/></td>
-						<td><input type="reset" value="Clear data" class="button2" onclick="return confirm('Do you want to clear your data?')"/></td>
+						<td ></td>
+						<td class="inputs"> <input type="submit" value="Enviar petición" class="button2"/>
+						<input type="reset" value="Clear data" class="button2" onclick="return confirm('Do you want to clear your data?')"/></td>
 					</tr>
 				</table>
 			</form>

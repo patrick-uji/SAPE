@@ -13,7 +13,7 @@
 					<th>Itinerario</th>
 					<th>FechaAlta</th>
 					<th>FechaUltimoCambio</th>
-					<th colspan="2">Action</th>
+					<th colspan="2">Acci&oacute;n</th>
 				</tr>
 				<tr th:each="currOffer : ${offers}">
 					<td th:text="${currOffer.numero}"/>
@@ -22,8 +22,8 @@
 					<td th:text="${currOffer.itinerario.getName()}"/>
 					<td th:text="${currOffer.fechaAlta}"/>
 					<td th:text="${currOffer.fechaUltimoCambio}"/>
-					<td><a th:href="@{/offers/{id}( id=${currOffer.id} )}">Edit</a></td>
-					<td><a th:href="@{/offers/{id}/delete( id=${currOffer.id} )}" onclick="return confirm('Do you want to delete this offer?')">Delete</a></td>
+					<td><a th:href="@{/offers/{id}( id=${currOffer.id} )}">Editar</a></td>
+					<td><a th:href="@{/offers/{id}/delete( id=${currOffer.id} )}" onclick="return confirm('Do you want to delete this offer?')">Eliminar</a></td>
 				</tr>
 			</table>
 			<input type="button" class = "addOferta" onclick=" location.href='/offers/add' " value="A&ntilde;adir oferta" name="boton" /> 

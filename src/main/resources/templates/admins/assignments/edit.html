@@ -1,42 +1,43 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/> 
     <head th:replace="templates :: head"/>
     <body>
         <div th:replace="templates :: menuCoordinador"/>
 		<div class="content1">
-			<h1>Crear Asignacion</h1>
+			<h1>Crear Asignación</h1>
 			<form method="POST" th:action="@{/students{target}( target=${target} )}" th:object="${assignment}">
 				<table class="table">
 					<tr>
-						<td>DNI</td>
+						<td >DNI</td>
 						<td th:text="${student.dni}"/>
 					</tr>
 					<tr>
-						<td>Nombre</td>
+						<td >Nombre</td>
 						<td th:text="${student.nombre}"/>
 					</tr>
 					<tr>
-						<td>Nota Media</td>
+						<td >Nota Media</td>
 						<td th:text="${student.notaMedia}"/>
 					</tr>
 					<tr>
-						<td>Itinerario</td>
+						<td >Itinerario</td>
 						<td th:text="${student.itinerario.getName()}"/>
 					</tr>
 					<tr>
-						<td>Numero Creditos</td>
+						<td >Numero Creditos</td>
 						<td th:text="${student.numeroCreditos}"/>
 					</tr>
 					<tr>
-						<td>Asignaturas Pendientes</td>
+						<td >Asignaturas Pendientes</td>
 						<td th:text="${student.asignaturasPendientes}"/>
 					</tr>
 					<tr>
-						<td>Semestre Inicio Estancia</td>
+						<td >Semestre Inicio Estancia</td>
 						<td th:text="${student.semestreInicioEstancia}"/>
 					</tr>
 					<tr>
-						<td class="register">Tutor</td>
+						<td >Tutor</td>
 						<td>
 							<select th:field="*{idProfesorTutor}">
 								<option th:each="currTeacher : ${teachers}"
@@ -45,13 +46,13 @@
 						</td>
 					</tr>
 					<tr>
-						<td class="register">Proyecto</td>
+						<td >Proyecto</td>
 						<td><input th:each="currPreference : ${preferences}" th:type="radio"
 							 	   th:field="*{idOfertaProyecto}" th:value="${currPreference.idOfertaProyecto}" th:text="${'[' + currPreference.orden + '] ' + currPreference.ofertaProyecto.titulo}"/></td>
 					</tr>
 					<tr>
 						<td class="register"><input type="submit" th:value="Crear" class="button2"/></td>
-						<td><input type="reset" value="Clear data" class="button2" onclick="return confirm('Do you want to clear your data?')"/></td>
+						<td class="register"><input type="reset" value="Clear data" class="button2" onclick="return confirm('Do you want to clear your data?')"/></td>
 					</tr>
 				</table>
 			</form>
