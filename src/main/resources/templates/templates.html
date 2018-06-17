@@ -117,8 +117,9 @@
    	<div th:fragment="listaPeticionCambios">
    		<div th:each="currPetition : ${petitions}">
    			<!-- TODO: Usar "nombre" en vez de "email" (Aun no esta en la BBDD) -->
+   			
    			<h1 th:text="${currPetition.usuario.email + ' @ ' + currPetition.fecha}"/>
-   			<h2>------------------------------</h2>
+   			
    			<h2 th:text="${currPetition.textoPeticion}"/>
    			<h2>------------------------------</h2>
    		</div>
