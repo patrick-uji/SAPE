@@ -23,7 +23,7 @@
 					<td th:text="${currAssignment.profesorTutor.nombre}"/>
 					<td><a th:href="@{/assignments/{id}( id=${currAssignment.id} )}">Ver asignación</a></td>
 					<td th:if="${session.user.esSuperAdmin()}">
-						<a th:href="@{/assignments/{id}/cancel( id=${currAssignment.id} )}" th:text="Anular" onclick="return confirm('Seguro que quieres anular esta asignación?')"
+						<a th:href="@{/assignments/{id}/cancel( id=${currAssignment.id} )}" th:text="Anular" onclick="return confirm('¿Seguro que quieres anular esta asignación?')"
 						   th:if="${T(es.uji.ei1027.sape.ThymeUtils).canCancelAssignment(currAssignment)}"/>
 						<a class="disabledLink" th:text="Anular"
 						   th:if="${!T(es.uji.ei1027.sape.ThymeUtils).canCancelAssignment(currAssignment)}"/>

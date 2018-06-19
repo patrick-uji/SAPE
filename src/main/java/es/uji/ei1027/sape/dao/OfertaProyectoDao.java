@@ -3,14 +3,14 @@ import java.util.List;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import es.uji.ei1027.sape.Utils;
-import es.uji.ei1027.sape.enums.EstadoOferta;
-import es.uji.ei1027.sape.mappers.OfertaProyectoMapper;
 import es.uji.ei1027.sape.model.OfertaProyecto;
 import org.springframework.stereotype.Component;
+import es.uji.ei1027.sape.mappers.OfertaProyectoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 @Component
 public class OfertaProyectoDao extends OwnedResourceDao<OfertaProyecto>
 {
+	public static final String[] OFFER_STATUS_FIELD = new String[] {"id_EstadoOferta"};
 	private PersonaContactoDao personaContactoDao;
 	private OfertaProyectoMapper rowMapper;
 	public OfertaProyectoDao()

@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/> 
     <head th:replace="templates :: head"/>
     <body>
         <div th:replace="templates :: menuEmpresa"/>
@@ -43,7 +42,7 @@
 				</table>
 			</form>
 		</div>
-		<input type="button" class = "izquierda" onclick=" location.href='/offers' " value="Atras" name="boton" /> 
+		<input th:replace="templates :: botonAtras"/> 
 		<div th:replace="templates :: listaPeticionCambios"/>
 		
         <div th:replace="templates :: footer"/>

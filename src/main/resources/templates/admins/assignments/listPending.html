@@ -19,7 +19,7 @@
 					<td th:text="${currStudent.nombre}"/>
 					<td th:text="${currStudent.notaMedia}"/>
 					<td th:text="${currStudent.itinerario.getName()}"/>
-					<td><a th:href="@{/students/{id}/assign( id=${currStudent.id} )}">Realizar asignacion</a></td>
+					<td><a th:href="@{/students/{id}/assign( id=${currStudent.id} )}">Realizar asignación</a></td>
 				</tr>
 			</table>
 			<div th:if="${students.isEmpty()}">

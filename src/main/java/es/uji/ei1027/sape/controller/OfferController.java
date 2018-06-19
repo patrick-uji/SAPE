@@ -1,29 +1,29 @@
 package es.uji.ei1027.sape.controller;
+import java.util.List;
+import java.util.ArrayList;
 import es.uji.ei1027.sape.Utils;
 import org.springframework.ui.Model;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.servlet.http.HttpSession;
-import es.uji.ei1027.sape.model.Usuario;
-import es.uji.ei1027.sape.validation.OfferValidator;
-import es.uji.ei1027.sape.enums.EstadoOferta;
 import es.uji.ei1027.sape.model.Alumno;
-import es.uji.ei1027.sape.model.OfertaProyecto;
-import es.uji.ei1027.sape.model.PeticionRevision;
+import es.uji.ei1027.sape.model.Usuario;
 import es.uji.ei1027.sape.dao.AlumnoDao;
 import es.uji.ei1027.sape.dao.EmpresaDao;
-import es.uji.ei1027.sape.dao.PersonaContactoDao;
+import es.uji.ei1027.sape.enums.EstadoOferta;
+import es.uji.ei1027.sape.domain.VisibleOffer;
+import es.uji.ei1027.sape.model.OfertaProyecto;
 import es.uji.ei1027.sape.dao.OfertaProyectoDao;
-import es.uji.ei1027.sape.dao.PeticionRevisionDao;
-import es.uji.ei1027.sape.dao.dto.OfertaProyectoDTODao;
-import es.uji.ei1027.sape.dao.dto.PeticionRevisionDTODao;
-import es.uji.ei1027.sape.domain.OffersSelection;
 import es.uji.ei1027.sape.dto.OfertaProyectoDTO;
-
 import org.springframework.stereotype.Controller;
+import es.uji.ei1027.sape.model.PeticionRevision;
+import es.uji.ei1027.sape.domain.OffersSelection;
+import es.uji.ei1027.sape.dao.PersonaContactoDao;
+import es.uji.ei1027.sape.dao.PeticionRevisionDao;
+import es.uji.ei1027.sape.dao.dto.AsignacionDTODao;
 import org.springframework.validation.BindingResult;
+import es.uji.ei1027.sape.validation.OfferValidator;
+import es.uji.ei1027.sape.dao.dto.OfertaProyectoDTODao;
+import es.uji.ei1027.sape.domain.VisibleOffersContainer;
+import es.uji.ei1027.sape.dao.dto.PeticionRevisionDTODao;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -35,6 +35,7 @@ public class OfferController
 {
 	private AlumnoDao alumnoDao;
 	private EmpresaDao empresaDao;
+	private AsignacionDTODao asignacionDTODao;
 	private OfertaProyectoDao ofertaProyectoDao;
 	private PersonaContactoDao personaContactoDao;
 	private PeticionRevisionDao peticionRevisionDao;
@@ -49,6 +50,11 @@ public class OfferController
 	public void setEmpresaDao(EmpresaDao empresaDao)
 	{
 		this.empresaDao = empresaDao;
+	}
+	@Autowired
+	public void setAsignacionDTODao(AsignacionDTODao asignacionDTODao)
+	{
+		this.asignacionDTODao = asignacionDTODao;
 	}
 	@Autowired
 	public void setPersonaContactoDao(PersonaContactoDao personaContactoDao)
@@ -86,18 +92,33 @@ public class OfferController
 			{
 				case BTC:
 				case CCD:
+					VisibleOffer newVisibleOffer;
+					List<VisibleOffer> visibleOffers = new ArrayList<VisibleOffer>();
 					List<OfertaProyectoDTO> offers = ofertaProyectoDTODao.getAllAccepted();
-					OffersSelection offersSelection = new OffersSelection();
-					List<Integer> selectedOffers = new ArrayList<Integer>();
-					offersSelection.setSelectedOffers(selectedOffers);
+					VisibleOffersContainer visiblesContainer = new VisibleOffersContainer();
 					for (OfertaProyectoDTO currOffer : offers)
 					{
-						if (currOffer.getEstado() == EstadoOferta.VISIBLE)
+						newVisibleOffer = new VisibleOffer();
+						newVisibleOffer.setId(currOffer.getId());
+						switch (currOffer.getEstado())
 						{
-							selectedOffers.add(currOffer.getId());
+							case ACEPTADA:
+								newVisibleOffer.setIgnore(false);
+								newVisibleOffer.setVisible(false);
+							break;
+							case VISIBLE:
+								newVisibleOffer.setIgnore(false);
+								newVisibleOffer.setVisible(true);
+							break;
+							default: //case ASIGNADA
+								newVisibleOffer.setIgnore(true);
+								newVisibleOffer.setVisible(true);
+							break;
 						}
+						visibleOffers.add(newVisibleOffer);
 					}
-					model.addAttribute("offersSelection", offersSelection);
+					visiblesContainer.setVisibleOffers(visibleOffers);
+					model.addAttribute("visiblesContainer", visiblesContainer);
 			        model.addAttribute("offers", offers);
 			        return "admins/offers/listAccepted";
 			    //break;
@@ -106,9 +127,15 @@ public class OfferController
 			        return "companies/offers/list";
 			    //break;
 			    default: //case ALUMNO:
-			    	Alumno student = alumnoDao.get(user.getId());
-			        model.addAttribute( "offers", ofertaProyectoDTODao.getAllChoosable(user.getId(), student.getItinerario()) );
-			        model.addAttribute("offersSelection", new OffersSelection());
+			    	int userID = user.getId();
+			    	Alumno student = alumnoDao.get(userID);
+			    	boolean hasAssignment = asignacionDTODao.getActiveFromStudent(userID) != null;
+			    	if (!hasAssignment)
+			    	{
+				        model.addAttribute( "offers", ofertaProyectoDTODao.getAllChoosable(userID, student.getItinerario()) );
+				        model.addAttribute("offersSelection", new OffersSelection());
+			    	}
+					model.addAttribute("hasAssignment", hasAssignment);
 			        return "students/offers/list";
 				//break;
 			}
@@ -140,6 +167,40 @@ public class OfferController
 		}
 		return "error/401";
     }
+    @RequestMapping(value="/visibility", method=RequestMethod.POST)
+    public String visibility(@ModelAttribute("visiblesContainer") VisibleOffersContainer visiblesContainer, HttpSession session)
+    {
+ 		Utils.debugLog("Offers VISIBILITY");
+ 		if (Utils.isSuperAdmin(session))
+ 		{
+ 			List<Integer> hiddenIDs = new ArrayList<Integer>();
+ 			List<Integer> visibleIDs = new ArrayList<Integer>();
+ 			for (VisibleOffer currOffer : visiblesContainer.getVisibleOffers())
+			{
+				if (!currOffer.getIgnore())
+				{
+					if (currOffer.getVisible())
+					{
+						visibleIDs.add(currOffer.getId());
+					}
+					else
+					{
+						hiddenIDs.add(currOffer.getId());
+					}
+				}
+			}
+ 			if (visibleIDs.size() != 0)
+ 			{
+ 	 			ofertaProyectoDao.updateAll(Utils.listToArray(visibleIDs), OfertaProyectoDao.OFFER_STATUS_FIELD, EstadoOferta.VISIBLE.getID());
+ 			}
+ 			if (hiddenIDs.size() != 0)
+ 			{
+ 	 			ofertaProyectoDao.updateAll(Utils.listToArray(hiddenIDs), OfertaProyectoDao.OFFER_STATUS_FIELD, EstadoOferta.ACEPTADA.getID());
+ 			}
+ 			return "redirect:../offers";
+ 		}
+ 		return "error/401";
+    }
     @RequestMapping("/{id}/accept")
     public String accept(@PathVariable("id") int id, HttpSession session)
     {
@@ -152,7 +213,7 @@ public class OfferController
     }
     private void setOfferStatus(int id, EstadoOferta status)
     {
-    	ofertaProyectoDao.update(id, new String[] {"id_EstadoOferta"}, status.getID());
+    	ofertaProyectoDao.update(id, OfertaProyectoDao.OFFER_STATUS_FIELD, status.getID());
     }
     @RequestMapping(value="/{id}/petition", method=RequestMethod.POST)
     public String createPetition(@PathVariable("id") int id, @ModelAttribute("petition") PeticionRevision petition, HttpSession session)
@@ -280,7 +341,10 @@ public class OfferController
 				Utils.setupUpdateModel(model, id);
 		        return "companies/offers/edit";
 			//break;
-			default: return "error/401";
+			default: //case ALUMNO
+		        model.addAttribute("offer", ofertaProyectoDTODao.get(id));
+				return "students/offers/view";
+			//break;
 		}
    }
    @RequestMapping(value="/{id}/update", method=RequestMethod.POST)

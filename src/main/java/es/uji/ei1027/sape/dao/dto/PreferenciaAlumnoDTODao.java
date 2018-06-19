@@ -2,17 +2,15 @@ package es.uji.ei1027.sape.dao.dto;
 import java.util.List;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import org.springframework.stereotype.Component;
-
-import es.uji.ei1027.sape.Utils;
-import es.uji.ei1027.sape.dto.PreferenciaAlumnoDTO;
-import es.uji.ei1027.sape.enums.EstadoAsignacion;
+import es.uji.ei1027.sape.model.Empresa;
 import es.uji.ei1027.sape.enums.EstadoOferta;
+import es.uji.ei1027.sape.model.OfertaProyecto;
+import org.springframework.stereotype.Component;
 import es.uji.ei1027.sape.mappers.EmpresaMapper;
+import es.uji.ei1027.sape.enums.EstadoAsignacion;
+import es.uji.ei1027.sape.dto.PreferenciaAlumnoDTO;
 import es.uji.ei1027.sape.mappers.OfertaProyectoMapper;
 import es.uji.ei1027.sape.mappers.PreferenciaAlumnoMapper;
-import es.uji.ei1027.sape.model.Empresa;
-import es.uji.ei1027.sape.model.OfertaProyecto;
 @Component
 public class PreferenciaAlumnoDTODao extends AbstractDTODao<PreferenciaAlumnoDTO>
 {
@@ -55,7 +53,7 @@ public class PreferenciaAlumnoDTODao extends AbstractDTODao<PreferenciaAlumnoDTO
 	public List<PreferenciaAlumnoDTO> getAllAvailableFromStudent(int studentID)
 	{
 		//Utils.debugLog("SELECT * FROM PreferenciaAlumno WHERE id_Alumno = " + studentID + " AND id_OfertaProyecto IN (SELECT id FROM OfertaProyecto WHERE id_EstadoOferta IN (3,4) OR id IN (SELECT id_OfertaProyecto FROM Asignacion WHERE id_Alumno = " + studentID + " AND id_EstadoAsignacion = 1)) ORDER BY orden");
-    	return jdbcTemplate.query(BASE_QUERY + " WHERE id_Alumno = ? AND id_OfertaProyecto IN ("+
+    	return jdbcTemplate.query(BASE_QUERY + " WHERE id_Alumno = ? AND id_OfertaProyecto IN (" +
     							 "SELECT id FROM OfertaProyecto WHERE id_EstadoOferta IN (?,?) OR " +
     							 "id IN (" +
     							 	"SELECT id_OfertaProyecto FROM Asignacion WHERE id_Alumno = ? AND id_EstadoAsignacion = ?" +

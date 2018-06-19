@@ -33,15 +33,33 @@ public abstract class AbstractDao<T extends ObjetoIdentificado> implements RowMa
     }
 	public final void update(int id, String[] fieldNames, Object... args)
 	{
+		updateAll(new Integer[] {id}, fieldNames, args);
+	}
+	public final void updateAll(Integer[] ids, String[] fieldNames, Object... args)
+	{
 		Object[] queryArgs;
+		StringBuilder idFields = new StringBuilder();
 		StringBuilder paramFields = new StringBuilder();
 		paramFields.append(fieldNames[0] + " = ?");
 		for (int currFieldIndex = 1; currFieldIndex < fieldNames.length; currFieldIndex++)
 		{
 			paramFields.append(", " + fieldNames[currFieldIndex] + " = ?");
 		}
-		queryArgs = Utils.appendArray(args, id);
-        jdbcTemplate.update("UPDATE " + tName + " SET " + paramFields.toString() + " WHERE id = ?", queryArgs);
+		if (ids.length == 1)
+		{
+			idFields.append("= ?");
+		}
+		else
+		{
+			idFields.append("IN (?");
+			for (int currIDIndex = 1; currIDIndex < ids.length; currIDIndex++)
+			{
+				idFields.append(",?");
+			}
+			idFields.append(")");
+		}
+		queryArgs = Utils.appendArray(args, ids);
+        jdbcTemplate.update("UPDATE " + tName + " SET " + paramFields.toString() + " WHERE id " + idFields.toString(), queryArgs);
 	}
 	public final void delete(int id)
 	{

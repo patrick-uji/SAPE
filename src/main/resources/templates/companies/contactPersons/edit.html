@@ -16,7 +16,7 @@
 					</tr>
 					<tr>
 						<td class="register">Email</td>
-						<td class="inputs"><input type="text" th:field="*{email}" class="textoCentrar" placeholder="Ejem: sape@uji.es"/></td>
+						<td class="inputs"><input type="text" th:field="*{email}" class="textoCentrar" placeholder="Ejemplo: sape@uji.es"/></td>
 						<td class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"/>
 					</tr>
 					<tr>
@@ -32,7 +32,7 @@
 				</table>
 			</form>
 		</div>
-		<input type="button" class = "izquierda" onclick=" location.href='/contactPersons' " value="Atras" name="boton" /> 
+		<input th:replace="templates :: botonAtras"/> 
         <div th:replace="templates :: footer"/>
 	</body>
 </html>

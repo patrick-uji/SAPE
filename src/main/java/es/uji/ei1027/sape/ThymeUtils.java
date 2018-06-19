@@ -1,8 +1,8 @@
 package es.uji.ei1027.sape;
-import es.uji.ei1027.sape.enums.EstadoAsignacion;
+import es.uji.ei1027.sape.model.Usuario;
 import es.uji.ei1027.sape.model.Asignacion;
 import es.uji.ei1027.sape.model.OfertaProyecto;
-import es.uji.ei1027.sape.model.Usuario;
+import es.uji.ei1027.sape.enums.EstadoAsignacion;
 public class ThymeUtils
 {
 	public static boolean canEditOffer(OfertaProyecto offer)
@@ -55,8 +55,12 @@ public class ThymeUtils
 	}
 	public static boolean canEditAssignment(Asignacion assignment, Usuario user)
 	{
+		return user.esSuperAdmin() && canEditAssignment(assignment);
+	}
+	public static boolean canEditAssignment(Asignacion assignment)
+	{
 		EstadoAsignacion assignmentStatus = assignment.getEstado();
-		return user.esSuperAdmin() && (assignmentStatus == null || assignmentStatus == EstadoAsignacion.ENVIADA);
+		return assignmentStatus == null || assignmentStatus == EstadoAsignacion.ENVIADA;
 	}
 	public static boolean canCancelAssignment(Asignacion assignment)
 	{

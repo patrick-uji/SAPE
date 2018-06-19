@@ -5,11 +5,10 @@ import javax.servlet.http.HttpSession;
 import es.uji.ei1027.sape.dao.AlumnoDao;
 import es.uji.ei1027.sape.model.Asignacion;
 import es.uji.ei1027.sape.dao.AsignacionDao;
-import es.uji.ei1027.sape.dao.OfertaProyectoDao;
-import es.uji.ei1027.sape.dao.ProfesorTutorDao;
-import es.uji.ei1027.sape.enums.EstadoAsignacion;
 import es.uji.ei1027.sape.enums.EstadoOferta;
-
+import es.uji.ei1027.sape.dao.ProfesorTutorDao;
+import es.uji.ei1027.sape.dao.OfertaProyectoDao;
+import es.uji.ei1027.sape.enums.EstadoAsignacion;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import es.uji.ei1027.sape.dao.dto.PreferenciaAlumnoDTODao;
@@ -85,7 +84,7 @@ public class StudentController
 		Utils.debugLog("Assignments CREATE");
 		if (Utils.isAdmin(session))
 		{
-			ofertaProyectoDao.update(assignment.getIdOfertaProyecto(), new String[] {"id_EstadoOferta"}, EstadoOferta.ASIGNADA.getID());
+			ofertaProyectoDao.update(assignment.getIdOfertaProyecto(), OfertaProyectoDao.OFFER_STATUS_FIELD, EstadoOferta.ASIGNADA.getID());
 			assignment.setEstado(EstadoAsignacion.ENVIADA);
 			assignment.setFechaCreacion(Utils.now());
 			assignment.setFechaUltimoCambio("");

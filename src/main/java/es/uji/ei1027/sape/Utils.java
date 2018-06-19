@@ -1,21 +1,22 @@
 package es.uji.ei1027.sape;
 import java.sql.Date;
+import java.util.List;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.security.MessageDigest;
+import org.springframework.ui.Model;
 import javax.servlet.http.HttpSession;
 import es.uji.ei1027.sape.model.Usuario;
 import java.lang.reflect.ParameterizedType;
 import java.security.NoSuchAlgorithmException;
 import org.springframework.validation.Validator;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import es.uji.ei1027.sape.validation.LoginValidator;
 public class Utils
 {
-	private static final boolean DEBUG = true;
+	public static final boolean DEBUG = true;
 	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
 	public static boolean isEmptyString(String string)
 	{
@@ -81,14 +82,14 @@ public class Utils
 		}
 		return hexBytes.toString();
 	}
-	public static <T> T[] appendArray(T[] array, T value)
+	@SuppressWarnings("unchecked")
+	public static <T> T[] listToArray(List<T> list)
 	{
-		T[] newArray = Arrays.copyOf(array, array.length + 1);
-		newArray[array.length] = value;
-		return newArray;
+		T[] array = (T[])Array.newInstance(list.get(0).getClass(), list.size());
+		list.toArray(array);
+		return array;
 	}
-	@SafeVarargs
-	public static <T> T[] appendArray(T[] array, T... appendArray)
+	public static <T> T[] appendArray(T[] array, T[] appendArray)
 	{
 		int currNewIndex = array.length;
 		T[] newArray = Arrays.copyOf(array, array.length + appendArray.length);
@@ -134,10 +135,6 @@ public class Utils
 	public static Usuario getUser(HttpSession session)
 	{
 		return (Usuario)session.getAttribute("user");
-	}
-	public static boolean validateUser(Usuario user, BindingResult bindingResult)
-	{
-		return validate(new LoginValidator(), user, bindingResult);
 	}
 	public static boolean validate(Validator validator, Object obj, BindingResult bindingResult)
 	{

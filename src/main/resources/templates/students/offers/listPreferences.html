@@ -17,6 +17,7 @@
 			}
    		    /*]]>*/
     	</script>
+        <script type="text/javascript" src="/js/unsavedChangesReminder.js" th:src="@{/js/unsavedChangesReminder.js}"/>
     	<script type="text/javascript" src="/js/linkPreferencesOrder.js" th:src="@{/js/linkPreferencesOrder.js}"/>
         <link rel="stylesheet" href="/css/styles.css" th:href="@{/css/styles.css}"/>
         <title>SAPE</title>
@@ -24,36 +25,43 @@
     <body>
         <div th:replace="templates :: menuAlumno"/>
 		<div class="content1">
-			<h1>Lista de ofertas</h1>
-			<form id="preferencesForm" method="POST" th:action="@{/offerPreferences/update}" th:object="${preferencesContainer}">
+			<h1>Mis preferencias</h1>
+			<form id="preferencesForm" method="POST" th:action="@{/offerPreferences/update}" th:object="${preferencesContainer}" onsubmit="unsavedChanges = false;">
 				<label>Semestre inicio estancia:</label>
-				<select th:field="*{internshipSemester}">
+				<select th:field="*{internshipSemester}" onchange="unsavedChanges = true;">
 					<option value="1">Primero</option>
 					<option value="2">Segundo</option>
 				</select>
-				<table class="list"
-				 th:if="${!preferencesContainer.isEmpty()}">
-					<tr>
-						<th>Proyecto</th>
-						<th>Empresa</th>
-						<th>Orden</th>
-						<th>Eliminar</th>
-					</tr>
-					<tr th:each="currPreference, currPrefKey : *{preferences}">
-						<input type="hidden" th:field="*{preferences[__${currPrefKey.index}__].id}"/>
-						<td th:text="${currPreference.ofertaProyecto.titulo}"/>
-						<td th:text="${currPreference.empresa.nombre}"/>
-						<td>
-							<select onchange="handleOrderChange(this)" th:field="*{preferences[__${currPrefKey.index}__].orden}">
-								<option th:each="currNumber: ${#numbers.sequence(1, preferencesContainer.preferences.size())}"
-										th:value="${currNumber}" th:text="${currNumber}"/>
-							</select>
-						</td>
-						<td><input type="checkbox" th:field="*{selectedPreferences}" th:value="${currPreference.id}"/></td>
-					</tr>
-				</table>
-				<div th:if="${preferencesContainer.isEmpty()}">
-					<h2>No tienes ofertas preferentes...</h2>
+				<div th:if="${!hasAssignment}">
+					<table class="list"
+					 th:if="${!preferencesContainer.isEmpty()}">
+						<tr>
+							<th>Proyecto</th>
+							<th>Empresa</th>
+							<th>Orden</th>
+							<th>Eliminar</th>
+						</tr>
+						<tr th:each="currPreference, currPrefKey : *{preferences}">
+							<input type="hidden" th:field="*{preferences[__${currPrefKey.index}__].id}"/>
+							<td th:text="${currPreference.ofertaProyecto.titulo}"/>
+							<td th:text="${currPreference.empresa.nombre}"/>
+							<td>
+								<select th:field="*{preferences[__${currPrefKey.index}__].orden}" onchange="handleOrderChange(this); unsavedChanges = true;">
+									<option th:each="currNumber: ${#numbers.sequence(1, preferencesContainer.preferences.size())}"
+											th:value="${currNumber}" th:text="${currNumber}"/>
+								</select>
+							</td>
+							<td><input type="checkbox" th:field="*{selectedPreferences}" th:value="${currPreference.id}" onchange="unsavedChanges = true;"/></td>
+						</tr>
+					</table>
+					<div th:if="${preferencesContainer.isEmpty()}">
+						<br/>
+						<h2>No tienes ofertas preferentes...</h2>
+					</div>
+				</div>
+				<div th:if="${hasAssignment}">
+					<br/>
+					<h2>No puedes modificar tus ofertas preferentes mientras tengas una asignación activa</h2>
 				</div>
 				<input type="submit" value="Aplicar cambios" class="button3"/>
 			</form>

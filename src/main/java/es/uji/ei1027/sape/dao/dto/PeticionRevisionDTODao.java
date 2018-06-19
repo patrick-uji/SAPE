@@ -2,9 +2,9 @@ package es.uji.ei1027.sape.dao.dto;
 import java.util.List;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import es.uji.ei1027.sape.model.Usuario;
 import org.springframework.stereotype.Component;
 import es.uji.ei1027.sape.mappers.UsuarioMapper;
-import es.uji.ei1027.sape.model.Usuario;
 import es.uji.ei1027.sape.dto.PeticionRevisionDTO;
 import es.uji.ei1027.sape.mappers.PeticionRevisionMapper;
 @Component

@@ -1,6 +1,6 @@
 package es.uji.ei1027.sape.dto;
-import es.uji.ei1027.sape.model.Empresa;
 import es.uji.ei1027.sape.model.Alumno;
+import es.uji.ei1027.sape.model.Empresa;
 import es.uji.ei1027.sape.model.Asignacion;
 import es.uji.ei1027.sape.model.ProfesorTutor;
 import es.uji.ei1027.sape.model.OfertaProyecto;

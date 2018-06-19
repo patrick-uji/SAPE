@@ -1,21 +1,23 @@
 package es.uji.ei1027.sape.controller;
 import java.util.List;
 import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.Collections;
 import es.uji.ei1027.sape.Utils;
 import org.springframework.ui.Model;
 import javax.servlet.http.HttpSession;
+import es.uji.ei1027.sape.model.Alumno;
 import es.uji.ei1027.sape.model.Usuario;
+import es.uji.ei1027.sape.dao.AlumnoDao;
 import org.springframework.stereotype.Controller;
 import es.uji.ei1027.sape.domain.OffersSelection;
-import es.uji.ei1027.sape.model.Alumno;
 import es.uji.ei1027.sape.model.PreferenciaAlumno;
 import es.uji.ei1027.sape.dto.PreferenciaAlumnoDTO;
-import es.uji.ei1027.sape.dao.AlumnoDao;
 import es.uji.ei1027.sape.dao.PreferenciaAlumnoDao;
-import es.uji.ei1027.sape.dao.dto.PreferenciaAlumnoDTODao;
+import es.uji.ei1027.sape.dao.dto.AsignacionDTODao;
 import es.uji.ei1027.sape.domain.PreferencesContainer;
-
+import es.uji.ei1027.sape.dao.dto.PreferenciaAlumnoDTODao;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,12 +27,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class OfferPreferencesController
 {
 	private AlumnoDao alumnoDao;
+	private AsignacionDTODao asignacionDTODao;
 	private PreferenciaAlumnoDao preferenciaAlumnoDao;
 	private PreferenciaAlumnoDTODao preferenciaAlumnoDTODao;
     @Autowired
     public void setAlumnoDao(AlumnoDao alumnoDao)
     {
     	this.alumnoDao = alumnoDao;
+    }
+    @Autowired
+    public void setAsignacionDTODao(AsignacionDTODao asignacionDTODao)
+    {
+    	this.asignacionDTODao = asignacionDTODao;
     }
     @Autowired
     public void setPreferenciaAlumnoDao(PreferenciaAlumnoDao preferenciaAlumnoDao)
@@ -52,10 +60,36 @@ public class OfferPreferencesController
 			int userID = user.getId();
 			Alumno student = alumnoDao.get(userID);
 			PreferencesContainer preferencesContainer = new PreferencesContainer();
+			boolean hasAssignment = asignacionDTODao.getActiveFromStudent(userID) != null;
+			if (!hasAssignment)
+			{
+				preferencesContainer.setPreferences(preferenciaAlumnoDTODao.getAllFromStudent(userID));
+			}
+			else
+			{
+				preferencesContainer.setPreferences(new ArrayList<PreferenciaAlumnoDTO>());
+			}
 			preferencesContainer.setInternshipSemester(student.getSemestreInicioEstancia());
-			preferencesContainer.setPreferences(preferenciaAlumnoDTODao.getAllFromStudent(userID));
 			model.addAttribute("preferencesContainer", preferencesContainer);
+			model.addAttribute("hasAssignment", hasAssignment);
 			return "students/offers/listPreferences";
+		}
+		return "error/401";
+	}
+	@RequestMapping("/add/{id}")
+	public String add(@PathVariable int id, HttpSession session)
+	{
+		Usuario user = Utils.getUser(session);
+		if (Utils.isStudent(user))
+		{
+			PreferenciaAlumno newPreference = new PreferenciaAlumno();
+			int studentID = user.getId();
+			newPreference.setIDAlumno(studentID);
+			newPreference.setIdOfertaProyecto(id);
+			newPreference.setFechaUltimoCambio(Utils.now());
+			newPreference.setOrden(preferenciaAlumnoDao.countFromStudent(studentID) + 1);
+			preferenciaAlumnoDao.create(newPreference);
+			return "redirect:../../offers";
 		}
 		return "error/401";
 	}
@@ -90,7 +124,11 @@ public class OfferPreferencesController
 		if (Utils.isStudent(user))
 		{
 			List<PreferenciaAlumnoDTO> preferences = preferencesContainer.getPreferences();
-			if (hasValidOrdering(preferences))
+			if (preferences == null)
+			{
+				alumnoDao.update(user.getId(), new String[] {"semestreInicioEstancia"}, preferencesContainer.getInternshipSemester());
+			}
+			else if (hasValidOrdering(preferences))
 			{
 				Collections.sort(preferences);
 				deleteSelectedPreferences(preferences, preferencesContainer.getSelectedPreferences());
@@ -125,7 +163,7 @@ public class OfferPreferencesController
 			}
 			else
 			{
-				Utils.debugLog("Selected Preference with ID " + currPreference.getId() + " will now have order: " + currPreference.getOrden());
+				Utils.debugLog("Preference with ID " + currPreference.getId() + " will now have order: " + currPreference.getOrden());
 				seenOrders.add(currPreferenceOrder);
 			}
 		}

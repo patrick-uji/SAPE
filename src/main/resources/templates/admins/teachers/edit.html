@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/> 
     <head th:replace="templates :: head"/>
     <body>
         <div th:replace="templates :: menuCoordinador"/>
@@ -10,22 +9,22 @@
 				<table class="table">
 					<tr>
 						<td class="register">Nombre</td>
-						<td><input type="text" th:field="*{nombre}" class="textoCentrar" placeholder="Nombre  profesor"/></td>
+						<td><input type="text" th:field="*{nombre}" class="textoCentrar" placeholder="Nombre profesor"/></td>
 						<td class="error" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"/>
 					</tr>
 					<tr>
 						<td class="register">Departamento</td>
-						<td><input type="text" th:field="*{departamento}" class="textoCentrar" placeholder="Ejem: Informática "/></td>
+						<td><input type="text" th:field="*{departamento}" class="textoCentrar" placeholder="Ejemplo: Informática "/></td>
 						<td class="error" th:if="${#fields.hasErrors('departamento')}" th:errors="*{departamento}"/>
 					</tr>
 					<tr>
 						<td class="register">Despacho</td>
-						<td><input type="text" th:field="*{despacho}" class="textoCentrar" placeholder="Ejem: TI1200"/></td>
+						<td><input type="text" th:field="*{despacho}" class="textoCentrar" placeholder="Ejemplo: TI1200"/></td>
 						<td class="error" th:if="${#fields.hasErrors('despacho')}" th:errors="*{despacho}"/>
 					</tr>
 					<tr>
 						<td class="register">Email</td>
-						<td><input type="text" th:field="*{email}" class="textoCentrar" placeholder="Ejem: sape@uji.es"/></td>
+						<td><input type="text" th:field="*{email}" class="textoCentrar" placeholder="Ejemplo: sape@uji.es"/></td>
 						<td class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"/>
 					</tr>
 					<tr>
@@ -38,7 +37,7 @@
 			</form>
 			
 		</div>
-		<input type="button" class = "izquierda" onclick=" location.href='/teachers' " value="Atras" name="boton" /> 
+		<input th:replace="templates :: botonAtras"/> 
         <div th:replace="templates :: footer"/>
 	</body>
 </html>

@@ -1,18 +1,16 @@
 package es.uji.ei1027.sape.dao.dto;
+import java.util.List;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
-
-import org.springframework.stereotype.Component;
-
-import es.uji.ei1027.sape.dto.OfertaProyectoDTO;
-import es.uji.ei1027.sape.enums.EstadoOferta;
+import es.uji.ei1027.sape.model.Empresa;
 import es.uji.ei1027.sape.enums.Itinerario;
+import es.uji.ei1027.sape.enums.EstadoOferta;
+import es.uji.ei1027.sape.model.PersonaContacto;
+import org.springframework.stereotype.Component;
+import es.uji.ei1027.sape.dto.OfertaProyectoDTO;
 import es.uji.ei1027.sape.mappers.EmpresaMapper;
 import es.uji.ei1027.sape.mappers.OfertaProyectoMapper;
 import es.uji.ei1027.sape.mappers.PersonaContactoMapper;
-import es.uji.ei1027.sape.model.Empresa;
-import es.uji.ei1027.sape.model.PersonaContacto;
 @Component
 public class OfertaProyectoDTODao extends AbstractDTODao<OfertaProyectoDTO>
 {
@@ -60,7 +58,7 @@ public class OfertaProyectoDTODao extends AbstractDTODao<OfertaProyectoDTO>
     }
     public List<OfertaProyectoDTO> getAllChoosable(int studentID, Itinerario itinerary)
     {
-    	return jdbcTemplate.query(BASE_QUERY + " WHERE id_EstadoOferta = ? AND id_Itinerario = ? AND p.id NOT IN (SELECT id_OfertaProyecto FROM PreferenciaAlumno WHERE id_Alumno = ?) ORDER BY id DESC",
+    	return jdbcTemplate.query(BASE_QUERY + " WHERE id_EstadoOferta = ? AND id_Itinerario = ? AND o.id NOT IN (SELECT id_OfertaProyecto FROM PreferenciaAlumno WHERE id_Alumno = ?) ORDER BY id DESC",
     							  new Object[] {EstadoOferta.VISIBLE.getID(), itinerary.getID(), studentID}, this);
     }
 }

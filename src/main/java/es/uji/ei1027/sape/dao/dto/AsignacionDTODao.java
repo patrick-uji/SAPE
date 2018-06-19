@@ -2,24 +2,22 @@ package es.uji.ei1027.sape.dao.dto;
 import java.util.List;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import es.uji.ei1027.sape.dto.AsignacionDTO;
-import es.uji.ei1027.sape.enums.EstadoAsignacion;
-
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.stereotype.Component;
-
-import es.uji.ei1027.sape.mappers.AlumnoMapper;
-import es.uji.ei1027.sape.mappers.AsignacionMapper;
-import es.uji.ei1027.sape.mappers.EmpresaMapper;
-import es.uji.ei1027.sape.mappers.OfertaProyectoMapper;
-import es.uji.ei1027.sape.mappers.PersonaContactoMapper;
-import es.uji.ei1027.sape.mappers.ProfesorTutorMapper;
 import es.uji.ei1027.sape.model.Alumno;
-import es.uji.ei1027.sape.model.Asignacion;
 import es.uji.ei1027.sape.model.Empresa;
+import es.uji.ei1027.sape.model.Asignacion;
+import es.uji.ei1027.sape.dto.AsignacionDTO;
+import es.uji.ei1027.sape.model.ProfesorTutor;
+import es.uji.ei1027.sape.mappers.AlumnoMapper;
 import es.uji.ei1027.sape.model.OfertaProyecto;
 import es.uji.ei1027.sape.model.PersonaContacto;
-import es.uji.ei1027.sape.model.ProfesorTutor;
+import org.springframework.stereotype.Component;
+import es.uji.ei1027.sape.mappers.EmpresaMapper;
+import es.uji.ei1027.sape.enums.EstadoAsignacion;
+import es.uji.ei1027.sape.mappers.AsignacionMapper;
+import es.uji.ei1027.sape.mappers.ProfesorTutorMapper;
+import es.uji.ei1027.sape.mappers.OfertaProyectoMapper;
+import es.uji.ei1027.sape.mappers.PersonaContactoMapper;
+import org.springframework.dao.EmptyResultDataAccessException;
 @Component
 public class AsignacionDTODao extends AbstractDTODao<AsignacionDTO>
 {
@@ -63,7 +61,8 @@ public class AsignacionDTODao extends AbstractDTODao<AsignacionDTO>
     {
     	try
 		{
-        	return jdbcTemplate.queryForObject(BASE_QUERY + " WHERE id_Alumno = ? AND id_EstadoAsignacion != ?", new Object[] {studentID, EstadoAsignacion.RECHAZADA.getID()}, this);
+        	return jdbcTemplate.queryForObject(BASE_QUERY + " WHERE id_Alumno = ? AND id_EstadoAsignacion IN (?,?)",
+        									   new Object[] {studentID, EstadoAsignacion.ENVIADA.getID(), EstadoAsignacion.ACEPTADA.getID()}, this);
 		}
 		catch (EmptyResultDataAccessException ex)
 		{

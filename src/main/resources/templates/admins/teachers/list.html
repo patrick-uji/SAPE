@@ -19,10 +19,10 @@
 					<td th:text="${currTeacher.despacho}"/>
 					<td th:text="${currTeacher.email}"/>
 					<td><a th:href="@{/teachers/{id}( id=${currTeacher.id} )}">Editar</a></td>
-					<td><a th:href="@{/teachers/{id}/delete( id=${currTeacher.id} )}" onclick="return confirm('�Desea eliminar la oferta?')">Eliminar</a></td>
+					<td><a th:href="@{/teachers/{id}/delete( id=${currTeacher.id} )}" onclick="return confirm('¿Seguro que quieres eliminar este profesor?')">Eliminar</a></td>
 				</tr>
 			</table>
-			<input type="button" class = "addOferta" onclick=" location.href='/teachers/add' " value="A&ntilde;adir tutor" name="boton" /> 
+			<input class="addOferta" type="button" name="boton" value="Añadir tutor" onclick="location.href='/teachers/add'"/> 
 		</div>
         <div th:replace="templates :: footer"/>
 	</body>

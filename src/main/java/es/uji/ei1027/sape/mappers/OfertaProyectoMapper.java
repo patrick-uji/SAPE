@@ -1,10 +1,9 @@
 package es.uji.ei1027.sape.mappers;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import es.uji.ei1027.sape.Utils;
-import es.uji.ei1027.sape.enums.EstadoOferta;
 import es.uji.ei1027.sape.enums.Itinerario;
+import es.uji.ei1027.sape.enums.EstadoOferta;
 import es.uji.ei1027.sape.model.OfertaProyecto;
 import org.springframework.jdbc.core.RowMapper;
 public class OfertaProyectoMapper extends PrefixableMapper implements RowMapper<OfertaProyecto>

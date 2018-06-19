@@ -1,22 +1,20 @@
 package es.uji.ei1027.sape.controller;
 import es.uji.ei1027.sape.Utils;
 import org.springframework.ui.Model;
+import es.uji.ei1027.sape.ThymeUtils;
 import javax.servlet.http.HttpSession;
+import es.uji.ei1027.sape.dao.AlumnoDao;
 import es.uji.ei1027.sape.model.Usuario;
 import es.uji.ei1027.sape.model.Asignacion;
-import es.uji.ei1027.sape.model.ProfesorTutor;
 import es.uji.ei1027.sape.dao.AsignacionDao;
-import es.uji.ei1027.sape.dao.OfertaProyectoDao;
-import es.uji.ei1027.sape.dao.AlumnoDao;
-import es.uji.ei1027.sape.dao.ProfesorTutorDao;
-import es.uji.ei1027.sape.enums.EstadoAsignacion;
 import es.uji.ei1027.sape.enums.EstadoOferta;
-
+import es.uji.ei1027.sape.dao.ProfesorTutorDao;
+import es.uji.ei1027.sape.dao.OfertaProyectoDao;
+import es.uji.ei1027.sape.enums.EstadoAsignacion;
 import org.springframework.stereotype.Controller;
 import es.uji.ei1027.sape.dao.dto.AsignacionDTODao;
-import es.uji.ei1027.sape.dao.dto.PreferenciaAlumnoDTODao;
-
 import org.springframework.validation.BindingResult;
+import es.uji.ei1027.sape.dao.dto.PreferenciaAlumnoDTODao;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -121,7 +119,7 @@ public class AssignmentController
 	private void unlinkAssignment(int assignmentID, EstadoAsignacion newStatus)
 	{
 		Asignacion assignment = asignacionDao.get(assignmentID);
-		ofertaProyectoDao.update(assignment.getIdOfertaProyecto(), new String[] {"id_EstadoOferta"}, EstadoOferta.VISIBLE.getID());
+		ofertaProyectoDao.update(assignment.getIdOfertaProyecto(), OfertaProyectoDao.OFFER_STATUS_FIELD, EstadoOferta.VISIBLE.getID());
 		asignacionDao.update(assignmentID, new String[] {"id_EstadoAsignacion"}, newStatus.getID());
 	}
 	@RequestMapping("/{id}/cancel")
@@ -145,15 +143,16 @@ public class AssignmentController
 			if (user.esSuperAdmin())
 			{
 				model.addAttribute( "preferences", preferenciaAlumnoDTODao.getAllAvailableFromStudent(assignment.getIDAlumno()) );
+		        model.addAttribute("action", ThymeUtils.canEditAssignment(assignment) ? "Actualizar" : "Ver");
 		        model.addAttribute("target", "/assignments/" + id + "/update");
 				model.addAttribute("teachers", profesorTutorDao.getAll());
-		        model.addAttribute("action", "Actualizar");
 			}
 			else //user == CCD
 			{
 		        model.addAttribute("action", "Ver");
 			}
 			model.addAttribute( "teacher", profesorTutorDao.get(assignment.getIdProfesorTutor()) );
+			model.addAttribute( "offer", ofertaProyectoDao.get(assignment.getIdOfertaProyecto()) );
 			model.addAttribute( "student", alumnoDao.get(assignment.getIDAlumno()) );
 			model.addAttribute("assignment", assignment);
 	        return "admins/assignments/edit";
@@ -171,8 +170,8 @@ public class AssignmentController
 			int oldAssignmentOfferID = oldAssignment.getIdOfertaProyecto();
 			if (newAssignmentOfferID != oldAssignmentOfferID)
 			{
-				ofertaProyectoDao.update(newAssignmentOfferID, new String[] {"id_EstadoOferta"}, EstadoOferta.ASIGNADA.getID());
-				ofertaProyectoDao.update(oldAssignmentOfferID, new String[] {"id_EstadoOferta"}, EstadoOferta.VISIBLE.getID());
+				ofertaProyectoDao.update(newAssignmentOfferID, OfertaProyectoDao.OFFER_STATUS_FIELD, EstadoOferta.ASIGNADA.getID());
+				ofertaProyectoDao.update(oldAssignmentOfferID, OfertaProyectoDao.OFFER_STATUS_FIELD, EstadoOferta.VISIBLE.getID());
 			}
 			assignment.setFechaCreacion(oldAssignment.getFechaCreacion());
 			assignment.setIDAlumno(oldAssignment.getIDAlumno());

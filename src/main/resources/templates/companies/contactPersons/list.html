@@ -9,17 +9,16 @@
 				<tr>
 					<th>Nombre</th>
 					<th>Email</th>
-					<th colspan="2">Acci&oacute;n</th>
+					<th colspan="2">Acción</th>
 				</tr>
 				<tr th:each="currContactPerson : ${contactPersons}">
 					<td th:text="${currContactPerson.nombre}"/>
 					<td th:text="${currContactPerson.email}"/>
 					<td><a th:href="@{/contactPersons/{id}( id=${currContactPerson.id} )}">Editar</a></td>
-					<td><a th:href="@{/contactPersons/{id}/delete( id=${currContactPerson.id} )}" onclick="return confirm('Do you want to delete this offer?')">Eliminar</a></td>
+					<td><a th:href="@{/contactPersons/{id}/delete( id=${currContactPerson.id} )}" onclick="return confirm('¿Seguro que quieres eliminar esta persona de contacto?')">Eliminar</a></td>
 				</tr>
 			</table>
-			<input type="button" class = "addPersona" onclick=" location.href='/contactPersons/add' " value="A&ntilde;adir nueva persona de contacto" name="boton" /> 
-			
+			<input class="addOferta" type="button" name="boton" value="Añadir contacto" onclick="location.href='/contactPersons/add'"/> 
 		</div>
         <div th:replace="templates :: footer"/>
 	</body>

@@ -1,6 +1,6 @@
 package es.uji.ei1027.sape.model;
-import es.uji.ei1027.sape.enums.EstadoOferta;
 import es.uji.ei1027.sape.enums.Itinerario;
+import es.uji.ei1027.sape.enums.EstadoOferta;
 public class OfertaProyecto extends ObjetoIdentificado
 {
 	public static final String SELECT_JOIN = "o.id AS o_id, o.numero AS o_numero, o.titulo AS o_titulo, o.id_PersonaContacto AS o_id_PersonaContacto, o.objetivo AS o_objetivo, o.fechaAlta AS o_fechaAlta, " +

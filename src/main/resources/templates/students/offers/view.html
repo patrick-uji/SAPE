@@ -2,40 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org">
     <head th:replace="templates :: head"/>
     <body>
-        <div th:replace="templates :: menuCoordinador"/>
+        <div th:replace="templates :: menuAlumno"/>
 		<div class="content1">
-			<!-- TODO: Crear un fragmento? -->
 			<h1>Información Oferta</h1>
-			<table class="table">
-				<tr>
-					<td>Titulo</td>
-					<td th:text="${offer.titulo}"/>
-				</tr>
-				<tr>
-					<td>Itinerario</td>
-					<td th:text="${offer.itinerario.getName()}"/>
-				</tr>
-				<tr>
-					<td>Objetivo</td>
-					<td th:text="${offer.objetivo}"/>
-				</tr>
-				<tr>
-					<td>Empresa</td>
-					<td th:text="${offer.empresa.nombre}"/>
-				</tr>
-				<tr>
-					<td>Persona Contacto</td>
-					<td th:text="${offer.personaContacto.nombre}"/>
-				</tr>
-				<tr>
-					<td>Email Persona Contacto</td>
-					<td th:text="${offer.personaContacto.email}"/>
-				</tr>
-				<tr>
-					<td>Descripcion Practicas (Persona de Contacto)</td>
-					<td th:text="${offer.personaContacto.descripcionPracticas}"/>
-				</tr>
-			</table>
+			<table th:replace="templates :: infoOferta"/>
+			<input class="addOferta" type="button" name="boton" value="Añadir a preferencias" th:onclick="'location.href=\'/offerPreferences/add/' + ${offer.id} + '\''"/>
+			
+			<!--location.href=/offerPreferences/add/' + offer.id + ');'}"/> -->
 		</div>
         <div th:replace="templates :: footer"/>
 	</body>

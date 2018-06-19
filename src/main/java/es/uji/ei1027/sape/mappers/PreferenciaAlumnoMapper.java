@@ -1,9 +1,8 @@
 package es.uji.ei1027.sape.mappers;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import org.springframework.jdbc.core.RowMapper;
-
 import es.uji.ei1027.sape.Utils;
+import org.springframework.jdbc.core.RowMapper;
 import es.uji.ei1027.sape.model.PreferenciaAlumno;
 public class PreferenciaAlumnoMapper implements RowMapper<PreferenciaAlumno>
 {

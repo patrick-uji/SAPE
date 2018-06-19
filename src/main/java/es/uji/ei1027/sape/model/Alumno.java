@@ -1,7 +1,5 @@
 package es.uji.ei1027.sape.model;
-
 import es.uji.ei1027.sape.enums.Itinerario;
-
 public class Alumno extends ObjetoIdentificado
 {
 	public static final String SELECT_JOIN = "a.id AS a_id, a.dni AS a_dni, a.nombre AS a_nombre, a.notaMedia AS a_notaMedia, a.id_Itinerario AS a_id_Itinerario, " +

@@ -8,49 +8,49 @@
 			<div th:if="${assignment != null}">
 				<table class="table" >
 					<tr>
-						<td>Proyecto =></td>
+						<td>Proyecto:</td>
 						<td th:text="${assignment.ofertaProyecto.titulo}"/>
 					</tr>
 					<tr>
-						<td>Objetivo =></td>
+						<td>Objetivo:</td>
 						<td th:text="${assignment.ofertaProyecto.objetivo}"/>
 					</tr>
 					<tr>
-						<td>Profesor Tutor =></td>
+						<td>Profesor Tutor:</td>
 						<td th:text="${assignment.profesorTutor.nombre}"/>
 					</tr>
 					<tr>
-						<td>Email (Tutor) =></td>
+						<td>Email (Tutor):</td>
 						<td th:text="${assignment.profesorTutor.email}"/>
 					</tr>
 					<tr>
-						<td>Departamento (Tutor) =></td>
+						<td>Departamento (Tutor):</td>
 						<td th:text="${assignment.profesorTutor.departamento}"/>
 					</tr>
 					<tr>
-						<td>Despacho (Tutor) =></td>
+						<td>Despacho (Tutor):</td>
 						<td th:text="${assignment.profesorTutor.despacho}"/>
 					</tr>
 					<tr>
-						<td>Empresa</td>
+						<td>Empresa:</td>
 						<td th:text="${assignment.empresa.nombre}"/>
 					</tr>
 					<tr>
-						<td>Persona Contacto</td>
+						<td>Persona Contacto:</td>
 						<td th:text="${assignment.personaContacto.nombre}"/>
 					</tr>
 					<tr>
-						<td>Email Persona Contacto</td>
+						<td>Email Persona Contacto:</td>
 						<td th:text="${assignment.personaContacto.email}"/>
 					</tr>
 					<tr>
-						<td>Descripcion Practicas (Persona de Contacto)</td>
+						<td>Descripcion Practicas (Persona de Contacto):</td>
 						<td th:text="${assignment.personaContacto.descripcionPracticas}"/>
 					</tr>
 				</table>
 				<div class="enlaces1" th:if="${assignment.estado != T(es.uji.ei1027.sape.enums.EstadoAsignacion).ACEPTADA}">
-					<a th:href="@{/assignments/{id}/reject( id=${assignment.id} )}" onclick="return confirm('Seguro que quiere rechazar esta asignación?')" class="enlaces">Rechazar</a>
-					<a th:href="@{/assignments/{id}/accept( id=${assignment.id} )}" onclick="return confirm('Seguro que quiere aceptar esta asignación?')">Aceptar</a>
+					<a class="enlaces" th:href="@{/assignments/{id}/reject( id=${assignment.id} )}" onclick="return confirm('¿Seguro que quiere rechazar esta asignación?')">Rechazar</a>
+					<a th:href="@{/assignments/{id}/accept( id=${assignment.id} )}" onclick="return confirm('¿Seguro que quiere aceptar esta asignación?')">Aceptar</a>
 				</div>
 			</div>
 			<div th:if="${assignment == null}">

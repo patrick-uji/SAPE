@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/> 
     <head th:fragment="head">
         <meta name="viewport" content="width=device-width, height=device-height, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
         <link rel="stylesheet" href="/css/styles.css" th:href="@{/css/styles.css}"/>
@@ -14,7 +13,6 @@
     		<img src="/css/sape.png" alt="Skill Sharing" class="image"/>
     	</a>
     	</div>
-    
     </div>
     
     <div th:text="${'Bienvenido: ' + session.user.email}" th:fragment="welcome"/>
@@ -61,7 +59,7 @@
 		   		</li>
 	   		</a>
    		</ul>
- 		<div class="botonS"><a class="salir" href="/logout">Cerrar Sesi&oacute;n</a></div>
+ 		<div class="botonS"><a class="salir" href="/logout">Cerrar Sesión</a></div>
    	</div>
    	
    	<div id="menu" th:fragment="menuEmpresa">
@@ -74,12 +72,6 @@
 		   		<p class ="menu" style="color:white;">Ofertas </p>
 		   		</li>
 	   		</a>
-	   		<a href="/offers/add" class="menu">
-		   		<li>
-		   		<div class="barra"></div>
-		   		<p class ="menu" style="color:white;">Crear Oferta</p>
-		   		</li>
-	   		</a>
 	   		<a href="/contactPersons" class="menu">
 		   		<li>
 		   		<div class="barra"></div>
@@ -87,7 +79,7 @@
 		   		</li>
 	   		</a>
    		</ul>
-		<div class="botonS"><a class="salir" href="/logout">Cerrar Sesi&oacute;n</a></div>
+		<div class="botonS"><a class="salir" href="/logout">Cerrar Sesión</a></div>
    	</div>
     
     <div id="menu" th:fragment="menuAlumno">
@@ -109,26 +101,57 @@
 	   		<a href="/assignments" class="menu">
 		   		<li>
 		   		<div class="barra"></div>
-		   		<p class ="menu" style="color:white;">Asignacion</p>
+		   		<p class ="menu" style="color:white;">Asignación</p>
 		   		</li>
 	   		</a>
    		</ul>
-		<div class="botonS"><a class="salir" href="/logout">Cerrar Sesi&oacute;n</a></div>
+		<div class="botonS"><a class="salir" href="/logout">Cerrar Sesión</a></div>
    	</div>
    	
-   	<input type="reset" value="Restablecer" class="button2" onclick="return confirm('¿Quieres restablecer los campos?')" th:fragment="botonRestablecer"/>
-   	
+   	<table class="table" th:fragment="infoOferta">
+		<tr>
+			<td>Titulo:</td>
+			<td th:text="${offer.titulo}"/>
+		</tr>
+		<tr>
+			<td>Itinerario:</td>
+			<td th:text="${offer.itinerario.getName()}"/>
+		</tr>
+		<tr>
+			<td>Objetivo:</td>
+			<td th:text="${offer.objetivo}"/>
+		</tr>
+		<tr>
+			<td>Empresa:</td>
+			<td th:text="${offer.empresa.nombre}"/>
+		</tr>
+		<tr>
+			<td>Persona Contacto:</td>
+			<td th:text="${offer.personaContacto.nombre}"/>
+		</tr>
+		<tr>
+			<td>Email Persona Contacto:</td>
+			<td th:text="${offer.personaContacto.email}"/>
+		</tr>
+		<tr>
+			<td>Descripcion Practicas (Persona de Contacto):</td>
+			<td th:text="${offer.personaContacto.descripcionPracticas}"/>
+		</tr>
+	</table>
+
    	<div th:fragment="listaPeticionCambios">
    		<div th:each="currPetition : ${petitions}">
-   			<!-- TODO: Usar "nombre" en vez de "email" (Aun no esta en la BBDD) -->
    			<h1 th:text="${currPetition.usuario.email + ' @ ' + currPetition.fecha}"/>
-   			
    			<h2 th:text="${currPetition.textoPeticion}"/>
    			<h2>------------------------------</h2>
    		</div>
    	</div>
     
+   	<input type="reset" value="Restablecer" class="button2" onclick="return confirm('¿Quieres restablecer los campos?')" th:fragment="botonRestablecer"/>
+
+    <input class="izquierda" type="button" name="boton" value="Atras" onclick="history.back();" th:fragment="botonAtras"/> 
+    
     <div class="footer" th:fragment="footer">
-		<p>&copy; EI102717BGM &#8226; All rights reserved &#8226; <a href="/privacy" class="footer_links">Política de privacidad</a> &#8226; <a href="/about" class="footer_links">Acerda de</a> &#8226; <a href="/contact" class="footer_links">Contacto</a></p>
+		<p>&copy; EI102717BGM &#8226; All rights reserved &#8226; <a href="/privacy" class="footer_links">Política de privacidad</a> &#8226; <a href="/about" class="footer_links">Acerca de</a> &#8226; <a href="/contact" class="footer_links">Contacto</a></p>
     </div>
 </html>

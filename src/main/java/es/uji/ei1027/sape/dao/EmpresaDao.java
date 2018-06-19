@@ -1,9 +1,8 @@
 package es.uji.ei1027.sape.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import es.uji.ei1027.sape.mappers.EmpresaMapper;
 import es.uji.ei1027.sape.model.Empresa;
+import es.uji.ei1027.sape.mappers.EmpresaMapper;
 import org.springframework.stereotype.Component;
 @Component
 public class EmpresaDao extends AbstractDao<Empresa>

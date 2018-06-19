@@ -1,11 +1,7 @@
 package es.uji.ei1027.sape.validation;
 import es.uji.ei1027.sape.Utils;
-import es.uji.ei1027.sape.domain.Login;
-import es.uji.ei1027.sape.model.OfertaProyecto;
-import es.uji.ei1027.sape.model.PersonaContacto;
-import es.uji.ei1027.sape.model.ProfesorTutor;
-
 import org.springframework.validation.Errors;
+import es.uji.ei1027.sape.model.OfertaProyecto;
 public class OfferValidator extends BaseValidator<OfertaProyecto>
 {
 	@Override

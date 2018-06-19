@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/> 
     <head th:replace="templates :: head"/>
     <body>
         <div th:replace="templates :: menuCoordinador"/>
@@ -9,23 +8,23 @@
 			<form method="POST" th:action="@{{target}( target=${target} )}" th:object="${assignment}">
 				<table class="table">
 					<tr>
-						<td>DNI</td>
+						<td>DNI:</td>
 						<td th:text="${student.dni}"/>
 					</tr>
 					<tr>
-						<td>Nombre</td>
+						<td>Nombre:</td>
 						<td th:text="${student.nombre}"/>
 					</tr>
 					<tr>
-						<td>Nota Media</td>
+						<td>Nota Media:</td>
 						<td th:text="${student.notaMedia}"/>
 					</tr>
 					<tr>
-						<td>Itinerario</td>
+						<td>Itinerario:</td>
 						<td th:text="${student.itinerario.getName()}"/>
 					</tr>
 					<tr>
-						<td>Numero Creditos</td>
+						<td>Numero Créditos:</td>
 						<td th:text="${student.numeroCreditos}"/>
 					</tr>
 					<tr>
@@ -70,12 +69,15 @@
 						<td>Tutor</td>
 						<td th:text="${teacher.nombre}"/>
 					</tr>
+					<tr>
+						<td>Proyecto</td>
+						<td th:text="${offer.titulo}"/>
+					</tr>
 				</div>
 				</table>
 			</form>
-			
 		</div>
-		<input type="button" class = "izquierda" onclick=" location.href='/assignments/pending' " value="Atras" name="boton" /> 
+		<input th:replace="templates :: botonAtras"/> 
         <div th:replace="templates :: footer"/>
 	</body>
 </html>

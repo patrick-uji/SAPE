@@ -1,30 +1,41 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-    <head th:replace="templates :: head"/>
-    <body>
+    <head>
+    	<meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, height=device-height, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+        <script type="text/javascript" src="/js/unsavedChangesReminder.js" th:src="@{/js/unsavedChangesReminder.js}"/>
+        <link rel="stylesheet" href="/css/styles.css" th:href="@{/css/styles.css}"/>
+        <title>SAPE</title>
+    </head>
+	<body>
         <div th:replace="templates :: menuAlumno"/>
 		<div class="content1">
 			<h1>Lista de ofertas</h1>
-			<form method="POST" action="/offerPreferences" th:action="@{/offerPreferences}" th:object="${offersSelection}"
-			 th:if="${!offers.isEmpty()}">
-				<table class="list">
-					<tr>
-						<th>Añadir</th>
-						<th>Titulo</th>
-						<th>Empresa</th>
-						<th colspan="2">Action</th>
-					</tr>
-					<tr th:each="currOffer : ${offers}">
-						<td><input type="checkbox" th:field="*{selectedOffers}" th:value="${currOffer.id}"/></td>
-						<td th:text="${currOffer.titulo}"/>
-						<td th:text="${currOffer.empresa.nombre}"/>
-						<td><a th:href="@{/offers/{id}( id=${currOffer.id} )}">Ver oferta</a></td>
-					</tr>
-				</table>
-				<input type="submit" value="Añadir preferencias" class="button3"/>
-			</form>
-			<div th:if="${offers.isEmpty()}">
-				<h2>No hay mas ofertas disponibles...</h2>
+			<div th:if="${!hasAssignment}">
+				<form method="POST" action="/offerPreferences" th:action="@{/offerPreferences}" th:object="${offersSelection}" onsubmit="unsavedChanges = false;"
+				 th:if="${!offers.isEmpty()}">
+					<table class="list">
+						<tr>
+							<th>Añadir</th>
+							<th>Titulo</th>
+							<th>Empresa</th>
+							<th colspan="2">Acción</th>
+						</tr>
+						<tr th:each="currOffer : ${offers}">
+							<td><input type="checkbox" th:field="*{selectedOffers}" th:value="${currOffer.id}" onchange="unsavedChanges = true;"/></td>
+							<td th:text="${currOffer.titulo}"/>
+							<td th:text="${currOffer.empresa.nombre}"/>
+							<td><a th:href="@{/offers/{id}( id=${currOffer.id} )}">Ver oferta</a></td>
+						</tr>
+					</table>
+					<input type="submit" value="Añadir preferencias" class="button3"/>
+				</form>
+				<div th:if="${offers.isEmpty()}">
+					<h2>No hay mas ofertas disponibles...</h2>
+				</div>
+			</div>
+			<div th:if="${hasAssignment}">
+				<h2>No puedes agregar ofertas preferentes mientras tengas una asignación activa</h2>
 			</div>
 		</div>
         <div th:replace="templates :: footer"/>

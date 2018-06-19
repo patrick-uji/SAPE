@@ -1,14 +1,11 @@
 package es.uji.ei1027.sape.dao;
+import java.util.List;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
-
-import es.uji.ei1027.sape.enums.EstadoAsignacion;
-import es.uji.ei1027.sape.enums.Itinerario;
-import es.uji.ei1027.sape.mappers.AlumnoMapper;
-import es.uji.ei1027.sape.mappers.ProfesorTutorMapper;
 import es.uji.ei1027.sape.model.Alumno;
+import es.uji.ei1027.sape.mappers.AlumnoMapper;
 import org.springframework.stereotype.Component;
+import es.uji.ei1027.sape.enums.EstadoAsignacion;
 @Component
 public class AlumnoDao extends AbstractDao<Alumno>
 {

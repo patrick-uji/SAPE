@@ -25,17 +25,16 @@
 						   th:if="${!T(es.uji.ei1027.sape.ThymeUtils).canEditOffer(currOffer)}"/>
 					</td>
 					<td>
-						<a th:href="@{/offers/{id}/delete( id=${currOffer.id} )}" onclick="return confirm('Seguro que quieres eliminar esta oferta?')" th:text="Eliminar"
+						<a th:href="@{/offers/{id}/delete( id=${currOffer.id} )}" onclick="return confirm('¿Seguro que quieres eliminar esta oferta?')" th:text="Eliminar"
 						   th:if="${T(es.uji.ei1027.sape.ThymeUtils).canDeleteOffer(currOffer)}"/>
-						<a th:href="@{/offers/{id}/cancel( id=${currOffer.id} )}" onclick="return confirm('Seguro que quieres anular esta oferta?')" th:text="Anular"
+						<a th:href="@{/offers/{id}/cancel( id=${currOffer.id} )}" onclick="return confirm('¿Seguro que quieres anular esta oferta?')" th:text="Anular"
 						   th:if="${T(es.uji.ei1027.sape.ThymeUtils).canCancelOffer(currOffer)}"/>
 						<a class="disabledLink" th:text="Anular"
 						   th:if="${currOffer.estado == T(es.uji.ei1027.sape.enums.EstadoOferta).PENDIENTE_ANULACION}"/>
 					</td>
 				</tr>
 			</table>
-			<input type="button" class = "addOferta" onclick=" location.href='/offers/add' " value="A&ntilde;adir oferta" name="boton" /> 
-			
+			<input class="addOferta" type="button" name="boton" value="Añadir oferta" onclick="location.href='/offers/add'"/> 
 			 <div th:replace="templates :: footer"/>
 		</div>
        
