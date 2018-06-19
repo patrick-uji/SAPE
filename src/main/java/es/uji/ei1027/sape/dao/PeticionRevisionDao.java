@@ -21,7 +21,7 @@ public class PeticionRevisionDao extends AbstractDao<PeticionRevision>
     }
     public List<PeticionRevision> getAllFromOffer(int offerID)
     {
-    	return jdbcTemplate.query("SELECT * FROM PeticionRevision WHERE id_OfertaProyecto = ? ORDER BY id DESC", new Object[] {offerID}, this);
+    	return jdbcTemplate.query("SELECT * FROM PeticionRevision WHERE id_OfertaProyecto = ? ORDER BY id", new Object[] {offerID}, this);
     }
     @Override
     public void create(PeticionRevision peticionRevision)

@@ -6,26 +6,38 @@
 		<div class="content1">
 			<h1 th:text="${action + ' profesor'}"/>
 			<form method="POST" th:action="@{/teachers{target}( target=${target} )}" th:object="${teacher}">
-				<table class="table">
+				<table class="table1">
 					<tr>
 						<td class="register">Nombre</td>
 						<td><input type="text" th:field="*{nombre}" class="textoCentrar" placeholder="Nombre profesor"/></td>
-						<td class="error" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"/>
+					</tr>
+					<tr th:if="${#fields.hasErrors('nombre')}">
+						<td class="tdError"/>
+						<td class="tdError" th:errors="*{nombre}"/>
 					</tr>
 					<tr>
 						<td class="register">Departamento</td>
 						<td><input type="text" th:field="*{departamento}" class="textoCentrar" placeholder="Ejemplo: Informática "/></td>
-						<td class="error" th:if="${#fields.hasErrors('departamento')}" th:errors="*{departamento}"/>
+					</tr>
+					<tr th:if="${#fields.hasErrors('departamento')}">
+						<td class="tdError"/>
+						<td class="tdError" th:errors="*{departamento}"/>
 					</tr>
 					<tr>
 						<td class="register">Despacho</td>
 						<td><input type="text" th:field="*{despacho}" class="textoCentrar" placeholder="Ejemplo: TI1200"/></td>
-						<td class="error" th:if="${#fields.hasErrors('despacho')}" th:errors="*{despacho}"/>
+					</tr>
+					<tr th:if="${#fields.hasErrors('despacho')}">
+						<td class="tdError"/>
+						<td class="tdError" th:errors="*{despacho}"/>
 					</tr>
 					<tr>
 						<td class="register">Email</td>
 						<td><input type="text" th:field="*{email}" class="textoCentrar" placeholder="Ejemplo: sape@uji.es"/></td>
-						<td class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"/>
+					</tr>
+					<tr th:if="${#fields.hasErrors('email')}">
+						<td class="tdError"/>
+						<td class="tdError" th:errors="*{email}"/>
 					</tr>
 					<tr>
 						<td></td>

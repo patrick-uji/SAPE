@@ -22,7 +22,7 @@
 							<th colspan="2">Acción</th>
 						</tr>
 						<tr th:each="currOffer : ${offers}">
-							<td><input type="checkbox" th:field="*{selectedOffers}" th:value="${currOffer.id}" onchange="unsavedChanges = true;"/></td>
+							<td><input class="caja" type="checkbox" th:field="*{selectedOffers}" th:value="${currOffer.id}" onchange="unsavedChanges = true;"/></td>
 							<td th:text="${currOffer.titulo}"/>
 							<td th:text="${currOffer.empresa.nombre}"/>
 							<td><a th:href="@{/offers/{id}( id=${currOffer.id} )}">Ver oferta</a></td>

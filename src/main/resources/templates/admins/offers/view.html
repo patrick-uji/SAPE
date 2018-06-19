@@ -1,14 +1,21 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-    <head th:replace="templates :: head"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <head>
+    	<meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, height=device-height, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+        <script type="text/javascript" src="/js/hrefConfirm.js" th:src="@{/js/hrefConfirm.js}"/>
+        <link rel="stylesheet" href="/css/styles.css" th:href="@{/css/styles.css}"/>
+        <title>SAPE</title>
+    </head>
     <body>
         <div th:replace="templates :: menuCoordinador"/>
 		<div class="content1">
-			<h1>Información Oferta</h1>
+			<h1>InformaciÃ³n Oferta</h1>
 			<table th:replace="templates :: infoOferta"/>
 			<div th:if="${T(es.uji.ei1027.sape.ThymeUtils).canAcceptDeclineOffer(offer)}">
 				<div class="aceptar1">
-					<a th:href="@{/offers/{id}/reject( id=${offer.id} )}" onclick="return confirm('¿Seguro que quieres rechazar esta oferta?')">Rechazar</a>
+					<a th:href="@{/offers/{id}/reject( id=${offer.id} )}" onclick="return confirm('Â¿Seguro que quieres rechazar esta oferta?')">Rechazar</a>
 					<a th:href="@{/offers/{id}/accept( id=${offer.id} )}" onclick="return confirm('?Seguro que quieres aceptar esta oferta?')">Aceptar</a>
 				</div>
 				
@@ -16,30 +23,40 @@
 				
 				<form method="POST" th:action="@{/offers/{id}/petition( id=${offer.id} )}" th:object="${petition}"
 				 th:if="${session.user.esSuperAdmin()}">
-					<table class="table">
+					<table class="table1">
 						<tr>
-							<td class="register">Mensaje</td>
-							<td><textarea th:field="*{textoPeticion}"/></td>
+							<td class="register">Mensaje Cambio</td>
+							<td><textarea class="medio" th:field="*{textoPeticion}"/></td>
+						</tr>
+						<tr th:if="${#fields.hasErrors('textoPeticion')}">
+						 	<td class="tdError"/>
+						 	<td class="tdError" th:errors="*{textoPeticion}"/>
 						</tr>
 						<tr>
-							<td><input type="submit" value="Enviar petición" class="button2"/></td>
-							<td><input th:replace="templates :: botonRestablecer"/></td>
+							<td/>
+							<td class="inputs">
+								<input type="submit" value="Enviar peticiÃ³n" class="button2"/>
+								<input th:replace="templates :: botonRestablecer"/>
+							</td>
 						</tr>
 					</table>
 				</form>
 			</div>
 			<div class="aceptar1" th:if="${session.user.esSuperAdmin()}">
 				<div th:if="${T(es.uji.ei1027.sape.ThymeUtils).canHideShowOffer(offer)}">
-					<a th:href="@{/offers/{id}/show( id=${offer.id} )}" th:text="${'Hacer visible'}" onclick="return confirm('¿Seguro que quieres hacer visible esta oferta?')"
+					<input class="addOferta" type="button" name="boton" value="Hacer visible" th:onclick="'location.href=\'/offerPreferences/add/' + ${offer.id} + '\''"/>
+					
+					<a th:href="@{/offers/{id}/show( id=${offer.id} )}" th:text="${'Hacer visible'}" onclick="return confirm('Â¿Seguro que quieres hacer visible esta oferta?')"
 					   th:if="${offer.estado == T(es.uji.ei1027.sape.enums.EstadoOferta).ACEPTADA}"/>
-					<a th:href="@{/offers/{id}/hide( id=${offer.id} )}" th:text="${'Ocultar oferta'}" onclick="return confirm('¿Seguro que quieres ocultar esta oferta?')"
+					<a th:href="@{/offers/{id}/hide( id=${offer.id} )}" th:text="${'Ocultar oferta'}" onclick="return confirm('Â¿Seguro que quieres ocultar esta oferta?')"
 					   th:if="${offer.estado == T(es.uji.ei1027.sape.enums.EstadoOferta).VISIBLE}"/>
 				</div>
 				<div th:if="${offer.estado == T(es.uji.ei1027.sape.enums.EstadoOferta).PENDIENTE_ANULACION}">
-					<a th:href="@{/offers/{id}/restore( id=${offer.id} )}" onclick="return confirm('¿Seguro que quieres restaurar esta oferta?')">Restaurar oferta</a>
-					<a th:href="@{/offers/{id}/cancel( id=${offer.id} )}" onclick="return confirm('¿Seguro que quieres anular esta oferta?')">Anular oferta</a>
+					<input class="addOferta" type="button" name="boton" value="Restaurar oferta" th:onclick="'hrefConfirm(\'/offers/' + ${offer.id} + '/restore\', \'¿Seguro que quieres restaurar esta oferta?\')'"/>
+					<input class="addOferta" type="button" name="boton" value="Anular oferta" th:onclick="'hrefConfirm(\'/offers/' + ${offer.id} + '/cancel\', \'¿Seguro que quieres anular esta oferta?\')'"/>
 				</div>
 			</div>
+			<input th:replace="templates :: botonAtras"/>
 		</div>
         <div th:replace="templates :: footer"/>
 	</body>

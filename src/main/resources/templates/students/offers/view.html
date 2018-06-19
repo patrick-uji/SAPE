@@ -6,9 +6,8 @@
 		<div class="content1">
 			<h1>Información Oferta</h1>
 			<table th:replace="templates :: infoOferta"/>
+			<input th:replace="templates :: botonAtras"/>
 			<input class="addOferta" type="button" name="boton" value="Añadir a preferencias" th:onclick="'location.href=\'/offerPreferences/add/' + ${offer.id} + '\''"/>
-			
-			<!--location.href=/offerPreferences/add/' + offer.id + ');'}"/> -->
 		</div>
         <div th:replace="templates :: footer"/>
 	</body>

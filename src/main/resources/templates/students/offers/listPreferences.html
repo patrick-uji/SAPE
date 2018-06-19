@@ -51,7 +51,7 @@
 											th:value="${currNumber}" th:text="${currNumber}"/>
 								</select>
 							</td>
-							<td><input type="checkbox" th:field="*{selectedPreferences}" th:value="${currPreference.id}" onchange="unsavedChanges = true;"/></td>
+							<td><input class="caja" type="checkbox" th:field="*{selectedPreferences}" th:value="${currPreference.id}" onchange="unsavedChanges = true;"/></td>
 						</tr>
 					</table>
 					<div th:if="${preferencesContainer.isEmpty()}">

@@ -15,7 +15,7 @@
     	</div>
     </div>
     
-    <div th:text="${'Bienvenido: ' + session.user.email}" th:fragment="welcome"/>
+    <div class="welcome" th:text="${'Bienvenido: ' + session.user.email}" th:fragment="welcome"/>
     
     <div id="menu" th:fragment="menuCoordinador">
         <div th:replace="templates :: header"/>
@@ -49,7 +49,7 @@
 	   		<a href="/companies" class="menu">
 		   		<li>
 		   		<div class="barra"></div>
-		   		<p class ="menu" style="color:white;">Empresas</p>
+		   		<p class ="menu" style="color:white;align:center;">Empresas</p>
 		   		</li>
 	   		</a>
 	   		<a href="/teachers" class="menu">

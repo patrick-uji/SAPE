@@ -21,6 +21,7 @@ import es.uji.ei1027.sape.dao.PeticionRevisionDao;
 import es.uji.ei1027.sape.dao.dto.AsignacionDTODao;
 import org.springframework.validation.BindingResult;
 import es.uji.ei1027.sape.validation.OfferValidator;
+import es.uji.ei1027.sape.validation.PetitionValidator;
 import es.uji.ei1027.sape.dao.dto.OfertaProyectoDTODao;
 import es.uji.ei1027.sape.domain.VisibleOffersContainer;
 import es.uji.ei1027.sape.dao.dto.PeticionRevisionDTODao;
@@ -216,17 +217,26 @@ public class OfferController
     	ofertaProyectoDao.update(id, OfertaProyectoDao.OFFER_STATUS_FIELD, status.getID());
     }
     @RequestMapping(value="/{id}/petition", method=RequestMethod.POST)
-    public String createPetition(@PathVariable("id") int id, @ModelAttribute("petition") PeticionRevision petition, HttpSession session)
+    public String createPetition(@PathVariable("id") int id, @ModelAttribute("petition") PeticionRevision petition, HttpSession session, Model model, BindingResult bindingResult)
     {
     	Usuario user = Utils.getUser(session);
     	if (Utils.isSuperAdmin(user))
     	{
-    		petition.setFecha(Utils.now());
-    		petition.setIDOfertaProyect(id);
-    		petition.setIDAdmin(user.getId());
-    		setOfferStatus(id, EstadoOferta.PENDIENTE_REVISION);
-    		peticionRevisionDao.create(petition);
-    		return "redirect:../pending";
+    		if (Utils.validate(new PetitionValidator(), petition, bindingResult))
+    		{
+        		petition.setFecha(Utils.now());
+        		petition.setIDOfertaProyect(id);
+        		petition.setIDAdmin(user.getId());
+        		setOfferStatus(id, EstadoOferta.PENDIENTE_REVISION);
+        		peticionRevisionDao.create(petition);
+        		return "redirect:../pending";
+    		}
+    		else
+    		{
+    			model.addAttribute("petitions", peticionRevisionDTODao.getAllFromOffer(id));
+		        model.addAttribute("offer", ofertaProyectoDTODao.get(id));
+		        return "admins/offers/view";
+    		}
     	}
     	return "error/401";
     }

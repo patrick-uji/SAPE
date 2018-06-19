@@ -1,10 +1,39 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-    <head th:replace="templates :: head"/>
+    <head>
+    	<meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, height=device-height, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+        <script th:inline="javascript">
+			/*<![CDATA[*/
+			window.onload = function()
+			{
+		    	var totalOffers = [[${preferences.size()}]];
+		    	if (totalOffers != 0)
+	    		{
+					var hasOneChecked = false;
+					for (currID = 1; currID <= totalOffers; currID++)
+					{
+						if (document.getElementById("idOfertaProyecto" + currID).checked)
+						{
+							hasOneChecked = true;
+							break;
+						}
+					}
+		        	if (!hasOneChecked)
+	        		{
+			        	document.getElementById("idOfertaProyecto1").checked = true;
+	        		}
+	    		}
+			}
+		    /*]]>*/
+    	</script>
+        <link rel="stylesheet" href="/css/styles.css" th:href="@{/css/styles.css}"/>
+        <title>SAPE</title>
+    </head>
     <body>
         <div th:replace="templates :: menuCoordinador"/>
 		<div class="content1">
-			<h1 th:text="${action + ' Asignación'}"/>
+			<h1 th:text="${action + ' AsignaciÃ³n'}"/>
 			<form method="POST" th:action="@{{target}( target=${target} )}" th:object="${assignment}">
 				<table class="table">
 					<tr>
@@ -24,7 +53,7 @@
 						<td th:text="${student.itinerario.getName()}"/>
 					</tr>
 					<tr>
-						<td>Numero Créditos:</td>
+						<td>Numero CrÃ©ditos:</td>
 						<td th:text="${student.numeroCreditos}"/>
 					</tr>
 					<tr>

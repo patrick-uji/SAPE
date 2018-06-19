@@ -6,11 +6,14 @@
 		<div class="content1">
 			<h1 th:text="${action + ' oferta'}"/>
 			<form method="POST" th:action="@{/offers{target}( target=${target} )}" th:object="${offer}">
-				<table class="tableFor">
+				<table class="table1">
 					<tr>
 						<td class="register">Título</td>
 						<td class="inputs"><input type="text" th:field="*{titulo}" class="textoCentrar" placeholder="Título oferta"/></td>
-						<td class="error" th:if="${#fields.hasErrors('titulo')}" th:errors="*{titulo}"/>
+					</tr>
+					<tr th:if="${#fields.hasErrors('titulo')}">
+						<td/>
+						<td class="tdError" th:errors="*{titulo}"/>
 					</tr>
 					
 					<tr>

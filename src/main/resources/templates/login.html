@@ -6,16 +6,24 @@
         <div class="content1">
             <h1>Iniciar sesión</h1>
             <form method="POST" action="" th:action="@{/login}" th:object="${login}">
-                <table class="table">
+                <table class="table1">
                     <tr>
                     	<td class="register"><label>Usuario:</label></td>
-                        <td> <input type="text" th:field="*{email}" pattern="\w+" placeholder="Usuario" maxlength="20" class="estatico"/> 
-                        <a class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"/></td>
+                        <td>
+                        	<input class="alargar" type="text" th:field="*{email}" pattern="\w+" placeholder="Usuario" maxlength="20"/> 
+                       	</td>
+                    </tr>
+                    <tr class="tdError" th:if="${#fields.hasErrors('email')}">
+                    	<td class="tdError"/>
+                    	<td class="tdError" th:errors="*{email}"/>
                     </tr>
                     <tr>
                         <td class="register"><label>Contraseña:</label></td>
-                        <td><input type="password" th:field="*{password}" placeholder="password"/>
-                        <a class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"/></td>
+                        <td><input class="alargar" type="password" th:field="*{password}" placeholder="Contraseña"/></td>
+                    </tr>
+                    <tr class="tdError" th:if="${#fields.hasErrors('password')}">
+                    	<td class="tdError"/>
+                    	<td class="tdError" th:errors="*{password}"/>
                     </tr>
                     <tr>
                         <td><input type="submit" value="Entrar" class="button2"/></td>

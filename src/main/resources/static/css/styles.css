@@ -40,7 +40,7 @@ body {
 	float: left;
 	
     aling: center;
-    margin: 10px;
+    margin: 0px;
    	position:fixed; /*El div ser� ubicado con relaci�n a la pantalla*/
 	left:240px; /*A la derecha deje un espacio de 0px*/
 	right:0px; /*A la izquierda deje un espacio de 0px*/
@@ -127,7 +127,6 @@ div#menu {
 }
 
 ul{
-	margin-top:50px;
 	list-style: none;
 	display:block;
 }
@@ -141,7 +140,7 @@ p.menu{
 	position: relative;
 	padding: 10px;
 	padding-right: 25px;
-	float:right
+	text-align:center;
 	color: white;
 	opacity:.6;
 	font-size: 1.8em;
@@ -211,6 +210,13 @@ h3 {
 }
 
 table {
+    color: black;
+    aling: center;
+	border-collapse: collapse;
+	margin: auto;
+}
+
+table1 {
     color: black;
     aling: center;
 	border-collapse: collapse;
@@ -317,6 +323,10 @@ div.login h3 {
     
      
 }
+.table1 {
+    border: 1px solid darkorange;
+}
+
 
 .tableFor{
 	border: 1px solid darkorange;
@@ -326,6 +336,11 @@ div.login h3 {
 	width: 195px;
 	height: 45px;
 }
+
+.table1 td {
+	width: 195px;
+}
+
 
 .list {
     margin-top: 1%;
@@ -437,6 +452,15 @@ select, input {
     color: red;
 }
 
+.tdError {
+    color: red;
+    padding-left:5px;
+    text-align:left;
+	height:0px;
+	padding:0px;
+	margin:0px;
+}
+
 .exit {
 	right: 0;
 	padding-right: 10px;
@@ -483,4 +507,19 @@ div.aceptar1{
 
 .estatico{
 	
+}
+
+.caja {
+	width: 50px;
+}
+
+.welcome {
+	color:white;
+	padding: 20px;
+	font-size: 20px;
+    font-weight:bold;
+}
+
+.alargar {
+	width:220px;
 }
