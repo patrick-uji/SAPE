@@ -4,7 +4,7 @@
     <body>
         <div th:replace="templates :: menuCoordinador"/>
 		<div class="content1">
-			<h1 th:text="${action + ' profesor'}"/>
+			<h1 th:text="${action + ' tutor'}"/>
 			<form method="POST" th:action="@{/teachers{target}( target=${target} )}" th:object="${teacher}">
 				<table class="table1">
 					<tr>
@@ -41,7 +41,7 @@
 					</tr>
 					<tr>
 						<td></td>
-						<td class="inputs"> <input type="submit" th:value="${action + ' profesor'}" class="button2"/>
+						<td class="inputs"> <input type="submit" th:value="${action + ' tutor'}" class="button2"/>
 						<input th:replace="templates :: botonRestablecer" class="button2"/></td>
 					</tr>
 				</table>

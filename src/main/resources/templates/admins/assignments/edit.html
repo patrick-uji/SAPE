@@ -33,7 +33,7 @@
     <body>
         <div th:replace="templates :: menuCoordinador"/>
 		<div class="content1">
-			<h1 th:text="${action + ' AsignaciÃ³n'}"/>
+			<h1 th:text="${action + ' Asignación'}"/>
 			<form method="POST" th:action="@{{target}( target=${target} )}" th:object="${assignment}">
 				<table class="table">
 					<tr>
@@ -53,7 +53,7 @@
 						<td th:text="${student.itinerario.getName()}"/>
 					</tr>
 					<tr>
-						<td>Numero CrÃ©ditos:</td>
+						<td>Numero Créditos:</td>
 						<td th:text="${student.numeroCreditos}"/>
 					</tr>
 					<tr>
@@ -89,7 +89,7 @@
 				 	   </td>
 					</tr>
 					<tr>
-						<td class="register"><input type="submit" th:value="${action}" class="button2"/></td>
+						<td class="register"><input class="button2" type="submit" th:value="${action}" th:disabled="${teachers.isEmpty() or preferences.isEmpty()}"/></td>
 						<td><input th:replace="templates :: botonRestablecer"/></td>
 					</tr>
 				</div>

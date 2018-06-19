@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-    <head th:replace="templates :: head"/>
+    <head>
+    	<meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, height=device-height, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+        <script type="text/javascript" src="/js/hrefConfirm.js" th:src="@{/js/hrefConfirm.js}"/>
+        <link rel="stylesheet" href="/css/styles.css" th:href="@{/css/styles.css}"/>
+        <title>SAPE</title>
+    </head>
     <body>
         <div th:replace="templates :: menuAlumno"/>
 		<div class="content1">
@@ -49,8 +55,8 @@
 					</tr>
 				</table>
 				<div class="enlaces1" th:if="${assignment.estado != T(es.uji.ei1027.sape.enums.EstadoAsignacion).ACEPTADA}">
-					<a class="enlaces" th:href="@{/assignments/{id}/reject( id=${assignment.id} )}" onclick="return confirm('¿Seguro que quiere rechazar esta asignación?')">Rechazar</a>
-					<a th:href="@{/assignments/{id}/accept( id=${assignment.id} )}" onclick="return confirm('¿Seguro que quiere aceptar esta asignación?')">Aceptar</a>
+					<input class="addOferta" type="button" name="boton" value="Rechazar" th:onclick="'hrefConfirm(\'/assignments/' + ${assignment.id} + '/reject\', \'¿Seguro que quiere rechazar esta asignación?\')'"/>
+					<input class="addOferta" type="button" name="boton" value="Aceptar" th:onclick="'hrefConfirm(\'/assignments/' + ${assignment.id} + '/accept\', \'¿Seguro que quiere aceptar esta asignación?\')'"/>
 				</div>
 			</div>
 			<div th:if="${assignment == null}">
